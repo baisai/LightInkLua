@@ -8,7 +8,7 @@ Use C++ Template Binding Class to lua; from project LightInk
 ##win32
 
 * install vs2012
-* open file ./windows/LightInkMsgPack.sln
+* open file ./windows/LightInkLua.sln
 * build
 * the file output in ./windows/Debug(Release)/
 
