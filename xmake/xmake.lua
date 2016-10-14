@@ -53,7 +53,7 @@ function set_mode_config(name)
 		add_defines("_WINDOWS", "WINDOWS", "_WIN32", "WIN32")
 	end
 	
-	set_languages("c99")
+	--set_languages("c99")
 	
 	add_defines("LIGHTINK_AS_DLL", "LIGHTINK_EXPORTS")
 	
