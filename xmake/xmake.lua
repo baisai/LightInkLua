@@ -49,15 +49,11 @@ function set_mode_config(name)
 	
 	end
 	
-	if is_arch("*64") then
-		add_defines("URHO3D_64BIT")
-	end
 	if is_plat("windows") then
 		add_defines("_WINDOWS", "WINDOWS", "_WIN32", "WIN32")
 	end
 	
 	set_languages("c99")
-	add_defines("__cplusplus")
 	
 	add_defines("LIGHTINK_AS_DLL", "LIGHTINK_EXPORTS")
 	
