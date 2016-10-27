@@ -94,6 +94,22 @@ namespace LightInk
 	}
 
 	template <typename ClassType, typename CtorType>
+	LuaRegister<ClassType, CtorType>::LuaRegister(const LuaRegister<ClassType, CtorType> & cp) : LuaRegisterNode(cp), m_lua(cp.m_lua)
+	{
+		LogTrace("LuaRegister<ClassType, CtorType>::LuaRegister(const LuaRegister<ClassType, CtorType> & cp)");
+		LogTraceReturnVoid;
+	}
+
+	template <typename ClassType, typename CtorType>
+	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::operator = (const LuaRegister<ClassType, CtorType> & right)
+	{
+		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::operator = (const LuaRegister<ClassType, CtorType> & right)");
+		LuaRegisterNode::operator=(right);
+		m_lua = right.m_lua;
+		LogTraceReturn(*this);
+	}
+
+	template <typename ClassType, typename CtorType>
 	template <typename T>
 	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def(T obj, const std::string & name)
 	{

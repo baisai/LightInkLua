@@ -65,6 +65,7 @@ namespace LightInk
 	public:
 		LuaRegisterNode(lua_State * L);
 		LuaRegisterNode(const LuaRef & key, const LuaRef & value);
+		LuaRegisterNode(const LuaRegisterNode & cp);
 		~LuaRegisterNode();
 
 		template <typename T>
@@ -97,6 +98,9 @@ namespace LightInk
 		const LuaRegisterNode * next() const;
 
 		LuaRegisterNode & operator <= (LuaRegisterNode & right);
+		LuaRegisterNode & operator = (const LuaRegisterNode & right);
+
+		LuaRegisterNode & self();
 
 	protected:
 		LuaRef m_key;

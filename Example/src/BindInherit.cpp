@@ -66,6 +66,41 @@ private:
 	int m_inherit;
 };
 
+static LightInk::LuaRegisterNode bind_base(lua_State * lua)
+{
+	return(
+		LightInk::LuaRegister<CppClassBase, void()>(lua, "CppClassBase")
+			.def(&CppClassBase::get_base, "get_base")
+			.def(&CppClassBase::set_base, "set_base")
+			.def(&CppClassBase::test, "test")
+			.def(CppClassBase::test_static, "test_static")
+			.def(CppClassBase::test_static_base, "test_static_base")
+			.def(&CppClassBase::m_test, "m_test")
+		);
+}
+
+static LightInk::LuaRegisterNode bind_inherit(lua_State * lua)
+{
+	return (
+		LightInk::LuaRegister<CppClassInherit, void()>(lua, "CppClassInherit", LightInk::BaseClassStrategy<CppClassBase>())
+			.def(&CppClassInherit::get_inherit, "get_inherit")
+			.def(&CppClassInherit::set_inherit, "set_inherit")
+			.def(&CppClassInherit::test, "test")
+			.def(CppClassInherit::test_static, "test_static")
+			.def(CppClassInherit::test_static_inherit, "test_static_inherit")
+			.def(&CppClassInherit::m_test, "m_test")
+		);
+}
+
+static void bind_cppclass2(lua_State * lua)
+{
+	LightInk::LuaModule(lua, "CppClassList")
+	[
+		bind_inherit(lua).self()
+		<=
+		bind_base(lua).self()
+	].def_end();
+}
 
 static void bind_cppclass(lua_State * lua)
 {
@@ -103,7 +138,8 @@ void test_bind_inherit()
 
 	LightInk::LuaEngine le;
 	le.init();
-	le.register_module(bind_cppclass);
+	//le.register_module(bind_cppclass);
+	le.register_module(bind_cppclass2);
 
 	le.add_package_path("../../Example/lua");
 

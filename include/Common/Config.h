@@ -64,10 +64,16 @@
 #endif
 
 #else
+	
+#ifdef LIGHTINK_EXPORTS
+#define LIGHTINK_DECL
+#define LIGHTINK_TEMPLATE_DECL
+#else
 #define LIGHTINK_DECL extern
 #define LIGHTINK_TEMPLATE_DECL
+#endif
+	
 #endif // LIGHTINK_BUILD_DLL
-
 
 
 #elif defined __GNUC__ && __GNUC__ >= 4

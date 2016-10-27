@@ -39,6 +39,11 @@ namespace LightInk
 		LogTrace("LuaRegisterNode::LuaRegisterNode(const LuaRef & key, const LuaRef & value)");
 		LogTraceReturnVoid;
 	}
+	LuaRegisterNode::LuaRegisterNode(const LuaRegisterNode & cp) : m_key(cp.m_key), m_value(cp.m_value), m_next(NULL)
+	{
+		LogTrace("LuaRegisterNode::LuaRegisterNode(const LuaRegisterNode & cp)");
+		LogTraceReturnVoid;
+	}
 	LuaRegisterNode::~LuaRegisterNode()
 	{
 		LogTrace("LuaRegisterNode::~LuaRegisterNode()");
@@ -128,6 +133,21 @@ namespace LightInk
 		LogTrace("LuaRegisterNode & LuaRegisterNode::operator ,(const LuaRegisterNode & right)");
 		right.m_next = this;
 		LogTraceReturn(right);
+	}
+
+	LuaRegisterNode & LuaRegisterNode::operator = (const LuaRegisterNode & right)
+	{
+		LogTrace("LuaRegisterNode & LuaRegisterNode::operator <= (const LuaRegisterNode & right)");
+		m_key = right.m_key;
+		m_value = right.m_value;
+		m_next = NULL;
+		LogTraceReturn(*this);
+	}
+
+	LuaRegisterNode & LuaRegisterNode::self()
+	{
+		LogTrace("LuaRegisterNode & LuaRegisterNode::self()");
+		LogTraceReturn(*this);
 	}
 
 

@@ -49,6 +49,10 @@ namespace LightInk
 		template <typename BaseType>
 		LuaRegister(lua_State * L, const std::string & name, BaseClassStrategy<BaseType>); //call once again base every class
 
+		LuaRegister(const LuaRegister<ClassType, CtorType> & cp);
+
+		LuaRegister<ClassType, CtorType> & operator = (const LuaRegister<ClassType, CtorType> & right);
+
 		template <typename T>
 		LuaRegister & def(T obj, const std::string & name);
 
@@ -81,8 +85,6 @@ namespace LightInk
 
 	private:
 		lua_State * m_lua;
-
-	LIGHTINK_DISABLE_COPY(LuaRegister)
 
 	};
 
