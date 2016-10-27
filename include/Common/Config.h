@@ -51,40 +51,48 @@
 /////////////////////////////////////////////////////////
 //导出,导入变量
 ////////////////////////////////////////////////////////
-#ifdef WIN32
-
 #ifdef LIGHTINK_AS_DLL
 
 #ifdef LIGHTINK_EXPORTS
+
+#ifdef WIN32
 #define LIGHTINK_DECL __declspec(dllexport)
 #define LIGHTINK_TEMPLATE_DECL __declspec(dllexport)
+#elif defined __GNUC__ && __GNUC__ >= 4
+#define LIGHTINK_DECL __attribute__((visibility ("default")))
+#define LIGHTINK_TEMPLATE_DECL
 #else
-#define LIGHTINK_DECL __declspec(dllimport)
-#define LIGHTINK_TEMPLATE_DECL __declspec(dllexport)
+#define LIGHTINK_DECL
+#define LIGHTINK_TEMPLATE_DECL
 #endif
 
 #else
-	
-#ifdef LIGHTINK_EXPORTS
-#define LIGHTINK_DECL
-#define LIGHTINK_TEMPLATE_DECL
+#ifdef WIN32
+#define LIGHTINK_DECL __declspec(dllimport)
+#define LIGHTINK_TEMPLATE_DECL __declspec(dllexport)
 #else
 #define LIGHTINK_DECL extern
 #define LIGHTINK_TEMPLATE_DECL
 #endif
-	
-#endif // LIGHTINK_BUILD_DLL
 
-
-#elif defined __GNUC__ && __GNUC__ >= 4
-#define LIGHTINK_DECL __attribute__((visibility ("default")))
-#define LIGHTINK_TEMPLATE_DECL
+#endif
 
 #else
+
+#ifdef LIGHTINK_EXPORTS
+
 #define LIGHTINK_DECL
 #define LIGHTINK_TEMPLATE_DECL
 
+#else
+
+#define LIGHTINK_DECL extern
+#define LIGHTINK_TEMPLATE_DECL
+
 #endif
+	
+	
+#endif // LIGHTINK_BUILD_DLL
 
 
 
