@@ -99,7 +99,7 @@ static void bind_cppclass2(lua_State * lua)
 		bind_inherit(lua).self()
 		<=
 		bind_base(lua).self()
-	].def_end();
+	];
 }
 
 static void bind_cppclass(lua_State * lua)
@@ -114,12 +114,9 @@ static void bind_cppclass(lua_State * lua)
 			.def(CppClassBase::test_static_base, "test_static_base")
 			.def(&CppClassBase::m_test, "m_test")
 			
-	].def_end();
+	];
 
-	lua_getglobal(lua, "CppClassList");
-	LightInk::LuaRef lrf(lua, true);
-
-	LightInk::LuaModule(lua, "CppClassList", lrf)
+	LightInk::LuaModule(lua, "CppClassList")
 	[
 		LightInk::LuaRegister<CppClassInherit, void()>(lua, "CppClassInherit", LightInk::BaseClassStrategy<CppClassBase>())
 			.def(&CppClassInherit::get_inherit, "get_inherit")
@@ -129,7 +126,7 @@ static void bind_cppclass(lua_State * lua)
 			.def(CppClassInherit::test_static_inherit, "test_static_inherit")
 			.def(&CppClassInherit::m_test, "m_test")
 			
-	].def_end();
+	];
 }
 
 void test_bind_inherit()

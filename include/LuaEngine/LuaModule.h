@@ -41,7 +41,7 @@ LightInk::LuaModule(L, "llll")
 		LightInk::LuaRegister<lightTest, void()>(L, "lightinktest")
 			.def(&lightTest::m_dou, "dou")
 			
-	].def_end();
+	];
 如果Class有继承关系,那么这种用法可能有问题,编译器有能会优化成下面的构造顺序:
 先将所有的LuaRegister构造出来,然后再调用各自的def,最后调用<=,这样会使基类的方法和变量,无法被派生继承;
 这个时候可以使用下面这种方法:
@@ -54,7 +54,7 @@ LightInk::LuaRegister<LuaClass, void()> c(L, "lightinkLuaClass", LightInk::BaseC
 LightInk::LuaModule(L, "llll")
 	[
 		c <= b <= b
-	].def_end();
+	];
 ****************************************************/
 
 namespace LightInk
@@ -64,7 +64,7 @@ namespace LightInk
 	{
 	public:
 		LuaRegisterNode(lua_State * L);
-		LuaRegisterNode(const LuaRef & key, const LuaRef & value);
+		LuaRegisterNode(const LuaRef & key, const LuaRef & value, const LuaRef & parent);
 		LuaRegisterNode(const LuaRegisterNode & cp);
 		~LuaRegisterNode();
 
@@ -87,12 +87,20 @@ namespace LightInk
 		}
 
 		void set_value(int idx);
+
+		template <typename T>
+		inline void set_parent(const T & t)
+		{
+			LogTrace("LuaRegisterNode::set_parent<T>(const T & t)");
+			m_parent = t;
+			LogTraceReturnVoid;
+		}
+
+		void set_parent(int idx);
+
 		void push() const;
 		void push_key() const;
 		void push_value() const;
-
-		LuaRegisterNode & def_end(int idx);
-		LuaRegisterNode & def_end();
 
 		void next(LuaRegisterNode * n);
 		const LuaRegisterNode * next() const;
@@ -105,6 +113,7 @@ namespace LightInk
 	protected:
 		LuaRef m_key;
 		LuaRef m_value;
+		LuaRef m_parent;
 		LuaRegisterNode * m_next;
 	};
 
@@ -112,7 +121,7 @@ namespace LightInk
 	{
 	public:
 		LuaModule(lua_State * L, const std::string & moduleName);
-		LuaModule(lua_State * L, const std::string & moduleName, const LuaRef & table);
+		LuaModule(lua_State * L, const std::string & moduleName, const LuaRef & parent);
 		virtual ~LuaModule();
 
 		LuaModule & operator[](const LuaRegisterNode & key);

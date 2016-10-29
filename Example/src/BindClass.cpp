@@ -77,7 +77,7 @@ static void bind_cppclass(lua_State * lua)
 			.def(CppClass2::destroy, "destroy")
 			.def(&CppClass2::test, "test")
 			
-	].def_end();
+	];
 }
 
 
