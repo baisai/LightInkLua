@@ -71,7 +71,7 @@
 #define LIGHTINK_DECL __declspec(dllimport)
 #define LIGHTINK_TEMPLATE_DECL __declspec(dllexport)
 #else
-#define LIGHTINK_DECL extern
+#define LIGHTINK_DECL
 #define LIGHTINK_TEMPLATE_DECL
 #endif
 
@@ -86,7 +86,7 @@
 
 #else
 
-#define LIGHTINK_DECL extern
+#define LIGHTINK_DECL
 #define LIGHTINK_TEMPLATE_DECL
 
 #endif
