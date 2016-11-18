@@ -25,6 +25,7 @@
 #ifndef LIGHTINK_COMMON_LOG_H_
 #define LIGHTINK_COMMON_LOG_H_
 
+#include "Common/Config.h"
 #include <stdio.h>
 
 /////////////////////////////////
