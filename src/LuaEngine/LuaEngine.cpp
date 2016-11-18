@@ -23,6 +23,7 @@
  */
 #include "LuaEngine/LuaEngine.h"
 #include "LuaEngine/LuaDefTool.h"
+#include "Common/SmallObject.h"
 
 namespace LightInk
 {
@@ -72,6 +73,7 @@ namespace LightInk
 		register_global_func("print_debug", &lua_print_debug);
 		register_global_func("print_warning", &lua_print_warning);
 		register_global_func("print_error", &lua_print_error);
+		register_global_func("print_fatal", &lua_print_fatal);
 		LogTraceReturn(do_init());
 	}
 
@@ -98,23 +100,20 @@ namespace LightInk
 	{
 		LogTrace("int LuaEngine::lua_error_catch(lua_State * L)");
 		const char * errStr = lua_tostring(L, -1);
-		LogError("Error!!!Lua Error Catch \"%s\"", errStr);
+		LogError("Error!!!Lua Error Catch \"{}\"", errStr);
 		throw RE_Lua_RuntimeError;
 		LogTraceReturn(0);
 	}
 
-	int LuaEngine::log_string(lua_State * L, LogMsg::LEVEL level)
+	int LuaEngine::log_string(lua_State * L, LogLevel::LEVEL level)
 	{
 		LogTrace("int LuaEngine::log_string(lua_State * L, LogMsg::LEVEL level)");
 		int n = lua_gettop(L) + 1;  /* number of arguments */
 		lua_getglobal(L, "tostring");
 	
-		char str[LogMsg::CacheChar] = {0};
-	
-		char * end = str + LogMsg::CacheChar - 2;
-		char * p = str;
-	
 		const char * s = NULL;
+
+		std::string str;
 	
 		for (int i = 1; i < n; i++)
 		{
@@ -128,82 +127,29 @@ namespace LightInk
 			{
 				LogTraceReturn(luaL_error(L, "\'tostring\' must return a string to \'print\'"));
 			}
-			if (i > 1)
-			{
-				if (p < end)
-				{
-					*p++ = '\t';
-				}
-				else
-				{
-					switch (level)
-					{
-					case LogMsg::LogMsg_ScriptDebug:
-						LogScriptDebug(str);
-						break;
-					case LogMsg::LogMsg_ScriptMessage:
-						LogScriptMessage(str);
-						break;
-					case LogMsg::LogMsg_ScriptWarning:
-						LogScriptWarning(str);
-						break;
-					case LogMsg::LogMsg_ScriptError:
-						LogScriptError(str);
-						break;
-					default:
-						break;
-					}
-					memset(str, 0, LogMsg::CacheChar);
-					p = str;
-				}
-			}
-		
-			while (*s != '\0')
-			{
-				*p++ = *s++;
-				if (p < end)
-					continue;
-				else
-				{
-					switch (level)
-					{
-					case LogMsg::LogMsg_ScriptDebug:
-						LogScriptDebug(str);
-						break;
-					case LogMsg::LogMsg_ScriptMessage:
-						LogScriptMessage(str);
-						break;
-					case LogMsg::LogMsg_ScriptWarning:
-						LogScriptWarning(str);
-						break;
-					case LogMsg::LogMsg_ScriptError:
-						LogScriptError(str);
-						break;
-					default:
-						break;
-					}
-					memset(str, 0, LogMsg::CacheChar);
-					p = str;
-				
-				}
-			}
+
+			str += s;
+			str.push_back('\t');
 		
 			lua_pop(L, 1);  /* pop result */
 		}
 	
 		switch (level)
 		{
-		case LogMsg::LogMsg_ScriptDebug:
-			LogScriptDebug(str);
+		case LogLevel::LogMsg_Debug:
+			LogScriptDebug(str.c_str());
 			break;
-		case LogMsg::LogMsg_ScriptMessage:
-			LogScriptMessage(str);
+		case LogLevel::LogMsg_Message:
+			LogScriptMessage(str.c_str());
 			break;
-		case LogMsg::LogMsg_ScriptWarning:
-			LogScriptWarning(str);
+		case LogLevel::LogMsg_Warning:
+			LogScriptWarning(str.c_str());
 			break;
-		case LogMsg::LogMsg_ScriptError:
-			LogScriptError(str);
+		case LogLevel::LogMsg_Error:
+			LogScriptError(str.c_str());
+			break;
+		case LogLevel::LogMsg_Fatal:
+			LogScriptFatal(str.c_str());
 			break;
 		default:
 			break;
@@ -214,22 +160,27 @@ namespace LightInk
 	int LuaEngine::lua_print_debug(lua_State * L)
 	{
 		LogTrace("int LuaEngine::lua_print_debug(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogMsg::LogMsg_ScriptDebug));
+		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Debug));
 	}
 	int LuaEngine::lua_replace_print(lua_State * L)
 	{
 		LogTrace("int LuaEngine::lua_replace_print(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogMsg::LogMsg_ScriptMessage));
+		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Message));
 	}
 	int LuaEngine::lua_print_warning(lua_State * L)
 	{
 		LogTrace("int LuaEngine::lua_print_warning(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogMsg::LogMsg_ScriptWarning));
+		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Warning));
 	}
 	int LuaEngine::lua_print_error(lua_State * L)
 	{
 		LogTrace("int LuaEngine::lua_print_error(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogMsg::LogMsg_ScriptError));
+		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Error));
+	}
+	int LuaEngine::lua_print_fatal(lua_State * L)
+	{
+		LogTrace("int LuaEngine::lua_print_fatal(lua_State * L)");
+		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Fatal));
 	}
 
 	void * LuaEngine::do_lua_allocator(void * ptr, size_t osize, size_t nsize)
@@ -246,7 +197,7 @@ namespace LightInk
 	
 	RuntimeError LuaEngine::add_package_path(const std::string & path)
 	{
-		LogTrace("RuntimeError LuaEngine::add_package_path(const std::string & path)");
+		LogTrace("RuntimeError LuaEngine::add_package_path(const string & path)");
 		std::string new_path = "package.path = package.path .. \"";
         if (path.empty())
         {
@@ -288,7 +239,7 @@ namespace LightInk
             {
                 case LUA_TSTRING:
                 {
-                    LogMessage("`%s'", lua_tostring(L, i));
+					LogMessage("`{}`", lua_tostring(L, i));
                 }
                 break;
                 case LUA_TBOOLEAN:
@@ -298,7 +249,7 @@ namespace LightInk
                 break;
                 case LUA_TNUMBER:
                 {
-                    LogMessage("`%g`", lua_tonumber(L, i));
+					LogMessage("`{}`", lua_tonumber(L, i));
                 }
                 break;
                 case LUA_TTABLE:
@@ -311,13 +262,13 @@ namespace LightInk
 						if (lua_isstring(L, -2))
 						{
 							key = lua_tostring(L, -2);
-							LogMessage("\t%s(%s) - %s\n",
+							LogMessage("\t{}({}) - {}\n",
 								lua_typename(L, lua_type(L, -2)), key,
 								lua_typename(L, lua_type(L, -1)));
 						}
 						else
 						{
-							LogMessage("\t%s - %s\n",
+							LogMessage("\t{} - {}\n",
 								lua_typename(L, lua_type(L, -2)),
 								lua_typename(L, lua_type(L, -1)));
 						}
@@ -328,7 +279,7 @@ namespace LightInk
                 break;
                 default:
                 {
-                    LogMessage("`%s`", lua_typename(L, t));
+					LogMessage("`{}`", lua_typename(L, t));
                 }
                 break;
             }
@@ -344,7 +295,7 @@ namespace LightInk
 		if (luaL_dostring(m_lua, chunk))
 		{
 			const char * err = lua_tostring(m_lua, -1);
-			LogScriptError("Call LuaEngine::run_string Error!!! error is \"%s\"", err);
+			LogScriptError("Call LuaEngine::run_string Error!!! error is \"{}\"", err);
 			lua_pop(m_lua, 1); //pop error
 			LogTraceReturn(RE_Lua_RuntimeError);
 		}
@@ -357,7 +308,7 @@ namespace LightInk
 		if (luaL_dofile(m_lua, fileName))
 		{
 			const char * err = lua_tostring(m_lua, -1);
-			LogScriptError("Call LuaEngine::run_file Error!!! error is \"%s\" \n chunk is \"%s\"\n", err, fileName);
+			LogScriptError("Call LuaEngine::run_file Error!!! error is \"{}\" \n chunk is \"{}\"\n", err, fileName);
 			lua_pop(m_lua, 1); //pop error
 			LogTraceReturn(RE_Lua_RuntimeError);
 		}
@@ -399,5 +350,4 @@ namespace LightInk
 		func(m_lua);
 		LogTraceReturnVoid;
 	}
-
 }

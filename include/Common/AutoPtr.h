@@ -26,13 +26,13 @@
 #ifndef LIGHTINK_COMMON_AUTOPTR_H_
 #define LIGHTINK_COMMON_AUTOPTR_H_
 
-#include "Common/Config.h"
+#include "Common/SmallObject.h"
 
 namespace LightInk
 {
 
-	template <typename T, typename DelStrategy>
-	class LIGHTINK_TEMPLATE_DECL AutoPtrWrapper : public SmallObject
+	template <typename T, typename DelStrategy, typename Allocator>
+	class LIGHTINK_TEMPLATE_DECL AutoPtrWrapper : public Allocator
 	{
 	public:
 		AutoPtrWrapper();
@@ -40,18 +40,19 @@ namespace LightInk
 		template<typename __T>
 		explicit AutoPtrWrapper(__T * ptr);
 
-		AutoPtrWrapper(const AutoPtrWrapper<T, DelStrategy> & cp);
-		AutoPtrWrapper<T, DelStrategy> & operator = (const AutoPtrWrapper<T, DelStrategy> & right);
+		AutoPtrWrapper(const AutoPtrWrapper<T, DelStrategy, Allocator> & cp);
+		AutoPtrWrapper<T, DelStrategy, Allocator> & operator = (const AutoPtrWrapper<T, DelStrategy, Allocator> & right);
 
-		template <typename __T, typename __DelStrategy>
-		AutoPtrWrapper(const AutoPtrWrapper<__T, __DelStrategy> & cp);
+		template <typename __T, typename __DelStrategy, typename __Allocator>
+		AutoPtrWrapper(const AutoPtrWrapper<__T, __DelStrategy, __Allocator> & cp);
 
-		template <typename __T, typename __DelStrategy>
-		AutoPtrWrapper<T, DelStrategy> & operator = (const AutoPtrWrapper<__T, __DelStrategy> & cp);
+		template <typename __T, typename __DelStrategy, typename __Allocator>
+		AutoPtrWrapper<T, DelStrategy, Allocator> & operator = (const AutoPtrWrapper<__T, __DelStrategy, __Allocator> & cp);
 
 		~AutoPtrWrapper();
 
-		void reset(T * ptr = NULL);
+		template<typename __T>
+		void reset(__T * ptr = NULL);
 
 		T * get() const;
 
@@ -68,17 +69,17 @@ namespace LightInk
 
 	};
 
-	template <typename T, typename DelStrategy>
-	bool operator == (const AutoPtrWrapper<T, DelStrategy> & left, T * right);
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator == (const AutoPtrWrapper<T, DelStrategy, Allocator> & left, T * right);
 
-	template <typename T, typename DelStrategy>
-	bool operator == (T * left, const AutoPtrWrapper<T, DelStrategy> & right);
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator == (T * left, const AutoPtrWrapper<T, DelStrategy, Allocator> & right);
 
-	template <typename T, typename DelStrategy>
-	bool operator != (const AutoPtrWrapper<T, DelStrategy> & left, T * right);
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator != (const AutoPtrWrapper<T, DelStrategy, Allocator> & left, T * right);
 
-	template <typename T, typename DelStrategy>
-	bool operator != (T * left,const AutoPtrWrapper<T, DelStrategy> & right);
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator != (T * left,const AutoPtrWrapper<T, DelStrategy, Allocator> & right);
 
 
 
@@ -97,13 +98,13 @@ namespace LightInk
 	template <typename T>
 	struct AutoPtr
 	{
-		typedef AutoPtrWrapper<T, PtrDelStrategy> type;
+		typedef AutoPtrWrapper<T, PtrDelStrategy, SmallObject> type;
 	};
 
 	template <typename T>
 	struct AutoArrayPtr
 	{
-		typedef AutoPtrWrapper<T, ArrayDelStrategy> type;
+		typedef AutoPtrWrapper<T, ArrayDelStrategy, SmallObject> type;
 	};
 
 }

@@ -8,8 +8,6 @@ set( sourceRootPath ${LightInkLua_SOURCE_DIR}/../../src )
 
 set( middlePath Common )
 set( sourceFile 
-	LogMsg.cpp
-	RefCounter.cpp
 	RuntimeError.cpp
 	SmallObject.cpp
 	LightInkVersion.cpp

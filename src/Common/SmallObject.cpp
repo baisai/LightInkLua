@@ -24,7 +24,6 @@
  */
 #include <assert.h>
 #include <string.h>
-#include "Common/Log.h"
 #include "Common/SmallObject.h"
 #include "Common/UserMemory.h"
 
@@ -36,96 +35,79 @@ namespace LightInk
 	/////////////////////////////////////////////////////////////
 	void * SmallObject::operator new(size_t size)
 	{
-		LogTrace("SmallObject::operator new(size_t size)");
-		LogTraceReturn(LightInkUerMemory->malloc_user(size));
+		return LightInkUerMemory->malloc_user(size);
 	}
 
 	void SmallObject::operator delete(void * p, size_t size)
 	{
-		LogTrace("SmallObject::operator delete(void * p, size_t size)");
 		LightInkUerMemory->free_user(p);
-		LogTraceReturnVoid;
 	}
 
 	void * SmallObject::operator new[](size_t size)
 	{
-		LogTrace("SmallObject::operator new[](size_t size)");
-		LogTraceReturn(LightInkUerMemory->malloc_user(size));
+		return LightInkUerMemory->malloc_user(size);
 	}
 
 	void SmallObject::operator delete[](void *p)
 	{
-		LogTrace("SmallObject::operator delete[](void *p)");
 		if (!p)
 		{
-			LogTraceReturnVoid;
+			return;
 		}
 		LightInkUerMemory->free_user(p);
-		LogTraceReturnVoid;
 	}
 
 	void * SmallObject::malloc_user(size_t size)
 	{
-		LogTrace("SmallObject::malloc_user(size_t size)");
-		LogTraceReturn(LightInkUerMemory->malloc_user(size));
+		return LightInkUerMemory->malloc_user(size);
 	}
 
 	void SmallObject::free_user(void * p, size_t size)
 	{
-		LogTrace("SmallObject::free_user(void * p, size_t size)");
 		LightInkUerMemory->free_user(p);
-		LogTraceReturnVoid;
 	}
 
 	void * SmallObject::realloc_user(void * p, size_t osize, size_t nsize)
 	{
-		LogTrace("SmallObject::realloc_user(void * p, size_t osize, size_t nsize)");
-		LogTraceReturn(LightInkUerMemory->realloc_user(p, nsize));
+		return LightInkUerMemory->realloc_user(p, nsize);
 	}
 
 	void * calloc_user(size_t count, size_t sizeObj)
 	{
-		LogTrace("void * calloc_user(size_t count, size_t sizeObj)");
 		void * p = SmallObject::malloc_user(count * sizeObj);
 		memset(p, 0, count * sizeObj);
-		LogTraceReturn(p);
+		return p;
 	}
 
 
 	void * SmallObject::malloc(size_t size)
 	{
-		LogTrace("SmallObject::malloc(size_t size)");
-		LogTraceReturn(LightInkUerMemory->malloc_user(size));
+		return LightInkUerMemory->malloc_user(size);
 	}
 
 	void SmallObject::free(void * p)
 	{
-		LogTrace("SmallObject::free(void * p)");
 		if (!p)
 		{
-			LogTraceReturnVoid;
+			return;
 		}
 		LightInkUerMemory->free_user(p);
-		LogTraceReturnVoid;
 	}
 
 	void * SmallObject::realloc(void * p, size_t nsize)
 	{
-		LogTrace("SmallObject::realloc(void * p, size_t nsize)");
-		LogTraceReturn(LightInkUerMemory->realloc_user(p, nsize));
+		return LightInkUerMemory->realloc_user(p, nsize);
 	}
 
 	void * SmallObject::calloc(size_t count, size_t sizeObj)
 	{
-		LogTrace("void * SmallObject::calloc(size_t count, size_t sizeObj)");
 		void * p = SmallObject::malloc(count * sizeObj);
 		memset(p, 0, count * sizeObj);
-		LogTraceReturn(p);
+		return p;
 	}
 
 	SmallObject::~SmallObject()
 	{
-		LogTrace("SmallObject::~SmallObject()");
-		LogTraceReturnVoid;
+		
 	}
 }

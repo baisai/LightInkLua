@@ -26,149 +26,130 @@
 #define LIGHTINK_COMMON_AUTOPTR_CPP_
 
 #include "AutoPtr.h"
-#include "Common/Log.h"
 
 namespace LightInk
 {
-	template <typename T, typename DelStrategy>
-	AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper() : m_objPtr(NULL)
+	template <typename T, typename DelStrategy, typename Allocator>
+	AutoPtrWrapper<T, DelStrategy, Allocator>::AutoPtrWrapper() : m_objPtr(NULL)
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper()");
-		LogTraceReturnVoid;
+		
 	}
 
-	template <typename T, typename DelStrategy>
+	template <typename T, typename DelStrategy, typename Allocator>
 	template<typename __T>
-	AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper(__T * ptr) : m_objPtr(ptr)
+	AutoPtrWrapper<T, DelStrategy, Allocator>::AutoPtrWrapper(__T * ptr) : m_objPtr(ptr)
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper(__T * ptr)");
-		LogTraceReturnVoid;
+		
 	}
 
-	template <typename T, typename DelStrategy>
-	AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper(const AutoPtrWrapper<T, DelStrategy> & cp) : m_objPtr(cp.release())
+	template <typename T, typename DelStrategy, typename Allocator>
+	AutoPtrWrapper<T, DelStrategy, Allocator>::AutoPtrWrapper(const AutoPtrWrapper<T, DelStrategy, Allocator> & cp) : m_objPtr(const_cast<AutoPtrWrapper<T, DelStrategy, Allocator> &>(cp).release())
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper(const AutoPtrWrapper<T, DelStrategy> & cp)");
-		LogTraceReturnVoid;
+		
 	}
 
-	template <typename T, typename DelStrategy>
-	inline AutoPtrWrapper<T, DelStrategy> & AutoPtrWrapper<T, DelStrategy>::operator = (const AutoPtrWrapper<T, DelStrategy> & right)
+	template <typename T, typename DelStrategy, typename Allocator>
+	inline AutoPtrWrapper<T, DelStrategy, Allocator> & AutoPtrWrapper<T, DelStrategy, Allocator>::operator = (const AutoPtrWrapper<T, DelStrategy, Allocator> & right)
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy> & AutoPtrWrapper<T, DelStrategy>::operator = (const AutoPtrWrapper<T, DelStrategy> & right)");
-		reset(right.release());
-		LogTraceReturn(*this);
+		reset(const_cast<AutoPtrWrapper<T, DelStrategy, Allocator> &>(right).release());
+		return *this;
 	}
 
 
-	template <typename T, typename DelStrategy>
-	template <typename __T, typename __DelStrategy>
-	AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper(const AutoPtrWrapper<__T, __DelStrategy> & cp) : m_objPtr(cp.release())
+	template <typename T, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __DelStrategy, typename __Allocator>
+	AutoPtrWrapper<T, DelStrategy, Allocator>::AutoPtrWrapper(const AutoPtrWrapper<__T, __DelStrategy, __Allocator> & cp) : m_objPtr(const_cast<AutoPtrWrapper<__T, __DelStrategy, __Allocator> &>(cp).release())
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy>::AutoPtrWrapper(const AutoPtrWrapper<__T, __DelStrategy> & cp)");
-		LogTraceReturnVoid;
+		
 	}
 
 
-	template <typename T, typename DelStrategy>
-	template <typename __T, typename __DelStrategy>
-	inline AutoPtrWrapper<T, DelStrategy> & AutoPtrWrapper<T, DelStrategy>::operator = (const AutoPtrWrapper<__T, __DelStrategy> & right)
+	template <typename T, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __DelStrategy, typename __Allocator>
+	inline AutoPtrWrapper<T, DelStrategy, Allocator> & AutoPtrWrapper<T, DelStrategy, Allocator>::operator = (const AutoPtrWrapper<__T, __DelStrategy, __Allocator> & right)
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy> & AutoPtrWrapper<T, DelStrategy>::operator = (const AutoPtrWrapper<__T, __DelStrategy> & right)");
-		reset(right.release());
-		LogTraceReturn(*this);
+		reset(const_cast<AutoPtrWrapper<__T, __DelStrategy, __Allocator> &>(right).release());
+		return *this;
 	}
 
 
-	template <typename T, typename DelStrategy>
-	AutoPtrWrapper<T, DelStrategy>::~AutoPtrWrapper()
+	template <typename T, typename DelStrategy, typename Allocator>
+	AutoPtrWrapper<T, DelStrategy, Allocator>::~AutoPtrWrapper()
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy>::~AutoPtrWrapper()");
 		if (m_objPtr)
 		{
 			DelStrategy::release(m_objPtr);
 			m_objPtr = NULL;
 		}
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename DelStrategy>
-	inline void AutoPtrWrapper<T, DelStrategy>::reset(T * ptr)
+	template <typename T, typename DelStrategy, typename Allocator>
+	template<typename __T>
+	inline void AutoPtrWrapper<T, DelStrategy, Allocator>::reset(__T * ptr)
 	{
-		LogTrace("void AutoPtrWrapper<T, DelStrategy>::reset(T * ptr)");
 		if (ptr && ptr != m_objPtr)
 		{
 			DelStrategy::release(m_objPtr);
 		}
 		m_objPtr = ptr;
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename DelStrategy>
-	inline T * AutoPtrWrapper<T, DelStrategy>::get() const
+	template <typename T, typename DelStrategy, typename Allocator>
+	inline T * AutoPtrWrapper<T, DelStrategy, Allocator>::get() const
 	{
-		LogTrace("T * AutoPtrWrapper<T, DelStrategy>::get() const");
-		LogTraceReturn(m_objPtr);
+		return m_objPtr;
 	}
 
-	template <typename T, typename DelStrategy>
-	inline T * AutoPtrWrapper<T, DelStrategy>::release()
+	template <typename T, typename DelStrategy, typename Allocator>
+	inline T * AutoPtrWrapper<T, DelStrategy, Allocator>::release()
 	{
-		LogTrace("T * AutoPtrWrapper<T, DelStrategy>::release()");
 		T * t = m_objPtr;
 		m_objPtr = NULL;
-		LogTraceReturn(t);
+		return t;
 	}
 
-	template <typename T, typename DelStrategy>
-	inline T & AutoPtrWrapper<T, DelStrategy>::operator * () const
+	template <typename T, typename DelStrategy, typename Allocator>
+	inline T & AutoPtrWrapper<T, DelStrategy, Allocator>::operator * () const
 	{
-		LogTrace("T & AutoPtrWrapper<T, DelStrategy>::operator * () const");
-		LogTraceReturn((*m_objPtr));
+		return *m_objPtr;
 	}
 
-	template <typename T, typename DelStrategy>
-	inline T * AutoPtrWrapper<T, DelStrategy>::operator -> () const
+	template <typename T, typename DelStrategy, typename Allocator>
+	inline T * AutoPtrWrapper<T, DelStrategy, Allocator>::operator -> () const
 	{
-		LogTrace("T * AutoPtrWrapper<T, DelStrategy>::operator -> () const");
-		LogTraceReturn(m_objPtr);
+		return m_objPtr;
 	}
 
-	template <typename T, typename DelStrategy>
-	inline AutoPtrWrapper<T, DelStrategy>::operator bool() const
+	template <typename T, typename DelStrategy, typename Allocator>
+	inline AutoPtrWrapper<T, DelStrategy, Allocator>::operator bool() const
 	{
-		LogTrace("AutoPtrWrapper<T, DelStrategy>::operator bool() const");
-		LogTraceReturn(m_objPtr != NULL);
+		return m_objPtr != NULL;
 	}
 
 
 
-	template <typename T, typename DelStrategy>
-	bool operator == (const AutoPtrWrapper<T, DelStrategy> & left, T * right)
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator == (const AutoPtrWrapper<T, DelStrategy, Allocator> & left, T * right)
 	{
-		LogTrace("bool operator == (const AutoPtrWrapper<T, DelStrategy> & left, T * right)");
-		LogTraceReturn(left->get() == right);
+		return left.get() == right;
 	}
 
-	template <typename T, typename DelStrategy>
-	bool operator == (T * left, const AutoPtrWrapper<T, DelStrategy> & right)
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator == (T * left, const AutoPtrWrapper<T, DelStrategy, Allocator> & right)
 	{
-		LogTrace("bool operator == (T * left, const AutoPtrWrapper<T, DelStrategy> & right)");
-		LogTraceReturn(left == right->get());
+		return left == right.get();
 	}
 
-	template <typename T, typename DelStrategy>
-	bool operator != (const AutoPtrWrapper<T, DelStrategy> & left, T * right)
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator != (const AutoPtrWrapper<T, DelStrategy, Allocator> & left, T * right)
 	{
-		LogTrace("bool operator != (const AutoPtrWrapper<T, DelStrategy> & left, T * right)");
-		LogTraceReturn(left->get() != right);
+		return left.get() != right;
 	}
 
-	template <typename T, typename DelStrategy>
-	bool operator != (T * left,const AutoPtrWrapper<T, DelStrategy> & right)
+	template <typename T, typename DelStrategy, typename Allocator>
+	bool operator != (T * left,const AutoPtrWrapper<T, DelStrategy, Allocator> & right)
 	{
-		LogTrace("bool operator != (T * left,const AutoPtrWrapper<T, DelStrategy> & right)");
-		LogTraceReturn(left != right->get());
+		return left != right.get();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -177,17 +158,13 @@ namespace LightInk
 	template <typename T>
 	inline void PtrDelStrategy::release(T * ptr)
 	{
-		LogTrace("void PtrDelStrategy::release(T * ptr)");
 		if (ptr) { delete ptr; }
-		LogTraceReturnVoid;
 	}
 
 	template <typename T>
 	inline void ArrayDelStrategy::release(T * ptr)
 	{
-		LogTrace("void ArrayDelStrategy::release(T * ptr)");
 		if (ptr) { delete [] ptr; }
-		LogTraceReturnVoid;
 	}
 
 }

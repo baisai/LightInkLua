@@ -24,7 +24,6 @@
 #ifndef LIGHTINK_COMMON_SHAREDPTR_CPP_
 #define LIGHTINK_COMMON_SHAREDPTR_CPP_
 
-#include "Common/Log.h"
 #include "SharedPtr.h"
 
 namespace LightInk
@@ -33,244 +32,209 @@ namespace LightInk
 	///////////////////////////////////////////////////////////////////////
 	//SharedPtr
 	//////////////////////////////////////////////////////////////////////
-	template <typename T, typename Counter, typename DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper() : m_objPtr(NULL), m_refControl(NULL)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::SharedPtrWrapper() : m_objPtr(NULL), m_refControl(NULL)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper()");
 		set_ptr(NULL);
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
 	template<typename __T>
-	SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(__T * ptr)
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::SharedPtrWrapper(__T * ptr)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(__T * ptr)");
 		set_ptr(ptr);
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const SharedPtrWrapper<T, Counter, DelStrategy> & cp)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::SharedPtrWrapper(const SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & cp)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const SharedPtrWrapper<T, Counter, DelStrategy> & cp)");
 		m_objPtr = cp.m_objPtr;
 		m_refControl = cp.m_refControl;
 		m_refControl->inc_shared();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy> & SharedPtrWrapper<T, Counter, DelStrategy>::operator = (const SharedPtrWrapper<T, Counter, DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator = (const SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & right)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy> & SharedPtrWrapper<T, Counter, DelStrategy>::operator = (const SharedPtrWrapper<T, Counter, DelStrategy> & right)");
-		if (this == &right) { LogTraceReturn((*this)); }
+		if (this == &right) { return (*this); }
 		reset();
 		m_objPtr = right.m_objPtr;
 		m_refControl = right.m_refControl;
 		m_refControl->inc_shared();
-		LogTraceReturn((*this));
+		return (*this);
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const WeakPtrWrapper<T, Counter, DelStrategy> & wpw)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::SharedPtrWrapper(const WeakPtrWrapper<T, Counter, DelStrategy, Allocator> & wpw)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const WeakPtrWrapper<T, Counter, DelStrategy> & wpw)");
 		m_objPtr = wpw.m_objPtr;
 		m_refControl = wpw.m_refControl;
 		m_refControl->inc_shared();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const SharedPtrWrapper<__T, __Counter, __DelStrategy> & cp)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::SharedPtrWrapper(const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & cp)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const SharedPtrWrapper<__T, __Counter, __DelStrategy> & cp)");
 		m_objPtr = cp.m_objPtr;
 		m_refControl = cp.m_refControl;
 		m_refControl->inc_shared();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy> & SharedPtrWrapper<T, Counter, DelStrategy>::operator = (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator = (const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy> & SharedPtrWrapper<T, Counter, DelStrategy>::operator = (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right)");
-		if (this == &right) { LogTraceReturn((*this)); }
+		if (this == &right) { return (*this); }
 		reset();
 		m_objPtr = right.m_objPtr;
 		m_refControl = right.m_refControl;
 		m_refControl->inc_shared();
-		LogTraceReturn((*this));
+		return (*this);
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const WeakPtrWrapper<__T, __Counter, __DelStrategy> & wpw)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::SharedPtrWrapper(const WeakPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & wpw)
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::SharedPtrWrapper(const WeakPtrWrapper<__T, __Counter, __DelStrategy> & wpw)");
 		m_objPtr = wpw.m_objPtr;
 		m_refControl = wpw.m_refControl;
 		m_refControl->inc_shared();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	SharedPtrWrapper<T, Counter, DelStrategy>::~SharedPtrWrapper()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::~SharedPtrWrapper()
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::~SharedPtrWrapper()");
 		check_delete_ptr();
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void SharedPtrWrapper<T, Counter, DelStrategy>::reset()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::reset()
 	{
-		LogTrace("void SharedPtrWrapper<T, Counter, DelStrategy>::reset()");
 		check_delete_ptr();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
 	template <typename __T>
-	inline void SharedPtrWrapper<T, Counter, DelStrategy>::reset(__T * ptr)
+	inline void SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::reset(__T * ptr)
 	{
-		LogTrace("void SharedPtrWrapper<T, Counter, DelStrategy>::reset(__T * ptr)");
 		check_delete_ptr();
 		set_ptr(ptr);
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void SharedPtrWrapper<T, Counter, DelStrategy>::swap(SharedPtrWrapper<T, Counter, DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::swap(SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & right)
 	{
-		LogTrace("void SharedPtrWrapper<T, Counter, DelStrategy>::swap(SharedPtrWrapper<T, Counter, DelStrategy> & right)");
-		if (this == &right) { LogTraceReturn((*this)); }
+		if (this == &right) { return; }
 		T * tempPtr = m_objPtr;
 		Counter * tempControl = m_refControl;
 		m_objPtr = right.m_objPtr;
 		m_refControl = right.m_refControl;
 		right.m_objPtr = tempPtr;
 		right.m_refControl = tempControl;
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline T * SharedPtrWrapper<T, Counter, DelStrategy>::get() const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline T * SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::get() const
 	{
-		LogTrace("T * SharedPtrWrapper<T, Counter, DelStrategy>::get() const");
-		LogTraceReturn(m_objPtr);
+		return m_objPtr;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline T & SharedPtrWrapper<T, Counter, DelStrategy>::operator * () const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline T & SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator * () const
 	{
-		LogTrace("T & SharedPtrWrapper<T, Counter, DelStrategy>::operator * () const");
-		LogTraceReturn((*m_objPtr));
+		return (*m_objPtr);
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline T * SharedPtrWrapper<T, Counter, DelStrategy>::operator -> () const
+	template <typename T, typename Counter, typename DelStrategy,  typename Allocator>
+	inline T * SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator -> () const
 	{
-		LogTrace("T * SharedPtrWrapper<T, Counter, DelStrategy>::operator -> () const");
-		LogTraceReturn(m_objPtr);
+		return m_objPtr;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline int64 SharedPtrWrapper<T, Counter, DelStrategy>::use_count() const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline int64 SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::use_count() const
 	{
-		LogTrace("int64 SharedPtrWrapper<T, Counter, DelStrategy>::use_count() const");
 		if (m_objPtr == NULL)
 		{
-			LogTraceReturn(0);
+			return 0;
 		}
-		LogTraceReturn(m_refControl->get_shared_refs());
+		return m_refControl->get_shared_refs();
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline bool SharedPtrWrapper<T, Counter, DelStrategy>::unique() const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline bool SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::unique() const
 	{
-		LogTrace("bool SharedPtrWrapper<T, Counter, DelStrategy>::unique() const");
-		LogTraceReturn(use_count() == 1);
+		return use_count() == 1;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline SharedPtrWrapper<T, Counter, DelStrategy>::operator bool() const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator bool() const
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy>::operator bool() const");
-		LogTraceReturn(m_objPtr != NULL);
+		return m_objPtr != NULL;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	inline bool SharedPtrWrapper<T, Counter, DelStrategy>::operator == (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	inline bool SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator == (const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right) const
 	{
-		LogTrace("bool SharedPtrWrapper<T, Counter, DelStrategy>::operator == (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const");
-		LogTraceReturn(m_objPtr == right.m_objPtr);
+		return m_objPtr == right.m_objPtr;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	inline bool SharedPtrWrapper<T, Counter, DelStrategy>::operator != (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	inline bool SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator != (const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right) const
 	{
-		LogTrace("bool SharedPtrWrapper<T, Counter, DelStrategy>::operator != (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const");
-		LogTraceReturn(m_objPtr != right.m_objPtr);
+		return m_objPtr != right.m_objPtr;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	inline bool SharedPtrWrapper<T, Counter, DelStrategy>::operator < (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	inline bool SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator < (const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right) const
 	{
-		LogTrace("bool SharedPtrWrapper<T, Counter, DelStrategy>::operator < (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const");
-		LogTraceReturn(m_objPtr < right.m_objPtr);
+		return m_objPtr < right.m_objPtr;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	inline bool SharedPtrWrapper<T, Counter, DelStrategy>::operator > (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	inline bool SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator > (const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right) const
 	{
-		LogTrace("bool SharedPtrWrapper<T, Counter, DelStrategy>::operator > (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const");
-		LogTraceReturn(m_objPtr > right.m_objPtr);
+		return m_objPtr > right.m_objPtr;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	inline bool SharedPtrWrapper<T, Counter, DelStrategy>::operator <= (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	inline bool SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator <= (const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right) const
 	{
-		LogTrace("bool SharedPtrWrapper<T, Counter, DelStrategy>::operator <= (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const");
-		LogTraceReturn(m_objPtr <= right.m_objPtr);
+		return m_objPtr <= right.m_objPtr;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	inline bool SharedPtrWrapper<T, Counter, DelStrategy>::operator >= (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy,  typename __Allocator>
+	inline bool SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::operator >= (const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right) const
 	{
-		LogTrace("bool SharedPtrWrapper<T, Counter, DelStrategy>::operator >= (const SharedPtrWrapper<__T, __Counter, __DelStrategy> & right) const");
-		LogTraceReturn(m_objPtr >= right.m_objPtr);
+		return m_objPtr >= right.m_objPtr;
 	}
 
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void SharedPtrWrapper<T, Counter, DelStrategy>::check_delete_ptr()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::check_delete_ptr()
 	{
-		LogTrace("void SharedPtrWrapper<T, Counter, DelStrategy>::check_delete_ptr()");
 		if (m_refControl == NULL)
 		{
-			LogTraceReturnVoid;
+			return;
 		}
 		m_refControl->dec_shared();
 		if (m_refControl->get_shared_refs() == 0)
@@ -282,231 +246,196 @@ namespace LightInk
 			delete m_refControl;
 		}
 		reset_no_delete();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void SharedPtrWrapper<T, Counter, DelStrategy>::reset_no_delete()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::reset_no_delete()
 	{
-		LogTrace("void SharedPtrWrapper<T, Counter, DelStrategy>::reset_no_delete()");
 		m_objPtr = NULL;
 		m_refControl = NULL;
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void SharedPtrWrapper<T, Counter, DelStrategy>::reset_ref_counter(T * ptr, Counter * cntr)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::reset_ref_counter(T * ptr, Counter * cntr)
 	{
-		LogTrace("void SharedPtrWrapper<T, Counter, DelStrategy>::reset_ref_counter(T * ptr, Counter * cntr)");
 		m_objPtr = ptr;
 		m_refControl = cntr;
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void SharedPtrWrapper<T, Counter, DelStrategy>::set_ptr(T * ptr)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void SharedPtrWrapper<T, Counter, DelStrategy, Allocator>::set_ptr(T * ptr)
 	{
-		LogTrace("void SharedPtrWrapper<T, Counter, DelStrategy>::set_ptr(T * ptr)");
 		m_refControl = new Counter();
 		m_objPtr = ptr;
-		LogTraceReturnVoid;
 	}
 
 
 	/////////////////////////////////////////////////////////////////////////
 	//Ptr operator
 	////////////////////////////////////////////////////////////////////////
-	template <typename T, typename Counter, typename DelStrategy>
-	inline bool operator == (const SharedPtrWrapper<T, Counter, DelStrategy> & left, T * right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline bool operator == (const SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & left, T * right)
 	{
-		LogTrace("bool operator == (const SharedPtrWrapper<T, Counter, DelStrategy> & left, T * right)");
-		LogTraceReturn(left->get() == right);
+		return left.get() == right;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline bool operator == (T * left, const SharedPtrWrapper<T, Counter, DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline bool operator == (T * left, const SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & right)
 	{
-		LogTrace("bool operator == (T * left, const SharedPtrWrapper<T, Counter, DelStrategy> & right)");
-		LogTraceReturn(left == right->get());
+		return left == right.get();
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline bool operator != (const SharedPtrWrapper<T, Counter, DelStrategy> & left, T * right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline bool operator != (const SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & left, T * right)
 	{
-		LogTrace("bool operator != (const SharedPtrWrapper<T, Counter, DelStrategy> & left, T * right)");
-		LogTraceReturn(left->get() != right);
+		return left.get() != right;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline bool operator != (T * left,const SharedPtrWrapper<T, Counter, DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline bool operator != (T * left,const SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & right)
 	{
-		LogTrace("bool operator != (T * left,const SharedPtrWrapper<T, Counter, DelStrategy> & right)");
-		LogTraceReturn(left == right->get());
+		return left == right.get();
 	}
 
 
 	///////////////////////////////////////////////////////////////////////
 	//WeakPtr
 	//////////////////////////////////////////////////////////////////////
-	template <typename T, typename Counter, typename DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper() : m_objPtr(NULL), m_refControl(NULL)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::WeakPtrWrapper() : m_objPtr(NULL), m_refControl(NULL)
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper()");
-		LogTraceReturnVoid;
+
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const SharedPtrWrapper<T, Counter, DelStrategy> & spw) : 
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::WeakPtrWrapper(const SharedPtrWrapper<T, Counter, DelStrategy, Allocator> & spw) : 
 		m_objPtr(spw.m_objPtr), m_refControl(spw.m_refControl)
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const SharedPtrWrapper<T, Counter, DelStrategy> & spw)");
 		m_refControl->inc_weak();
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const WeakPtrWrapper<T, Counter, DelStrategy> & cp) : 
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::WeakPtrWrapper(const WeakPtrWrapper<T, Counter, DelStrategy, Allocator> & cp) : 
 		m_objPtr(cp.m_objPtr), m_refControl(cp.m_refControl)
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const WeakPtrWrapper<T, Counter, DelStrategy> & cp)");
 		m_refControl->inc_weak();
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy> & WeakPtrWrapper<T, Counter, DelStrategy>::operator = (const WeakPtrWrapper<T, Counter, DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator> & WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::operator = (const WeakPtrWrapper<T, Counter, DelStrategy, Allocator> & right)
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy> & WeakPtrWrapper<T, Counter, DelStrategy>::operator = (const WeakPtrWrapper<T, Counter, DelStrategy> & right)");
-		if (this == &right) { LogTraceReturn((*this)); }
+		if (this == &right) { return (*this); }
 		m_objPtr = right.m_objPtr;
 		m_refControl = right.m_refControl;
 		m_refControl->inc_weak();
-		LogTraceReturn((*this));
+		return (*this);
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const SharedPtrWrapper<__T, __Counter, __DelStrategy> & spw) : 
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::WeakPtrWrapper(const SharedPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & spw) : 
 		m_objPtr(spw.m_objPtr), m_refControl(spw.m_refControl)
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const SharedPtrWrapper<__T, __Counter, __DelStrategy> & spw)");
 		m_refControl->inc_weak();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy> & WeakPtrWrapper<T, Counter, DelStrategy>::operator = (const WeakPtrWrapper<__T, __Counter, __DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator> & WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::operator = (const WeakPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & right)
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy> & WeakPtrWrapper<T, Counter, DelStrategy>::operator = (const WeakPtrWrapper<__T, __Counter, __DelStrategy> & right)");
-		if (this == &right) { LogTraceReturn((*this)); }
+		if (this == &right) { return(*this); }
 		m_objPtr = right.m_objPtr;
 		m_refControl = right.m_refControl;
 		m_refControl->inc_weak();
-		LogTraceReturn((*this));
+		return (*this);
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	template <typename __T, typename __Counter, typename __DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const WeakPtrWrapper<__T, __Counter, __DelStrategy> & cp) : 
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	template <typename __T, typename __Counter, typename __DelStrategy, typename __Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::WeakPtrWrapper(const WeakPtrWrapper<__T, __Counter, __DelStrategy, __Allocator> & cp) : 
 		m_objPtr(cp.m_objPtr), m_refControl(cp.m_refControl)
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy>::WeakPtrWrapper(const WeakPtrWrapper<__T, __Counter, __DelStrategy> & cp)");
 		m_refControl->inc_weak();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	WeakPtrWrapper<T, Counter, DelStrategy>::~WeakPtrWrapper()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::~WeakPtrWrapper()
 	{
-		LogTrace("WeakPtrWrapper<T, Counter, DelStrategy>::~WeakPtrWrapper()");
 		check_delete_ptr();
-		LogTraceReturnVoid;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void WeakPtrWrapper<T, Counter, DelStrategy>::reset()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::reset()
 	{
-		LogTrace("void WeakPtrWrapper<T, Counter, DelStrategy>::reset()");
 		check_delete_ptr();
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void WeakPtrWrapper<T, Counter, DelStrategy>::swap(WeakPtrWrapper<T, Counter, DelStrategy> & right)
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::swap(WeakPtrWrapper<T, Counter, DelStrategy, Allocator> & right)
 	{
-		LogTrace("void WeakPtrWrapper<T, Counter, DelStrategy>::swap(WeakPtrWrapper<T, Counter, DelStrategy> & right)");
-		if (this == &right) { LogTraceReturnVoid; }
+		if (this == &right) { return; }
 		T * tempPtr = m_objPtr;
 		Counter * tempControl = m_refControl;
 		m_objPtr = right.m_objPtr;
 		m_refControl = right.m_refControl;
 		right.m_objPtr = tempPtr;
 		right.m_refControl = tempControl;
-		LogTraceReturnVoid;
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline int64 WeakPtrWrapper<T, Counter, DelStrategy>::use_count() const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline int64 WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::use_count() const
 	{
-		LogTrace("int64 WeakPtrWrapper<T, Counter, DelStrategy>::use_count() const");
 		if (m_refControl == NULL)
 		{
-			LogTraceReturn(0);
+			return 0;
 		}
-		LogTraceReturn(m_refControl->get_shared_refs());
+		return m_refControl->get_shared_refs();
 	}
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline bool WeakPtrWrapper<T, Counter, DelStrategy>::expired() const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline bool WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::expired() const
 	{
-		LogTrace("bool WeakPtrWrapper<T, Counter, DelStrategy>::expired() const");
 		if (m_refControl == NULL)
 		{
-			LogTraceReturn(true);
+			return true;
 		}
-		LogTraceReturn(m_refControl->get_shared_refs() == 0);
+		return m_refControl->get_shared_refs() == 0;
 	}
 
 
-	template <typename T, typename Counter, typename DelStrategy>
-	inline SharedPtrWrapper<T, Counter, DelStrategy> WeakPtrWrapper<T, Counter, DelStrategy>::lock() const
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline SharedPtrWrapper<T, Counter, DelStrategy, Allocator> WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::lock() const
 	{
-		LogTrace("SharedPtrWrapper<T, Counter, DelStrategy> WeakPtrWrapper<T, Counter, DelStrategy>::lock() const");
 		if (expired())
 		{
-			LogTraceReturn((SharedPtrWrapper<T, Counter, DelStrategy>()));
+			return SharedPtrWrapper<T, Counter, DelStrategy, Allocator>();
 		}
-		LogTraceReturn((SharedPtrWrapper<T, Counter, DelStrategy>(*this)));
+		return SharedPtrWrapper<T, Counter, DelStrategy, Allocator>(*this);
 	}
 
 	
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void WeakPtrWrapper<T, Counter, DelStrategy>::check_delete_ptr()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::check_delete_ptr()
 	{
-		LogTrace("void WeakPtrWrapper<T, Counter, DelStrategy>::check_delete_ptr()");
 		m_refControl->dec_weak();
 		if (!m_refControl->has_refs())
 		{
 			delete m_refControl;
 		}
 		reset_no_delete();
-		LogTraceReturnVoid;
 	}
 		
-	template <typename T, typename Counter, typename DelStrategy>
-	inline void WeakPtrWrapper<T, Counter, DelStrategy>::reset_no_delete()
+	template <typename T, typename Counter, typename DelStrategy, typename Allocator>
+	inline void WeakPtrWrapper<T, Counter, DelStrategy, Allocator>::reset_no_delete()
 	{
-		LogTrace("void WeakPtrWrapper<T, Counter, DelStrategy>::reset_no_delete()");
 		m_objPtr = NULL;
 		m_refControl = NULL;
-		LogTraceReturnVoid;
 	}
 
 

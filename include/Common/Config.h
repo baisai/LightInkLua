@@ -47,6 +47,13 @@
 //#define LightInkNoScriptError
 
 
+#define LIGHTINK_SHOWVERSION
+
+
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
+
 
 /////////////////////////////////////////////////////////
 //导出,导入变量
@@ -57,7 +64,7 @@
 
 #ifdef WIN32
 #define LIGHTINK_DECL __declspec(dllexport)
-#define LIGHTINK_TEMPLATE_DECL __declspec(dllexport)
+#define LIGHTINK_TEMPLATE_DECL //__declspec(dllexport)
 #elif defined __GNUC__ && __GNUC__ >= 4
 #define LIGHTINK_DECL __attribute__((visibility ("default")))
 #define LIGHTINK_TEMPLATE_DECL
@@ -69,7 +76,7 @@
 #else
 #ifdef WIN32
 #define LIGHTINK_DECL __declspec(dllimport)
-#define LIGHTINK_TEMPLATE_DECL __declspec(dllexport)
+#define LIGHTINK_TEMPLATE_DECL //__declspec(dllexport)
 #else
 #define LIGHTINK_DECL
 #define LIGHTINK_TEMPLATE_DECL

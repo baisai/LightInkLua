@@ -39,9 +39,6 @@
     <ClInclude Include="..\..\include\Common\Log.h">
       <Filter>Common\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Common\LogMsg.h">
-      <Filter>Common\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\Common\Type.h">
       <Filter>Common\include</Filter>
     </ClInclude>
@@ -215,9 +212,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Common\LogMsg.cpp">
-      <Filter>Common\source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Common\RuntimeError.cpp">
       <Filter>Common\source</Filter>
     </ClCompile>
@@ -225,9 +219,6 @@
       <Filter>Common\source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\include\Common\AutoPtr.cpp">
-      <Filter>Common\source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Common\RefCounter.cpp">
       <Filter>Common\source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\LuaEngine\lua\lapi.c">

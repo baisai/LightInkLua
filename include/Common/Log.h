@@ -24,8 +24,8 @@
 
 #ifndef LIGHTINK_COMMON_LOG_H_
 #define LIGHTINK_COMMON_LOG_H_
-#include <cstdio>
-#include "Common/LogMsg.h"
+
+#include <stdio.h>
 
 /////////////////////////////////
 //系统日志
@@ -35,35 +35,25 @@
 //Trace
 ///////////////////////////
 #ifdef LightInkNoTrace
-#define LogTrace(fmt, ...)
+#define LogTrace(ft, ...)
 #define LogTraceReturn(v) return v
 #define LogTraceReturnVoid return
+#define LogTraceEnd
 
 #else
-#define LogTrace(fmt, ...) \
-		char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-		snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-		LightInk::LogMsgTrace ___trace(__FILE__, __LINE__, ___mess)
-#define LogTraceReturn(v) \
-		do {___trace.set_line(__LINE__); return v; } while (0)
-#define LogTraceReturnVoid \
-		do {___trace.set_line(__LINE__); return; } while (0)
-
+#define LogTrace(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+#define LogTraceReturn(v) return v
+#define LogTraceReturnVoid return
+#define LogTraceEnd
 #endif
 
 ////////////////////////
 //Debug
 ///////////////////////
 #ifdef LightInkNoDebug
-#define LogDebug(fmt, ...)
+#define LogDebug(ft, ...)
 #else
-#define LogDebug(fmt, ...) \
-	do  \
-	{ \
-		char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-		snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-		LightInkLog->debug(__FILE__, __LINE__, ___mess); \
-	} while (0) 
+#define LogDebug(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
 
 #endif
 
@@ -71,15 +61,9 @@
 //Message
 ///////////////////////
 #ifdef LightInkNoMessage
-#define LogMessage(fmt, ...)
+#define LogMessage(ft, ...)
 #else
-#define LogMessage(fmt, ...) \
-	do  \
-	{ \
-	char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-	snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-	LightInkLog->message(__FILE__, __LINE__, ___mess); \
-	} while (0) 
+#define LogMessage(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
 
 #endif
 
@@ -87,15 +71,9 @@
 //Warning
 ///////////////////////
 #ifdef LightInkNoWarning
-#define LogWarning(fmt, ...)
+#define LogWarning(ft, ...)
 #else
-#define LogWarning(fmt, ...) \
-	do  \
-	{ \
-	char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-	snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-	LightInkLog->warning(__FILE__, __LINE__, ___mess); \
-	} while (0) 
+#define LogWarning(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
 
 #endif
 
@@ -104,15 +82,19 @@
 //Error
 ///////////////////////
 #ifdef LightInkNoError
-#define LogError(fmt, ...)
+#define LogError(ft, ...)
 #else
-#define LogError(fmt, ...) \
-	do  \
-	{ \
-	char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-	snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-	LightInkLog->error(__FILE__, __LINE__, ___mess); \
-	} while (0)
+#define LogError(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+
+#endif
+
+////////////////////////
+//Fatal
+///////////////////////
+#ifdef LightInkNoFatal
+#define LogFatal(ft, ...)
+#else
+#define LogFatal(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
 
 #endif
 
@@ -122,15 +104,10 @@
 //ScriptDebug
 ///////////////////////
 #ifdef LightInkNoScriptDebug
-#define LogScriptDebug(fmt, ...)
+#define LogScriptDebug(ft, ...)
 #else
-#define LogScriptDebug(fmt, ...) \
-	do  \
-	{ \
-	char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-	snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-	LightInkLog->script_debug(__FILE__, __LINE__, ___mess); \
-	} while (0)
+#define LogScriptDebug(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+
 #endif
 
 
@@ -139,30 +116,20 @@
 //ScriptMessage
 ///////////////////////
 #ifdef LightInkNoScriptMessage
-#define LogScriptMessage(fmt, ...)
+#define LogScriptMessage(ft, ...)
 #else
-#define LogScriptMessage(fmt, ...) \
-	do  \
-	{ \
-	char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-	snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-	LightInkLog->script_message(__FILE__, __LINE__, ___mess); \
-	} while (0)
+#define LogScriptMessage(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+
 #endif
 
 ////////////////////////
 //ScriptWarning
 ///////////////////////
 #ifdef LightInkNoScriptWarning
-#define LogScriptWarning(fmt, ...)
+#define LogScriptWarning(ft, ...)
 #else
-#define LogScriptWarning(fmt, ...) \
-	do  \
-	{ \
-	char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-	snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-	LightInkLog->script_warning(__FILE__, __LINE__, ___mess); \
-	} while (0)
+#define LogScriptWarning(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+
 #endif
 
 
@@ -170,15 +137,21 @@
 //ScriptError
 ///////////////////////
 #ifdef LightInkNoScriptError
-#define LogScriptError(fmt, ...)
+#define LogScriptError(ft, ...)
 #else
-#define LogScriptError(fmt, ...) \
-	do  \
-	{ \
-	char ___mess[LightInk::LogMsg::CacheChar] = {0}; \
-	snprintf(___mess, LightInk::LogMsg::CacheChar, fmt, ##__VA_ARGS__); \
-	LightInkLog->script_error(__FILE__, __LINE__, ___mess); \
-	} while (0)
+#define LogScriptError(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+	
+#endif
+
+
+////////////////////////
+//Fatal
+///////////////////////
+#ifdef LightInkNoScriptFatal
+#define LogScriptFatal(ft, ...)
+#else
+#define LogScriptFatal(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+
 #endif
 
 

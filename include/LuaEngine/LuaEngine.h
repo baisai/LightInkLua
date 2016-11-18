@@ -35,6 +35,23 @@
 
 namespace LightInk
 {
+	namespace LogLevel
+	{
+		enum LEVEL
+		{
+			LogMsg_Trace = 0x1,
+			LogMsg_Debug = 0x2,
+			LogMsg_Message = 0x4,
+			LogMsg_Warning = 0x8,
+			LogMsg_Error = 0x10,
+			LogMsg_Fatal = 0x20,
+		};
+
+		enum LEVELCOUNT
+		{
+			LogMsg_Count = 6
+		};
+	}
 	class LIGHTINK_DECL LuaEngine : public SmallObject
 	{
 	public:
@@ -61,11 +78,12 @@ namespace LightInk
 	private:
 		static void * lua_allocator(void * ud, void * ptr, size_t osize, size_t nsize);
 		static int lua_error_catch(lua_State * L);
-		static int log_string(lua_State * L, LogMsg::LEVEL level);
+		static int log_string(lua_State * L, LogLevel::LEVEL level);
 		static int lua_print_debug(lua_State * L);
 		static int lua_replace_print(lua_State * L);
 		static int lua_print_warning(lua_State * L);
 		static int lua_print_error(lua_State * L);
+		static int lua_print_fatal(lua_State * L);
 	public:
 		template <typename T>
 		RuntimeError open_module(T m)
