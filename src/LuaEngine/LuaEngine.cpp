@@ -100,7 +100,7 @@ namespace LightInk
 	{
 		LogTrace("int LuaEngine::lua_error_catch(lua_State * L)");
 		const char * errStr = lua_tostring(L, -1);
-		LogError("Error!!!Lua Error Catch \"{}\"", errStr);
+		LogError("Error!!!Lua Error Catch \"%s\"", errStr);
 		throw RE_Lua_RuntimeError;
 		LogTraceReturn(0);
 	}
@@ -239,7 +239,7 @@ namespace LightInk
             {
                 case LUA_TSTRING:
                 {
-					LogMessage("`{}`", lua_tostring(L, i));
+					LogMessage("`%s`", lua_tostring(L, i));
                 }
                 break;
                 case LUA_TBOOLEAN:
@@ -249,7 +249,7 @@ namespace LightInk
                 break;
                 case LUA_TNUMBER:
                 {
-					LogMessage("`{}`", lua_tonumber(L, i));
+					LogMessage("`%g`", lua_tonumber(L, i));
                 }
                 break;
                 case LUA_TTABLE:
@@ -262,13 +262,13 @@ namespace LightInk
 						if (lua_isstring(L, -2))
 						{
 							key = lua_tostring(L, -2);
-							LogMessage("\t{}({}) - {}\n",
+							LogMessage("\t%s(%s) - %s\n",
 								lua_typename(L, lua_type(L, -2)), key,
 								lua_typename(L, lua_type(L, -1)));
 						}
 						else
 						{
-							LogMessage("\t{} - {}\n",
+							LogMessage("\t%s - %s\n",
 								lua_typename(L, lua_type(L, -2)),
 								lua_typename(L, lua_type(L, -1)));
 						}
@@ -279,7 +279,7 @@ namespace LightInk
                 break;
                 default:
                 {
-					LogMessage("`{}`", lua_typename(L, t));
+					LogMessage("`%s`", lua_typename(L, t));
                 }
                 break;
             }
@@ -295,7 +295,7 @@ namespace LightInk
 		if (luaL_dostring(m_lua, chunk))
 		{
 			const char * err = lua_tostring(m_lua, -1);
-			LogScriptError("Call LuaEngine::run_string Error!!! error is \"{}\"", err);
+			LogScriptError("Call LuaEngine::run_string Error!!! error is \"%s\"", err);
 			lua_pop(m_lua, 1); //pop error
 			LogTraceReturn(RE_Lua_RuntimeError);
 		}
@@ -308,7 +308,7 @@ namespace LightInk
 		if (luaL_dofile(m_lua, fileName))
 		{
 			const char * err = lua_tostring(m_lua, -1);
-			LogScriptError("Call LuaEngine::run_file Error!!! error is \"{}\" \n chunk is \"{}\"\n", err, fileName);
+			LogScriptError("Call LuaEngine::run_file Error!!! error is \"%s\" \n chunk is \"%s\"\n", err, fileName);
 			lua_pop(m_lua, 1); //pop error
 			LogTraceReturn(RE_Lua_RuntimeError);
 		}
