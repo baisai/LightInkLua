@@ -30,10 +30,10 @@
 #endif // DEBUG
 
 
-#define LightInkNoTrace //关闭trace日志
+#define LightInkNoTrace //鍏抽棴trace鏃ュ織
 
 #ifndef LIGHTINK_DEBUG
-#define LightInkNoDebug //关闭debug日志
+#define LightInkNoDebug //鍏抽棴debug鏃ュ織
 #endif
 
 //#define LightInkNoMessage
@@ -56,7 +56,7 @@
 
 
 /////////////////////////////////////////////////////////
-//导出,导入变量
+//瀵煎嚭,瀵煎叆鍙橀噺
 ////////////////////////////////////////////////////////
 #ifdef LIGHTINK_AS_DLL
 

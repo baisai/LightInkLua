@@ -183,7 +183,7 @@ namespace LightInk
 	{
 		LogTrace("int pcall_callback(lua_State * L)");
 		lua_Debug debug= {};  
-		int ret = lua_getstack(L, 2, &debug); // 0是pcall_callback_err_fun自己, 1是error函数, 2是真正出错的函数  
+		int ret = lua_getstack(L, 2, &debug); // 0鏄痯call_callback_err_fun鑷繁, 1鏄痚rror鍑芥暟, 2鏄湡姝ｅ嚭閿欑殑鍑芥暟  
 		lua_getinfo(L, "Sln", &debug);  
   
 		string err = lua_tostring(L, -1);  

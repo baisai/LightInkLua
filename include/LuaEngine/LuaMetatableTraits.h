@@ -35,7 +35,7 @@ namespace LightInk
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//LuaMetatableTraits
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Éú³ÉÒ»Ğ©Ôª·½·¨µÄÊµÏÖÀà
+	// ç”Ÿæˆä¸€äº›å…ƒæ–¹æ³•çš„å®ç°ç±»
 	template<typename ClassType>
 	struct LuaMetatableTraits
 	{
@@ -77,7 +77,7 @@ namespace LightInk
 				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but metatable is error!!!", idx);
 				LogTraceReturn(NULL);
 			}
-			/*ÒòÎª¿ÉÄÜÊÇ¼Ì³Ğ¹ØÏµ
+			/*å› ä¸ºå¯èƒ½æ˜¯ç»§æ‰¿å…³ç³»
 			lua_pushlightuserdata(L, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_rawequal(L, -1, -2))
 			{

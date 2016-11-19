@@ -448,7 +448,7 @@ namespace LightInk
 			LogTraceReturn(LuaRef(m_L, true));
 		}
 /*
---luaÉú³É
+--luaç”Ÿæˆ
 function create_traits(count)
 
 	local str = ""

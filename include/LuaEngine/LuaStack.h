@@ -45,7 +45,7 @@ namespace LightInk
 	struct LIGHTINK_TEMPLATE_DECL LuaStack;
 
 /*
---luaÉú³É
+--luaç”Ÿæˆ
 
 local type_str = {
 	["char"] = "\t\t\tlua_pushinteger(L, static_cast <lua_Integer> (value));\n",

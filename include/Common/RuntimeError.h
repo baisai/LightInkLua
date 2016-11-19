@@ -35,7 +35,7 @@ const char * name(int e)
 
 namespace LightInk
 {
-	//´íÎó´úÂë
+	//é”™è¯¯ä»£ç 
 	enum RuntimeError
 	{
 		RE_Success = 0,

@@ -76,7 +76,7 @@ namespace LightInk
 	};
 
 /*
---lua生成
+--lua鐢熸垚
 function create_traits(count)
 
 	local temp = {}
@@ -502,7 +502,7 @@ create_traits(20)
 		}
 	};
 /*
---lua生成
+--lua鐢熸垚
 function create_traits(count, isConst)
 
 	local str = ""

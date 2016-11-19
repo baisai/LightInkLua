@@ -56,7 +56,7 @@ namespace LightInk
 	template<RuntimeError e>
 	const char * RuntimeErrorDes<e>::error = "Undefined Error!!!";
 
-	//´íÎóÃèÊö
+	//é”™è¯¯æè¿°
 	LIGHTINK_DEFINE_ERROR_DES(RE_Success, "Sucess!!!");
 	LIGHTINK_DEFINE_ERROR_DES(RE_ThreadSelfExit, "Thread Self Exit!!!");
 	LIGHTINK_DEFINE_ERROR_DES(RE_UnknownError, "Error!!!Unknown --> Unknown Error!!!");
@@ -79,7 +79,7 @@ namespace LightInk
 	LIGHTINK_DEFINE_ERROR_DES(RE_Lua_CheckConfigError, "Error!!!Lua --> Check Server Config Error!!!Config Have Some Problem!!!");
 
 
-	//´íÎó´úÂëºÍ´íÎóÃèÊöÓ³Éä
+	//é”™è¯¯ä»£ç å’Œé”™è¯¯æè¿°æ˜ å°„
 	LIGHTINK_GET_ERROR_DES_BEGIN(get_runtime_error)
 
 

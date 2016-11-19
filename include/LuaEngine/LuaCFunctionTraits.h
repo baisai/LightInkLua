@@ -110,7 +110,7 @@ namespace LightInk
 	};
 
 /*
---lua生成
+--lua鐢熸垚
 function create_traits(count, isReturn, isConst)
 
 	local str = ""
@@ -2289,7 +2289,7 @@ print("\n\n\n")
 	};
 
 /*
---lua生成
+--lua鐢熸垚
 function create_traits(count, isReturn)
 
 	local str = ""

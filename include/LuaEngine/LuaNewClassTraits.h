@@ -75,7 +75,7 @@ namespace LightInk
 	};
 
 /*
---luaÉú³É
+--luaç”Ÿæˆ
 function create_traits(count)
 
 	local str = ""
