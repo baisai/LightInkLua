@@ -68,6 +68,8 @@ namespace LightInk
 		LuaRegisterNode(const LuaRegisterNode & cp);
 		~LuaRegisterNode();
 
+		lua_State * state() const;
+
 		template <typename T>
 		inline void set_key(const T & t)
 		{
@@ -130,7 +132,6 @@ namespace LightInk
 		void release_module();
 		void register_field(const LuaRegisterNode & head);
 	protected:
-		lua_State * m_lua;
 		int m_top;
 	LIGHTINK_DISABLE_COPY(LuaModule)
 	};

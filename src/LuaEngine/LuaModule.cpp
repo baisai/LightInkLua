@@ -50,6 +50,12 @@ namespace LightInk
 		LogTraceReturnVoid;
 	}
 
+	lua_State * LuaRegisterNode::state() const
+	{
+		LogTrace("lua_State * LuaRegisterNode::state() const");
+		LogTraceReturn(m_key.state());
+	}
+
 	void LuaRegisterNode::set_key(int idx)
 	{
 		LogTrace("void LuaRegisterNode::set_key(int idx)");
@@ -135,7 +141,7 @@ namespace LightInk
 	////////////////////////////////////////////////////////////////////////
 	//LuaModule
 	///////////////////////////////////////////////////////////////////////
-	LuaModule::LuaModule(lua_State * L, const std::string & moduleName) : m_lua(L), m_top(lua_gettop(L)), LuaRegisterNode(L)
+	LuaModule::LuaModule(lua_State * L, const std::string & moduleName) : m_top(lua_gettop(L)), LuaRegisterNode(L)
 	{
 		LogTrace("LuaModule::LuaModule(lua_State * L, const std::string & moduleName)");
 		set_key(moduleName);
@@ -155,7 +161,7 @@ namespace LightInk
 
 		LogTraceReturnVoid;
 	}
-	LuaModule::LuaModule(lua_State * L, const std::string & moduleName, const LuaRef & parent) : m_lua(L), m_top(lua_gettop(L)), LuaRegisterNode(LuaRef(L, moduleName), LuaRef(L), parent)
+	LuaModule::LuaModule(lua_State * L, const std::string & moduleName, const LuaRef & parent) : m_top(lua_gettop(L)), LuaRegisterNode(LuaRef(L, moduleName), LuaRef(L), parent)
 	{
 		LogTrace("LuaModule::LuaModule(lua_State * L, const string & moduleName, const LuaRef & parent)");
 		if (!parent.is_table())
@@ -196,24 +202,21 @@ namespace LightInk
 	void LuaModule::release_module()
 	{
 		LogTrace("void LuaModule::release_module()");
-		if (m_lua)
-		{
-			lua_settop(m_lua, m_top);
-			m_lua = NULL;
-		}
+		lua_settop(m_key.state(), m_top);
 		LogTraceReturnVoid;
 	}
 
 	void LuaModule::register_field(const LuaRegisterNode & head)
 	{
 		LogTrace("void LuaModule::register_field(LuaRegisterNode * head)");
-		LuaStateProtect lsp(m_lua, true);
+		lua_State * lua = m_key.state();
+		LuaStateProtect lsp(lua, true);
 		const LuaRegisterNode * p = &head;
 		push_value();
 		while (p)
 		{
 			p->push();
-			lua_rawset(m_lua, -3);
+			lua_rawset(lua, -3);
 			p = p->next();
 		}
 		LogTraceReturnVoid;
