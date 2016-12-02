@@ -24,8 +24,9 @@ set( sourceFile
 	LuaIndexMetatable.cpp
 	LuaIterator.cpp
 	LuaModule.cpp
+	LuaInt64.cpp
 	lua/lapi.c
-    lua/lauxlib.c
+	lua/lauxlib.c
 	lua/lbaselib.c
 	lua/lcode.c
 	lua/ldblib.c

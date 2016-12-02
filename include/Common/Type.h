@@ -43,6 +43,10 @@
 # include <stdint.h>
 #endif
 
+#ifdef WIN32
+#define strtoll _strtoi64
+#define strtoull _strtoui64
+#endif
 
 
 /////////////////////////////////////////////////////////////

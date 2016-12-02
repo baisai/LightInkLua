@@ -360,8 +360,8 @@ namespace LightInk
 	{
 		LogTrace("LuaModuleByClass<ClassType, CtorType> & LuaModuleByClass<ClassType, CtorType>::def(T obj, const std::string & name)");
 		push_value();
-		LuaDefAutoTool::def(m_lua, obj, name);
-		lua_pop(m_lua, 1);
+		LuaDefAutoTool::def(state(), obj, name);
+		lua_pop(state(), 1);
 		LogTraceReturn(*this);
 	}
 

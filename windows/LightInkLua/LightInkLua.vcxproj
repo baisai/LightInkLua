@@ -195,6 +195,7 @@
     <ClInclude Include="..\..\include\LuaEngine\LuaEngine.h" />
     <ClInclude Include="..\..\include\LuaEngine\LuaFixFunction.h" />
     <ClInclude Include="..\..\include\LuaEngine\LuaIndexMetatable.h" />
+    <ClInclude Include="..\..\include\LuaEngine\LuaInt64.h" />
     <ClInclude Include="..\..\include\LuaEngine\LuaIterator.h" />
     <ClInclude Include="..\..\include\LuaEngine\LuaMetatableTraits.h" />
     <ClInclude Include="..\..\include\LuaEngine\LuaModule.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="..\..\src\Common\WinSnprintf.c" />
     <ClCompile Include="..\..\src\LuaEngine\LuaEngine.cpp" />
     <ClCompile Include="..\..\src\LuaEngine\LuaIndexMetatable.cpp" />
+    <ClCompile Include="..\..\src\LuaEngine\LuaInt64.cpp" />
     <ClCompile Include="..\..\src\LuaEngine\LuaIterator.cpp" />
     <ClCompile Include="..\..\src\LuaEngine\LuaModule.cpp" />
     <ClCompile Include="..\..\src\LuaEngine\lua\lapi.c" />

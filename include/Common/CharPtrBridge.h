@@ -24,6 +24,7 @@
 #ifndef LIGHTINK_COMMON_CHARPTRBRIDGE_H_
 #define LIGHTINK_COMMON_CHARPTRBRIDGE_H_
 
+#include <string.h>
 #include "Common/Type.h"
 #include "Common/SmallObject.h"
 

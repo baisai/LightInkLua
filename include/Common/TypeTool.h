@@ -51,6 +51,24 @@ namespace LightInk
 		static inline const T & get_ref(const T * data) {return *data; };
 	};
 
+	template <typename T>
+	struct GetType
+	{
+		typedef T type;
+	};
+
+	template <typename T>
+	struct GetType<T *>
+	{
+		typedef T type;
+	};
+
+	template <typename T>
+	struct GetType<T &>
+	{
+		typedef T type;
+	};
+
 	template <int v>
 	struct Int2Type
 	{

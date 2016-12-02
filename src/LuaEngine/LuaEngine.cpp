@@ -24,6 +24,7 @@
 #include "LuaEngine/LuaEngine.h"
 #include "LuaEngine/LuaDefTool.h"
 #include "Common/SmallObject.h"
+#include "LuaEngine/LuaInt64.h"
 
 namespace LightInk
 {
@@ -74,6 +75,98 @@ namespace LightInk
 		register_global_func("print_warning", &lua_print_warning);
 		register_global_func("print_error", &lua_print_error);
 		register_global_func("print_fatal", &lua_print_fatal);
+
+		lua_pushvalue(m_lua, LUA_GLOBALSINDEX);
+		LuaRef lrf(m_lua, true);
+		LuaModule(m_lua, "_G", lrf)
+		[
+			LuaRegister<LuaUint64, void(lua_Number)>(m_lua, "Uint64")
+				.def(LuaUint64::new_from_string, "new_from_string")
+				.def(LuaUint64::new_from_st, "new_from_st")
+				.def(&LuaUint64::to_string, "to_string")
+				.def(&LuaUint64::to_number, "to_number")
+				.def(&LuaUint64::to_int64, "to_int64")
+				.def(&LuaUint64::set_number, "set_number")
+				.def(&LuaUint64::set_string, "set_string")
+				.def(&LuaUint64::set_st, "set_st")
+				.def(&LuaUint64::add_number, "__add")
+				.def(&LuaUint64::sub_number, "__sub")
+				.def(&LuaUint64::mul_number, "__mul")
+				.def(&LuaUint64::div_number, "__div")
+				.def(&LuaUint64::mod_number, "__mod")
+				.def(&LuaUint64::pow_number, "__pow")
+				.def(&LuaUint64::unm_number, "__unm")
+				.def(&LuaUint64::eq_number, "__eq")
+				.def(&LuaUint64::lt_number, "__lt")
+				.def(&LuaUint64::le_number, "__le")
+				.def(&LuaUint64::add_st, "add_st")
+				.def(&LuaUint64::sub_st, "sub_st")
+				.def(&LuaUint64::mul_st, "mul_st")
+				.def(&LuaUint64::div_st, "div_st")
+				.def(&LuaUint64::mod_st, "mod_st")
+				.def(&LuaUint64::pow_st, "pow_st")
+				.def(&LuaUint64::eq_st, "eq_st")
+				.def(&LuaUint64::lt_st, "lt_st")
+				.def(&LuaUint64::le_st, "le_st")
+				.def(&LuaUint64::add_set_number, "add_set_number")
+				.def(&LuaUint64::sub_set_number, "sub_set_number")
+				.def(&LuaUint64::mul_set_number, "mul_set_number")
+				.def(&LuaUint64::div_set_number, "div_set_number")
+				.def(&LuaUint64::mod_set_number, "mod_set_number")
+				.def(&LuaUint64::pow_set_number, "pow_set_number")
+				.def(&LuaUint64::unm_set_number, "unm_set_number")
+				.def(&LuaUint64::add_set_st, "add_set_st")
+				.def(&LuaUint64::sub_set_st, "sub_set_st")
+				.def(&LuaUint64::mul_set_st, "mul_set_st")
+				.def(&LuaUint64::div_set_st, "div_set_st")
+				.def(&LuaUint64::mod_set_st, "mod_set_st")
+				.def(&LuaUint64::pow_set_st, "pow_set_st")
+
+			<=
+			LuaRegister<LuaInt64, void(lua_Number)>(m_lua, "Int64")
+				.def(LuaInt64::new_from_string, "new_from_string")
+				.def(LuaInt64::new_from_st, "new_from_st")
+				.def(&LuaInt64::to_string, "to_string")
+				.def(&LuaInt64::to_number, "to_number")
+				.def(&LuaInt64::to_uint64, "to_uint64")
+				.def(&LuaInt64::set_number, "set_number")
+				.def(&LuaInt64::set_string, "set_string")
+				.def(&LuaInt64::set_st, "set_st")
+				.def(&LuaInt64::add_number, "__add")
+				.def(&LuaInt64::sub_number, "__sub")
+				.def(&LuaInt64::mul_number, "__mul")
+				.def(&LuaInt64::div_number, "__div")
+				.def(&LuaInt64::mod_number, "__mod")
+				.def(&LuaInt64::pow_number, "__pow")
+				.def(&LuaInt64::unm_number, "__unm")
+				.def(&LuaInt64::eq_number, "__eq")
+				.def(&LuaInt64::lt_number, "__lt")
+				.def(&LuaInt64::le_number, "__le")
+				.def(&LuaInt64::add_st, "add_st")
+				.def(&LuaInt64::sub_st, "sub_st")
+				.def(&LuaInt64::mul_st, "mul_st")
+				.def(&LuaInt64::div_st, "div_st")
+				.def(&LuaInt64::mod_st, "mod_st")
+				.def(&LuaInt64::pow_st, "pow_st")
+				.def(&LuaInt64::eq_st, "eq_st")
+				.def(&LuaInt64::lt_st, "lt_st")
+				.def(&LuaInt64::le_st, "le_st")
+				.def(&LuaInt64::add_set_number, "add_set_number")
+				.def(&LuaInt64::sub_set_number, "sub_set_number")
+				.def(&LuaInt64::mul_set_number, "mul_set_number")
+				.def(&LuaInt64::div_set_number, "div_set_number")
+				.def(&LuaInt64::mod_set_number, "mod_set_number")
+				.def(&LuaInt64::pow_set_number, "pow_set_number")
+				.def(&LuaInt64::unm_set_number, "unm_set_number")
+				.def(&LuaInt64::add_set_st, "add_set_st")
+				.def(&LuaInt64::sub_set_st, "sub_set_st")
+				.def(&LuaInt64::mul_set_st, "mul_set_st")
+				.def(&LuaInt64::div_set_st, "div_set_st")
+				.def(&LuaInt64::mod_set_st, "mod_set_st")
+				.def(&LuaInt64::pow_set_st, "pow_set_st")
+
+		];
+
 		LogTraceReturn(do_init());
 	}
 

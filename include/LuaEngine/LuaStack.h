@@ -35,6 +35,7 @@
 #include "Common/RuntimeError.h"
 #include "LuaEngine/LuaFixFunction.h"
 #include "Common/CharPtrBridge.h"
+#include "Common/TypeTool.h"
 
 namespace LightInk
 {
@@ -1353,10 +1354,10 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline T get(lua_State * L, int idx)
+		static inline typename GetType<T>::type get(lua_State * L, int idx)
 		{
 			LogTrace("T LuaStack<T>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaUserdata::get <T> (L, idx));
+			LogTraceReturn(LuaUserdata::get <typename GetType<T>::type> (L, idx));
 		}
 	};
 
@@ -1371,10 +1372,10 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline T get(lua_State * L, int idx)
+		static inline typename GetType<T>::type get(lua_State * L, int idx)
 		{
 			LogTrace("T LuaStack<T>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaUserdata::get <T> (L, idx));
+			LogTraceReturn(LuaUserdata::get <typename GetType<T>::type> (L, idx));
 		}
 	};
 
