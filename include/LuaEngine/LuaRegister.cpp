@@ -268,10 +268,10 @@ namespace LightInk
 	{
 		LogTrace("void LuaRegister<ClassType, CtorType>::init_class(const std::string & name)");
 		set_key(name);
-		if(LuaClassInfo<ClassType>::set_class_name(name.c_str())) //have this name
+		LuaClassInfo<ClassType>::set_class_name(name.c_str());
+		if(LuaClassInfo<ClassType>::is_registered(m_lua)) //have this name
 		{
-			LuaClassInfo<ClassType>::get_class_table(m_lua);
-			rawgetfield(m_lua, -1, "metatable__");
+			LuaClassInfo<ClassType>::get_class_metatable(m_lua);
 			set_value(-2);
 			//lua_rawgetp(m_lua, -1, LuaClassInfo<ClassType>::get_class_key());
 		}

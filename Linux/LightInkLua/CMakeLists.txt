@@ -77,8 +77,11 @@ add_definitions("-DLIGHTINK_EXPORTS")
 
 add_library( ${PROJECT_NAME} SHARED ${fullSourcePath} )
 
-
-set(LIBRARY_OUTPUT_PATH ${LightInkLua_SOURCE_DIR}/../bin)
+if (CMAKE_BUILD_TYPE STREQUAL Debug)
+set(LIBRARY_OUTPUT_PATH ${LightInkLua_SOURCE_DIR}/../../bin/Debug)
+elseif()
+set(LIBRARY_OUTPUT_PATH ${LightInkLua_SOURCE_DIR}/../../bin/Release)
+endif()
 
 unset(middlePath)
 unset(sourceFile)

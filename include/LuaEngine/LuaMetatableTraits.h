@@ -42,7 +42,7 @@ namespace LightInk
 		static LuaUserdataForClass<ClassType> * userdata_to_imp(lua_State * L, int idx)
 		{
 			LogTrace("LuaUserdataForClass<ClassType> * LuaMetatableTraits<ClassType>::userdata_to_imp(lua_State * L, int idx)");
-			if (!LuaClassInfo<ClassType>::is_registered())
+			if (!LuaClassInfo<ClassType>::is_registered(L))
 			{
 				LogScriptErrorJump(L, "Error!!!The Class has not registered to lua!!!!");
 				LogTraceReturn(NULL);

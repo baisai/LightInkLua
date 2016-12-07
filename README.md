@@ -10,7 +10,7 @@ Use C++ Template Binding Class to lua; from project LightInk
 * install vs2012
 * open file ./windows/LightInkLua.sln
 * build
-* the file output in ./windows/Debug(Release)/
+* the file output in ./bin/Debug(Release)/
 
 ##linux
 
@@ -19,4 +19,4 @@ Use C++ Template Binding Class to lua; from project LightInk
 * cd ./Linux/build
 * cmake ../
 * make
-* the file output in ./Linux/bin/
+* the file output in ./bin/Debug(Release)/

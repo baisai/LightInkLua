@@ -68,22 +68,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\Debug\</OutDir>
+    <OutDir>..\..\bin\Debug\</OutDir>
     <IntDir>..\Obj_d\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\x64\Debug\</OutDir>
+    <OutDir>..\..\bin\Debug\</OutDir>
     <IntDir>..\x64\Obj_d\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\Release\</OutDir>
+    <OutDir>..\..\bin\Release\</OutDir>
     <IntDir>..\Obj_r\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\x64\Release\</OutDir>
+    <OutDir>..\..\bin\Release\</OutDir>
     <IntDir>..\x64\Obj_r\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

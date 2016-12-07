@@ -135,8 +135,8 @@ void test_bind_inherit()
 
 	LightInk::LuaEngine le;
 	le.init();
-	//le.register_module(bind_cppclass);
-	le.register_module(bind_cppclass2);
+	le.register_module(bind_cppclass);
+	//le.register_module(bind_cppclass2);
 
 	le.add_package_path("../../Example/lua");
 
