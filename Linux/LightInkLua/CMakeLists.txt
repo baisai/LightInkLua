@@ -79,7 +79,7 @@ add_library( ${PROJECT_NAME} SHARED ${fullSourcePath} )
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
 set(LIBRARY_OUTPUT_PATH ${LightInkLua_SOURCE_DIR}/../../bin/Debug)
-elseif()
+else()
 set(LIBRARY_OUTPUT_PATH ${LightInkLua_SOURCE_DIR}/../../bin/Release)
 endif()
 

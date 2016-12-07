@@ -32,7 +32,7 @@ target_link_libraries(${PROJECT_NAME} LightInkLua )
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
 set(EXECUTABLE_OUTPUT_PATH ${Example_SOURCE_DIR}/../../bin/Debug)
-elseif()
+else()
 set(EXECUTABLE_OUTPUT_PATH ${Example_SOURCE_DIR}/../../bin/Release)
 endif()
 
