@@ -28,6 +28,7 @@
 #include <string.h>
 #include "LuaEngine/lua/lua.hpp"
 #include "LuaEngine/LuaStateProtect.h"
+#include "LuaEngine/LuaFixFunction.h"
 
 namespace LightInk
 {
