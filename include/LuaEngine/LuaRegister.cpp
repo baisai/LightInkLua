@@ -59,6 +59,7 @@ namespace LightInk
 		if (!LuaClassInfo<BaseType>::get_class_table(L))
 		{
 			LogError("Error!!!Get Base Class Table Failed!!!");
+			LogTraceReturnVoid;
 		}
 		rawgetfield(L, -1, "metatable__");
 		lua_pushnil(L);
@@ -88,6 +89,16 @@ namespace LightInk
 			}
 			lua_pop(L, 2);
 		}
+		
+		if (get_class_metatable() != RE_Success)
+		{
+			LogError("Error!!!Get Class Metatable Failed!!!");
+			LogTraceReturnVoid;
+		}
+
+		lua_pushlightuserdata(L, LuaClassInfo<BaseType>::get_class_key());
+		lua_pushboolean(L, 1);
+		lua_rawset(L, -3);
 
 		//pop metatable, class table, parent class table
 		LogTraceReturnVoid;
@@ -305,6 +316,9 @@ namespace LightInk
 
 			lua_pushlightuserdata(m_lua, LuaClassInfo<ClassType>::get_class_key());
 			rawsetfield(m_lua, -2, "key__");
+			
+			lua_pushboolean(m_lua, 1);
+			lua_rawsetp(m_lua, -2, LuaClassInfo<ClassType>::get_class_key());
 
 			lua_pushcclosure(m_lua, &LuaMetatableTraits<ClassType>::mt_isdelete_function, 0);
 			rawsetfield(m_lua, -2, "isdelete__");

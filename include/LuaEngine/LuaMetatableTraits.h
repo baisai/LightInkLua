@@ -65,14 +65,12 @@ namespace LightInk
 				LogTraceReturn(NULL);
 			}
 			
-			/*//因为可能是继承关系
-			lua_pushstring(L, "key__");
-			lua_rawget(L, -2);
+			//因为可能是继承关系
 			if (!LuaClassInfo<ClassType>::check_registered(L, -1))
 			{
-				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but metatable is error!!!", idx);
+				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but class type is error!!!", idx);
 				LogTraceReturn(NULL);
-			}*/
+			}
 			LuaUserdataForClass<ClassType> * p = (LuaUserdataForClass<ClassType>*) userdata;
 			lsp.reset();
 			LogTraceReturn(p);
