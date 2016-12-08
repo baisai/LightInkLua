@@ -43,7 +43,7 @@ namespace LightInk
 		}
 		static void set_class_name(const char * name)
 		{
-			LogTrace("bool LuaClassInfo<T>::set_class_name(const char * name)");
+			LogTrace("void LuaClassInfo<T>::set_class_name(const char * name)");
 			if (have_name())
 			{
 				LogTraceReturnVoid;
@@ -85,7 +85,7 @@ namespace LightInk
 			{
 				LogTraceReturn(true);
 			}
-			LogScriptError("Error!!!This  class {} is not register!!!", m_className);
+			LogScriptError("Error!!!This  class %s is not register!!!", m_className);
 			LogTraceReturn(false);
 		}
 
@@ -112,7 +112,7 @@ namespace LightInk
 				lua_rawget(L, -2);
 				if (!lua_istable(L, -1))
 				{
-					LogScriptError("Error!!!This  class {} do not have metatable__!!!", m_className);
+					LogScriptError("Error!!!This  class %s do not have metatable__!!!", m_className);
 					LogTraceReturn(false);
 				}
 				lua_pushstring(L, "key__");
@@ -120,7 +120,7 @@ namespace LightInk
 				lua_pushlightuserdata(L, &m_key);
 				if (!lua_rawequal(L, -1, -2))
 				{
-					LogScriptError("Error!!!This  class {} do not have metatable__!!!", m_className);
+					LogScriptError("Error!!!This  class %s do not have metatable__!!!", m_className);
 					LogTraceReturn(false);
 				}
 			}
