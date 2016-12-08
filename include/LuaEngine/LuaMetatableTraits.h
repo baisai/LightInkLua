@@ -42,11 +42,6 @@ namespace LightInk
 		static LuaUserdataForClass<ClassType> * userdata_to_imp(lua_State * L, int idx)
 		{
 			LogTrace("LuaUserdataForClass<ClassType> * LuaMetatableTraits<ClassType>::userdata_to_imp(lua_State * L, int idx)");
-			if (!LuaClassInfo<ClassType>::is_registered(L))
-			{
-				LogScriptErrorJump(L, "Error!!!The Class has not registered to lua!!!!");
-				LogTraceReturn(NULL);
-			}
 			LuaStateProtect lsp(L);
 			if (lua_isnothing(L, idx))
 			{
@@ -70,19 +65,12 @@ namespace LightInk
 				LogTraceReturn(NULL);
 			}
 			
+			/*//因为可能是继承关系
 			lua_pushstring(L, "key__");
 			lua_rawget(L, -2);
-			if (!lua_islightuserdata(L, -1))
+			if (!LuaClassInfo<ClassType>::check_registered(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but metatable is error!!!", idx);
-				LogTraceReturn(NULL);
-			}
-			/*因为可能是继承关系
-			lua_pushlightuserdata(L, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_rawequal(L, -1, -2))
-			{
-				lsp.give_up();
-				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but CPP Type is error!!!", idx);
 				LogTraceReturn(NULL);
 			}*/
 			LuaUserdataForClass<ClassType> * p = (LuaUserdataForClass<ClassType>*) userdata;

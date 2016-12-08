@@ -66,10 +66,24 @@ namespace LightInk
 		inline static bool is_registered(lua_State * L)
 		{
 			LogTrace("bool is_registered(lua_State * L)");
+			LuaStateProtect lsp(L, true);
 			lua_pushlightuserdata(L, &m_key);
 			lua_rawget(L, LUA_REGISTRYINDEX);
-			LuaStateProtect lsp(L, true);
 			if (lua_istable(L, -1))
+			{
+				LogTraceReturn(true);
+			}
+			LogTraceReturn(false);
+		}
+		
+		inline static bool check_registered(lua_State * L, int idx)
+		{
+			LogTrace("bool check_registered(lua_State * L, int idx)");
+			LuaStateProtect lsp(L, true);
+			idx = lua_absindex(L, idx);
+			lua_pushlightuserdata(L, &m_key);
+			lua_rawget(L, LUA_REGISTRYINDEX);
+			if (lua_rawequal(L, idx, -1))
 			{
 				LogTraceReturn(true);
 			}
