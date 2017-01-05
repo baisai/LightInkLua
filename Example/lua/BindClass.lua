@@ -26,6 +26,7 @@ print("cppObj.m_short == 2 ? ", cppObj.m_short == 2)
 print("cppObj.m_int == 3 ? ", cppObj.m_int == 3)
 print("cppObj.m_string == \"chendong\" ? ", cppObj.m_string == "chendong")
 print("cppObj.m_vector == {1,2,3,4,5,6,7,8,9,10} ? ", unpack(cppObj.m_vector))
+cppObj.test_static()
 cppObj = nil
 collectgarbage("collect")
 
