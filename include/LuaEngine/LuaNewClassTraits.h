@@ -47,6 +47,17 @@ namespace LightInk
 	};
 
 	template <typename ClassType, bool luaGC>
+	struct LuaNewClassTraits<ClassType, luaGC, void>
+	{
+		static  int call(lua_State * L)
+		{
+			LogTrace("LuaNewClassTraits<ClassType, void()>::call(lua_State * L)");
+			lua_pushnil(L);
+			LogTraceReturn(1);
+		}
+	};
+
+	template <typename ClassType, bool luaGC>
 	struct LuaNewClassTraits<ClassType, luaGC, void()>
 	{
 		static  int call(lua_State * L)
