@@ -1336,12 +1336,48 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline T * get (lua_State * L, int idx)
+		static inline const T * get (lua_State * L, int idx)
 		{
 			LogTrace("T * LuaStack<T *>::get(lua_State * L, int idx)");
 			LogTraceReturn(LuaUserdataPtr::get<T> (L, idx));
 		}
 	};
+
+
+	template <typename T>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <T &>
+	{
+		static inline void push(lua_State* L, T & p)
+		{
+			LogTrace("void LuaStack<T *>::push(lua_State * L, T * const p)");
+			LuaUserdataPtr::push<T>(L, p);
+			LogTraceReturnVoid;
+		}
+
+		static inline T & get (lua_State * L, int idx)
+		{
+			LogTrace("T * LuaStack<T *>::get(lua_State * L, int idx)");
+			LogTraceReturn(*LuaUserdataPtr::get<T> (L, idx));
+		}
+	};
+
+	template <typename T>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <const T &>
+	{
+		static inline void push(lua_State* L, const T & p)
+		{
+			LogTrace("void LuaStack<T *>::push(lua_State * L, T * const p)");
+			LuaUserdataPtr::push<T>(L, &p);
+			LogTraceReturnVoid;
+		}
+
+		static inline const T & get (lua_State * L, int idx)
+		{
+			LogTrace("T * LuaStack<T *>::get(lua_State * L, int idx)");
+			LogTraceReturn(*LuaUserdataPtr::get<T> (L, idx));
+		}
+	};
+
 
 	// Lua stack conversions for const class objects passed by value.
 	template <typename T>
@@ -1354,10 +1390,10 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename GetType<T>::type get(lua_State * L, int idx)
+		static inline const T get(lua_State * L, int idx)
 		{
 			LogTrace("T LuaStack<T>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaUserdata::get <typename GetType<T>::type> (L, idx));
+			LogTraceReturn(LuaUserdata::get<T> (L, idx));
 		}
 	};
 
@@ -1365,17 +1401,17 @@ end
 	template <typename T>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack
 	{
-		static inline void push(lua_State * L, const T & t)
+		static inline void push(lua_State * L, T & t)
 		{
 			LogTrace("void LuaStack<T>::push(lua_State * L, const T & t)");
 			LuaUserdata::push<T>(L, t);
 			LogTraceReturnVoid;
 		}
 
-		static inline typename GetType<T>::type get(lua_State * L, int idx)
+		static inline T get(lua_State * L, int idx)
 		{
 			LogTrace("T LuaStack<T>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaUserdata::get <typename GetType<T>::type> (L, idx));
+			LogTraceReturn(LuaUserdata::get <T> (L, idx));
 		}
 	};
 
