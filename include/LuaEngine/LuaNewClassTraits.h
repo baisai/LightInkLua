@@ -25,6 +25,7 @@
 #define LIGHTINK_LUAENGINE_LUANEWCLASSTRAITS_H_
 
 #include "Common/Type.h"
+#include "Common/SmallObject.h"
 #include "LuaEngine/LuaClassInfo.h"
 #include "LuaEngine/LuaFixFunction.h"
 
@@ -111,9 +112,9 @@ function create_traits(count)
 		table.insert(temp, arg2)
 		table.insert(temp, ")>::call(lua_State * L)\");\n")
 		table.insert(temp, "\t\t\tif (!lua_istable(L, 1))\n\t\t\t{\n\t\t\t\tLogScriptErrorJump(L, \"Error!!!The NewClass Traits First arg is not table!!!\");\n\t\t\t\tLogTraceReturn(0);\n\t\t\t}\n")
+		table.insert(temp, arg3)
 		table.insert(temp, "\t\t\trawgetfield(L, 1, \"metatable__\");\n\t\t\t//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());\n")
 		table.insert(temp, "\t\t\tif (!lua_istable(L, -1))\n\t\t\t{\n\t\t\t\tLogScriptErrorJump(L, \"Error!!!The NewClass Traits First arg have not userdata metatable!!!\");\n\t\t\t\tLogTraceReturn(0);\n\t\t\t}\n")
-		table.insert(temp, arg3)
 		table.insert(temp, "\t\t\tvoid * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));\n\t\t\t")
 		table.insert(temp, "lua_pushvalue(L, -2);\n\t\t\tlua_setmetatable(L, -2);\n\n\t\t\t")
 		table.insert(temp, "new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(")
@@ -141,6 +142,7 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
+			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			rawgetfield(L, 1, "metatable__");
 			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_istable(L, -1))
@@ -148,7 +150,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
-			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -169,6 +170,8 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
+			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
+			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			rawgetfield(L, 1, "metatable__");
 			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_istable(L, -1))
@@ -176,8 +179,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
-			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
-			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -198,6 +199,9 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
+			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
+			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
+			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			rawgetfield(L, 1, "metatable__");
 			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_istable(L, -1))
@@ -205,9 +209,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
-			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
-			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
-			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -228,6 +229,10 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
+			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
+			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
+			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
+			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			rawgetfield(L, 1, "metatable__");
 			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_istable(L, -1))
@@ -235,10 +240,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
-			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
-			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
-			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
-			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -259,6 +260,11 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
+			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
+			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
+			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
+			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
+			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			rawgetfield(L, 1, "metatable__");
 			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_istable(L, -1))
@@ -266,11 +272,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
-			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
-			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
-			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
-			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
-			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -291,6 +292,12 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
+			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
+			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
+			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
+			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
+			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
+			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			rawgetfield(L, 1, "metatable__");
 			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_istable(L, -1))
@@ -298,12 +305,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
-			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
-			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
-			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
-			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
-			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
-			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -324,13 +325,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -338,6 +332,13 @@ create_traits(20)
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -358,13 +359,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -373,6 +367,13 @@ create_traits(20)
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -393,13 +394,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -409,6 +403,13 @@ create_traits(20)
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -429,13 +430,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -446,6 +440,13 @@ create_traits(20)
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -466,13 +467,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -484,6 +478,13 @@ create_traits(20)
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -504,13 +505,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -523,6 +517,13 @@ create_traits(20)
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -543,13 +544,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -563,6 +557,13 @@ create_traits(20)
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -583,13 +584,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -604,6 +598,13 @@ create_traits(20)
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -624,13 +625,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -646,6 +640,13 @@ create_traits(20)
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -666,13 +667,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -689,6 +683,13 @@ create_traits(20)
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -709,13 +710,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -733,6 +727,13 @@ create_traits(20)
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -753,13 +754,6 @@ create_traits(20)
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
 				LogTraceReturn(0);
 			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
-			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
@@ -778,6 +772,13 @@ create_traits(20)
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -796,13 +797,6 @@ create_traits(20)
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
-			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
@@ -824,6 +818,13 @@ create_traits(20)
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
@@ -842,13 +843,6 @@ create_traits(20)
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
-			}
-			rawgetfield(L, 1, "metatable__");
-			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
-			if (!lua_istable(L, -1))
-			{
-				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
 				LogTraceReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
@@ -871,6 +865,13 @@ create_traits(20)
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			Arg20 arg20 = LuaStack<const Arg20>::get(L, 21);
+			rawgetfield(L, 1, "metatable__");
+			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
+			if (!lua_istable(L, -1))
+			{
+				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
+				LogTraceReturn(0);
+			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);

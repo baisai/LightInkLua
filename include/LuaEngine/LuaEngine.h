@@ -26,7 +26,7 @@
 #define LIGHTINK_LUAENGINE_LUAENGINE_H_
 
 #include "Common/RuntimeError.h"
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "Common/Log.h"
 #include "LuaEngine/LuaRef.h"
 #include "LuaEngine/LuaRegister.h"
@@ -64,7 +64,7 @@ namespace LightInk
 		virtual void * do_lua_allocator(void * ptr, size_t osize, size_t nsize);
 		virtual RuntimeError do_init();
 		virtual void do_close();
-		RuntimeError add_package_path(const std::string & path);
+		RuntimeError add_package_path(const string & path);
 		void clear_package_path();
 		static void dump_stack(lua_State * L);
 		RuntimeError run_string(const char * chunk);
@@ -84,6 +84,10 @@ namespace LightInk
 		static int lua_print_warning(lua_State * L);
 		static int lua_print_error(lua_State * L);
 		static int lua_print_fatal(lua_State * L);
+		
+	protected:
+		lua_State * m_lua;
+
 	public:
 		template <typename T>
 		RuntimeError open_module(T m)
@@ -741,10 +745,6 @@ create_traits(20)
 			{  LogTraceReturn(e); }
 			LogTraceReturn(RE_Success);
 		}
-
-
-	protected:
-		lua_State * m_lua;
 	};
 }
 

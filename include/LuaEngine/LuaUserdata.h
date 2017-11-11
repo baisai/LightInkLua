@@ -26,7 +26,7 @@
 
 #include "Common/Type.h"
 #include "Common/Log.h"
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "LuaEngine/LuaClassInfo.h"
 #include "LuaEngine/LuaMetatableTraits.h"
 
@@ -59,6 +59,48 @@ namespace LightInk
 				LogScriptErrorJump(L, "Error!!!LuaUserdata<T>::get get pointer is null!!!!");
 			}
 			LogTraceReturn(*p);
+		}
+	};
+
+	template <typename T>
+	struct LIGHTINK_TEMPLATE_DECL LuaStackPtrMove
+	{
+		LuaStackPtrMove() : m_ptr(NULL) {  }
+		LuaStackPtrMove(T * t) : m_ptr(t) {  }
+		LuaStackPtrMove(const LuaStackPtrMove<T> & cp) : m_ptr(cp.m_ptr) {  }
+		inline void reset() { if (m_ptr) { delete m_ptr; m_ptr = NULL; } }
+		T * m_ptr;
+	};
+	struct LuaUserdataPtrMove
+	{
+		template <typename T>
+		static void push(lua_State * L, const LuaStackPtrMove<T> & pm)
+		{
+			LogTrace("void LuaUserdataPtrMove<T>::push(lua_State * L, const T & t)");
+			if (!LuaClassInfo<T>::get_class_metatable(L))
+			{
+				LogScriptErrorJump(L, "Error!!!LuaUserdataPtrMove<T>::push Can not get class metatable!!!!");
+			}
+			if (pm.m_ptr)
+			{
+				void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<T>));
+				lua_insert(L, -2);
+				lua_setmetatable(L, -2);
+				new(userdataPtr) LuaUserdataForClass<T>(pm.m_ptr, true);
+			}
+			else
+			{
+				lua_pop(L, 1);
+				lua_pushnil(L);
+			}
+			LogTraceReturnVoid;
+		}
+		
+		template <typename T>
+		static LuaStackPtrMove<T> get(lua_State * L, int idx)
+		{
+			LogTrace("T LuaUserdataPtrMove<T>::get(lua_State * L, int idx)");
+			LogTraceReturn(LuaStackPtrMove<T>(LuaMetatableTraits<T>::userdata_to_object_move(L, idx)));
 		}
 	};
 

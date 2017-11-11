@@ -43,9 +43,9 @@ namespace LightInk
 		LogTraceReturnVoid;
 	}
 
-	LuaInt64 LuaInt64::new_from_string(CharPtrBridge number)
+	LuaInt64 LuaInt64::new_from_string(const CharPtrBridge & number)
 	{
-		LogTrace("LuaInt64 LuaInt64::new_from_string(CharPtrBridge number)");
+		LogTrace("LuaInt64 LuaInt64::new_from_string(const CharPtrBridge & number)");
 		int64 num = strtoll(number.m_charPtr, NULL, 10);
 		LogTraceReturn(LuaInt64(num));
 	}
@@ -79,9 +79,9 @@ namespace LightInk
 		m_number = static_cast<int64>(number);
 		LogTraceReturnVoid;
 	}
-	void LuaInt64::set_string(const CharPtrBridge number)
+	void LuaInt64::set_string(const CharPtrBridge & number)
 	{
-		LogTrace("void LuaInt64::set_string(const CharPtrBridge number)");
+		LogTrace("void LuaInt64::set_string(const CharPtrBridge & number)");
 		m_number = strtoll(number.m_charPtr, NULL, 10);
 		LogTraceReturnVoid;
 	}
@@ -284,9 +284,9 @@ namespace LightInk
 		LogTraceReturnVoid;
 	}
 
-	LuaUint64 LuaUint64::new_from_string(CharPtrBridge number)
+	LuaUint64 LuaUint64::new_from_string(const CharPtrBridge & number)
 	{
-		LogTrace("LuaUint64 LuaUint64::new_from_string(CharPtrBridge number)");
+		LogTrace("LuaUint64 LuaUint64::new_from_string(const CharPtrBridge & number)");
 		uint64 num = strtoull(number.m_charPtr, NULL, 10);
 		LogTraceReturn(LuaUint64(num));
 	}
@@ -320,9 +320,9 @@ namespace LightInk
 		m_number = static_cast<uint64>(number);
 		LogTraceReturnVoid;
 	}
-	void LuaUint64::set_string(const CharPtrBridge number)
+	void LuaUint64::set_string(const CharPtrBridge & number)
 	{
-		LogTrace("void LuaUint64::set_string(const CharPtrBridge number)");
+		LogTrace("void LuaUint64::set_string(const CharPtrBridge & number)");
 		m_number = strtoull(number.m_charPtr, NULL, 10);
 		LogTraceReturnVoid;
 	}
@@ -470,7 +470,6 @@ namespace LightInk
 	void LuaUint64::unm_set_number()
 	{
 		LogTrace("void LuaUint64::unm_set_number()");
-		m_number = -m_number;
 		LogTraceReturnVoid;
 	}
 	void LuaUint64::add_set_st(const LuaUint64 & number)

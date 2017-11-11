@@ -26,7 +26,7 @@
 #define LIGHTINK_LUAENGINE_LUAMODULE_H_
 
 #include "Common/Type.h"
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "Common/Log.h"
 #include "LuaEngine/LuaRef.h"
 /***************************************************

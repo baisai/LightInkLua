@@ -1,6 +1,5 @@
 
 
-
 /* Copyright ChenDong(Wilbur), email <baisaichen@live.com>. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,6 +20,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
+
 #ifndef LIGHTINK_COMMON_LIGHTINKVERSION_H_
 #define LIGHTINK_COMMON_LIGHTINKVERSION_H_
 
@@ -30,10 +30,10 @@
 #define LIGHTINK_MAJOR_VERSION_ 0
 
 //minor version component
-#define LIGHTINK_MINOR_VERSION_ 0
+#define LIGHTINK_MINOR_VERSION_ 3
 
 //micro version component
-#define LIGHTINK_MICRO_VERSION_ 1
+#define LIGHTINK_MICRO_VERSION_ 3
 
 //prerelease version component
 //#define LIGHTINK_PRERELEASE_VERSION_ rc0
@@ -46,6 +46,7 @@
 
 #define _LIGHTINK_VERSION_S_(str) #str
 #define LIGHTINK_VERSION_S_(str) _LIGHTINK_VERSION_S_(str)
+
 
 
 #define LIGHTINK_VERSION_HEX_ (LIGHTINK_MAJOR_VERSION_ << 24 | \
@@ -70,6 +71,7 @@ namespace LightInk
 	LIGHTINK_DECL bool check_version (int major, int minor, int micro);
 	LIGHTINK_DECL const char * get_authors();
 
+	LIGHTINK_DECL const char * get_depend_lib_version();
 }
 
 #endif

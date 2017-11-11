@@ -25,6 +25,7 @@
 #include "LuaEngine/LuaDefTool.h"
 #include "Common/SmallObject.h"
 #include "LuaEngine/LuaInt64.h"
+#include "LuaEngine/LuaTableRef.h"
 
 namespace LightInk
 {
@@ -60,7 +61,11 @@ namespace LightInk
 		{
 			LogTraceReturn(RE_Lua_ThisStateInited);
 		}
+#if defined(LIGHTINK_LUAJIT) && defined(LIGHTINK_X64)
+		m_lua = luaL_newstate();
+#else
 		m_lua = lua_newstate(LuaEngine::lua_allocator, this);
+#endif
 		if (!m_lua)
 		{
 			LogTraceReturn(RE_Lua_NewStateFailed);
@@ -75,11 +80,14 @@ namespace LightInk
 		register_global_func("print_warning", &lua_print_warning);
 		register_global_func("print_error", &lua_print_error);
 		register_global_func("print_fatal", &lua_print_fatal);
-		
+
 		lua_pushvalue(m_lua, LUA_GLOBALSINDEX);
 		LuaRef lrf(m_lua, true);
 		LuaModule(m_lua, "_G", lrf)
 		[
+			LuaRegister<LuaTableRef, void(const LuaRef &, const LuaRef &)>(m_lua, "LuaTableRef")
+				.def(&LuaTableRef::get_ref, "get_ref")
+			<=
 			LuaRegister<LuaUint64, void(lua_Number)>(m_lua, "Uint64")
 				.def(LuaUint64::new_from_string, "new_from_string")
 				.def(LuaUint64::new_from_st, "new_from_st")
@@ -220,7 +228,7 @@ namespace LightInk
 				LogTraceReturn(luaL_error(L, "\'tostring\' must return a string to \'print\'"));
 			}
 
-			str += s;
+			str.append(s);
 			str.push_back('\t');
 		
 			lua_pop(L, 1);  /* pop result */
@@ -287,10 +295,10 @@ namespace LightInk
 	{ LogTrace("void LuaEngine::do_close()"); LogTraceReturnVoid; }
 
 	
-	RuntimeError LuaEngine::add_package_path(const std::string & path)
+	RuntimeError LuaEngine::add_package_path(const string & path)
 	{
 		LogTrace("RuntimeError LuaEngine::add_package_path(const string & path)");
-		std::string new_path = "package.path = package.path .. \"";
+		string new_path = "package.path = package.path .. \"";
         if (path.empty())
         {
             LogTraceReturn(RE_Lua_StringEmpty);
@@ -341,7 +349,7 @@ namespace LightInk
                 break;
                 case LUA_TNUMBER:
                 {
-					LogMessage("`%g`", lua_tonumber(L, i));
+					LogMessage("`%lf`", lua_tonumber(L, i));
                 }
                 break;
                 case LUA_TTABLE:

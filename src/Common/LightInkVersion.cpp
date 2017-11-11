@@ -22,50 +22,59 @@
  * IN THE SOFTWARE.
  */
 #include "Common/LightInkVersion.h"
-#include "Common/Log.h"
+#include "LuaEngine/LuaLib.h"
 
 namespace LightInk
 {
 	int get_major_version ()
 	{
-		LogTrace("int get_major_version ()");
-		LogTraceReturn(LIGHTINK_MAJOR_VERSION_);
+		return (LIGHTINK_MAJOR_VERSION_);
 	}
 
 	int get_minor_version ()
 	{
-		LogTrace("int get_minor_version ()");
-		LogTraceReturn(LIGHTINK_MINOR_VERSION_);
+		return (LIGHTINK_MINOR_VERSION_);
 	}
 
 	int get_micro_version ()
 	{
-		LogTrace("int get_micro_version ()");
-		LogTraceReturn(LIGHTINK_MICRO_VERSION_);
+		return (LIGHTINK_MICRO_VERSION_);
 	}
 
 	uint32 get_version_hex()
 	{
-		LogTrace("uint32 get_version_hex()");
-		LogTraceReturn(LIGHTINK_VERSION_HEX_);
+		return (LIGHTINK_VERSION_HEX_);
 	}
 
 	const char * get_version_string ()
 	{
-		LogTrace("const char * get_version_string ()");
-		LogTraceReturn(LIGHTINK_VERSION_S_(LIGHTINK_VERSION_));
+		return (LIGHTINK_VERSION_S_(LIGHTINK_VERSION_));
 	}
 
 	bool check_version (int major, int minor, int micro)
 	{
-		LogTrace("bool check_version (int major, int minor, int micro)");
-		LogTraceReturn(LIGHTINK_CHECK_VERSION_(major, minor, micro));
+		return (LIGHTINK_CHECK_VERSION_(major, minor, micro));
 	}
 
 	const char * get_authors()
 	{
-		LogTrace("const char * get_authors()");
-		LogTraceReturn(LIGHTINK_AUTHORS);
+		return (LIGHTINK_AUTHORS);
 	}
 
+	struct LightInkVersion
+	{ 
+		LightInkVersion()
+		{
+			snprintf(dependLib, sizeof(dependLib), "Lua version(%s)\n", LUA_RELEASE);
+		}
+
+		static char dependLib[288];
+	};
+	char LightInkVersion::dependLib[288] = { 0 };
+	LightInkVersion liv;
+	
+	const char * get_depend_lib_version()
+	{
+		return LightInkVersion::dependLib;
+	}
 }

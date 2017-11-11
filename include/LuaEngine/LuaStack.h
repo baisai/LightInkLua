@@ -159,9 +159,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const long long get(lua_State * L, int idx)
+		static inline long long get(lua_State * L, int idx)
 		{
-			LogTrace("const long long LuaStack<const long long>::get(lua_State * L, int idx)");
+			LogTrace("long long LuaStack<const long long>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<long long>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -179,9 +179,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const unsigned int get(lua_State * L, int idx)
+		static inline unsigned int get(lua_State * L, int idx)
 		{
-			LogTrace("const unsigned int LuaStack<const unsigned int>::get(lua_State * L, int idx)");
+			LogTrace("unsigned int LuaStack<const unsigned int>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<unsigned int>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -199,9 +199,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const signed char get(lua_State * L, int idx)
+		static inline signed char get(lua_State * L, int idx)
 		{
-			LogTrace("const signed char LuaStack<const signed char>::get(lua_State * L, int idx)");
+			LogTrace("signed char LuaStack<const signed char>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<signed char>(luaL_checkinteger(L, idx)));
 		}
 	};
@@ -259,9 +259,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const bool get(lua_State * L, int idx)
+		static inline bool get(lua_State * L, int idx)
 		{
-			LogTrace("const bool LuaStack<const bool>::get(lua_State * L, int idx)");
+			LogTrace("bool LuaStack<const bool>::get(lua_State * L, int idx)");
 			LogTraceReturn(lua_toboolean (L, idx) ? true : false);
 		}
 	};
@@ -339,9 +339,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const short get(lua_State * L, int idx)
+		static inline short get(lua_State * L, int idx)
 		{
-			LogTrace("const short LuaStack<const short>::get(lua_State * L, int idx)");
+			LogTrace("short LuaStack<const short>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<short>(luaL_checkinteger(L, idx)));
 		}
 	};
@@ -379,9 +379,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const char get(lua_State * L, int idx)
+		static inline char get(lua_State * L, int idx)
 		{
-			LogTrace("const char LuaStack<const char>::get(lua_State * L, int idx)");
+			LogTrace("char LuaStack<const char>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<char>(luaL_checkinteger(L, idx)));
 		}
 	};
@@ -419,9 +419,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const float get(lua_State * L, int idx)
+		static inline float get(lua_State * L, int idx)
 		{
-			LogTrace("const float LuaStack<const float>::get(lua_State * L, int idx)");
+			LogTrace("float LuaStack<const float>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<float>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -439,9 +439,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const unsigned long get(lua_State * L, int idx)
+		static inline unsigned long get(lua_State * L, int idx)
 		{
-			LogTrace("const unsigned long LuaStack<const unsigned long>::get(lua_State * L, int idx)");
+			LogTrace("unsigned long LuaStack<const unsigned long>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<unsigned long>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -459,9 +459,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const unsigned long long get(lua_State * L, int idx)
+		static inline unsigned long long get(lua_State * L, int idx)
 		{
-			LogTrace("const unsigned long long LuaStack<const unsigned long long>::get(lua_State * L, int idx)");
+			LogTrace("unsigned long long LuaStack<const unsigned long long>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<unsigned long long>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -519,9 +519,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const int get(lua_State * L, int idx)
+		static inline int get(lua_State * L, int idx)
 		{
-			LogTrace("const int LuaStack<const int>::get(lua_State * L, int idx)");
+			LogTrace("int LuaStack<const int>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<int>(luaL_checkinteger(L, idx)));
 		}
 	};
@@ -539,9 +539,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const long get(lua_State * L, int idx)
+		static inline long get(lua_State * L, int idx)
 		{
-			LogTrace("const long LuaStack<const long>::get(lua_State * L, int idx)");
+			LogTrace("long LuaStack<const long>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<long>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -619,9 +619,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const unsigned short get(lua_State * L, int idx)
+		static inline unsigned short get(lua_State * L, int idx)
 		{
-			LogTrace("const unsigned short LuaStack<const unsigned short>::get(lua_State * L, int idx)");
+			LogTrace("unsigned short LuaStack<const unsigned short>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<unsigned short>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -659,9 +659,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const unsigned char get(lua_State * L, int idx)
+		static inline unsigned char get(lua_State * L, int idx)
 		{
-			LogTrace("const unsigned char LuaStack<const unsigned char>::get(lua_State * L, int idx)");
+			LogTrace("unsigned char LuaStack<const unsigned char>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<unsigned char>(luaL_checkinteger(L, idx)));
 		}
 	};
@@ -699,9 +699,9 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline const double get(lua_State * L, int idx)
+		static inline double get(lua_State * L, int idx)
 		{
-			LogTrace("const double LuaStack<const double>::get(lua_State * L, int idx)");
+			LogTrace("double LuaStack<const double>::get(lua_State * L, int idx)");
 			LogTraceReturn(static_cast<double>(luaL_checknumber(L, idx)));
 		}
 	};
@@ -805,7 +805,7 @@ end
 	};
 
 	//const char[size]
-	template <int size>
+	template <uint32 size>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <const char [size]>
 	{
 		static inline void push(lua_State * L, const char str[size])
@@ -813,7 +813,7 @@ end
 			LogTrace("void LuaStack<const char *>::push(lua_State * L, const char str[size])");
 			if (str)
 			{
-				lua_pushstring(L, str);
+				lua_pushlstring(L, str, strnlen(str, size));
 			}
 			else
 			{
@@ -830,7 +830,7 @@ end
 	};
 
 	//char[size]
-	template <int size>
+	template <uint32 size>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <char [size]>
 	{
 		static inline void push(lua_State * L, char str[size])
@@ -838,7 +838,7 @@ end
 			LogTrace("void LuaStack<const char *>::push(lua_State * L, char str[size])");
 			if (str)
 			{
-				lua_pushstring(L, str);
+				lua_pushlstring(L, str, strnlen(str, size));
 			}
 			else
 			{
@@ -940,71 +940,74 @@ end
 		}
 	};
 
-	//string
+	////////////////////////////////////////////////////////////////////////////////////////////
+	//stl
+	///////////////////////////////////////////////////////////////////////////////////////////
+	//std::string
 	template <>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <std::string>
 	{
 		static inline void push(lua_State * L, std::string & str)
 		{
-			LogTrace("void LuaStack<string>::push(lua_State * L, const string & str)");
+			LogTrace("void LuaStack<std::string>::push(lua_State * L, const std::string & str)");
 			lua_pushlstring (L, str.c_str (), str.size());
 			LogTraceReturnVoid;
 		}
 
 		static inline std::string get(lua_State * L, int idx)
 		{
-			LogTrace("std::string LuaStack<string>::get(lua_State * L, int idx)");
+			LogTrace("std::string LuaStack<std::string>::get(lua_State * L, int idx)");
 			size_t len = 0;
 			const char * str = luaL_checklstring(L, idx, &len);
 			LogTraceReturn(std::string(str, len));
 		}
 	};
 
-	//const string
+	//const std::string
 	template <>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::string>
 	{
 		static inline void push(lua_State * L, const std::string & str)
 		{
-			LogTrace("void LuaStack<const string>::push(lua_State * L, const std::string & str)");
+			LogTrace("void LuaStack<const std::string>::push(lua_State * L, const std::string & str)");
 			lua_pushlstring (L, str.c_str (), str.size());
 			LogTraceReturnVoid;
 		}
 
 		static inline std::string get(lua_State * L, int idx)
 		{
-			LogTrace("std::string LuaStack<const string &>::get(lua_State * L, int idx)");
+			LogTrace("std::string LuaStack<const std::string &>::get(lua_State * L, int idx)");
 			size_t len = 0;
 			const char * str = luaL_checklstring(L, idx, &len);
 			LogTraceReturn(std::string(str, len));
 		}
 	};
 
-	//const string &
+	//const std::string &
 	template <>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::string &>
 	{
 		static inline void push(lua_State * L, const std::string & str)
 		{
-			LogTrace("void LuaStack<const string &>::push(lua_State * L, const std::string & str)");
+			LogTrace("void LuaStack<const std::string &>::push(lua_State * L, const std::string & str)");
 			lua_pushlstring (L, str.c_str (), str.size());
 			LogTraceReturnVoid;
 		}
 
 		static inline std::string get(lua_State * L, int idx)
 		{
-			LogTrace("string LuaStack<const string &>::get(lua_State * L, int idx)");
+			LogTrace("std::string LuaStack<const std::string &>::get(lua_State * L, int idx)");
 			size_t len = 0;
 			const char * str = luaL_checklstring(L, idx, &len);
 			LogTraceReturn(std::string(str, len));
 		}
 	};
 
-	//vector
+	//std::vector
 	template <typename T>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <std::vector<T> >
 	{
-		static inline void push(lua_State * L, typename std::vector<T> & vec)
+		static inline void push(lua_State * L, std::vector<T> & vec)
 		{
 			LogTrace("void LuaStack<std::vector<T>>::push(lua_State * L, const std::vector<T> & vec)");
 			lua_createtable(L, vec.size(), 0);
@@ -1016,16 +1019,17 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename std::vector<T> get(lua_State * L, int idx)
+		static inline std::vector<T> get(lua_State * L, int idx)
 		{
-			LogTrace("std::vector<T> LuaStack<std::vector<T>>::get(lua_State * L, int idx)");
+			LogTrace("std::vector<T> LuaStack<std::vector<T> >::get(lua_State * L, int idx)");
 			if (!lua_istable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert vector failed!!!", idx);
 			}
-			typename std::vector<T> vec;
 			idx = lua_absindex(L, idx);
 			size_t len = lua_objlen(L, idx);
+			std::vector<T> vec;
+			vec.reserve(len);
 			for (size_t i = 1; i <= len; i++)
 			{
 				lua_rawgeti(L, idx, i);
@@ -1036,11 +1040,11 @@ end
 		}
 	};
 
-	//const vector
+	//const std::vector
 	template <typename T>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::vector<T> >
 	{
-		static inline void push(lua_State * L, const typename std::vector<T> & vec)
+		static inline void push(lua_State * L, const std::vector<T> & vec)
 		{
 			LogTrace("void LuaStack<const std::vector<T>>::push(lua_State * L, const std::vector<T> & const vec)");
 			lua_createtable(L, vec.size(), 0);
@@ -1052,16 +1056,17 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename std::vector<T> get(lua_State * L, int idx)
+		static inline std::vector<T> get(lua_State * L, int idx)
 		{
 			LogTrace("std::vector<T> LuaStack<const std::vector<T> &>::get(lua_State * L, int idx)");
 			if (!lua_istable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert vector failed!!!", idx);
 			}
-			typename std::vector<T> vec;
 			idx = lua_absindex(L, idx);
 			size_t len = lua_objlen(L, idx);
+			std::vector<T> vec;
+			vec.reserve(len);
 			for (size_t i = 1; i <= len; i++)
 			{
 				lua_rawgeti(L, idx, i);
@@ -1072,11 +1077,11 @@ end
 		}
 	};
 
-	//const vector &
+	//const std::vector &
 	template <typename T>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::vector<T> &>
 	{
-		static inline void push(lua_State * L, const typename std::vector<T> & vec)
+		static inline void push(lua_State * L, const std::vector<T> & vec)
 		{
 			LogTrace("void LuaStack<const std::vector<T> &>::push(lua_State * L, const std::vector<T> & vec)");
 			lua_createtable(L, vec.size(), 0);
@@ -1088,16 +1093,17 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename std::vector<T> get(lua_State * L, int idx)
+		static inline std::vector<T> get(lua_State * L, int idx)
 		{
 			LogTrace("std::vector<T> LuaStack<const std::vector<T> &>::get(lua_State * L, int idx)");
 			if (!lua_istable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert vector failed!!!", idx);
 			}
-			typename std::vector<T> vec;
 			idx = lua_absindex(L, idx);
 			size_t len = lua_objlen(L, idx);
+			std::vector<T> vec;
+			vec.reserve(len);
 			for (size_t i = 1; i <= len; i++)
 			{
 				lua_rawgeti(L, idx, i);
@@ -1110,11 +1116,11 @@ end
 
 
 
-	//map
+	//std::map
 	template <typename K, typename V>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <std::map<K, V> >
 	{
-		static inline void push(lua_State * L, typename std::map<K, V> & m)
+		static inline void push(lua_State * L, std::map<K, V> & m)
 		{
 			LogTrace("void LuaStack<std::map<K, V>>::push(lua_State * L, const std::map<K, V> & m)");
 			lua_createtable(L, 0, m.size());
@@ -1127,14 +1133,14 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename std::map<K, V> get(lua_State * L, int idx)
+		static inline std::map<K, V> get(lua_State * L, int idx)
 		{
-			LogTrace("std::map<K, V> LuaStack<map<K, V>>::get(lua_State * L, int idx)");
+			LogTrace("std::map<K, V> LuaStack<std::map<K, V>>::get(lua_State * L, int idx)");
 			if (!lua_istable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert map failed!!!", idx);
 			}
-			typename std::map<K, V> m;
+			std::map<K, V> m;
 			idx = lua_absindex(L, idx);
 
 			lua_pushnil(L);
@@ -1142,22 +1148,22 @@ end
 			{
 				K key = LuaStack<const K>::get(L, -2);
 				V val = LuaStack<const V>::get(L, -1);
-				m.insert(std::map<K, V>::value_type(key, val));
+				m.insert(typename std::map<K, V>::value_type(key, val));
 				lua_pop(L, 1);
 			}
 			LogTraceReturn(m);
 		}
 	};
-
-	//const map &
+	
+	//const std::map
 	template <typename K, typename V>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::map<K, V> >
 	{
-		static inline void push(lua_State * L, const typename std::map<K, V> & m)
+		static inline void push(lua_State * L, const std::map<K, V> & m)
 		{
 			LogTrace("void LuaStack<const std::map<K, V> &>::push(lua_State * L, const std::map<K, V> & m)");
 			lua_createtable(L, 0, m.size());
-			for (typename std::map<K, V>::iterator iter = m.begin(); iter != m.end(); ++iter)
+			for (typename std::map<K, V>::const_iterator iter = m.begin(); iter != m.end(); ++iter)
 			{
 				LuaStack<const K>::push(L, iter->first);
 				LuaStack<const V>::push(L, iter->second);
@@ -1166,14 +1172,14 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename std::map<K, V> get(lua_State * L, int idx)
+		static inline std::map<K, V> get(lua_State * L, int idx)
 		{
 			LogTrace("std::map<K, V> LuaStack<const std::map<K, V> &>::get(lua_State * L, int idx)");
 			if (!lua_istable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert map failed!!!", idx);
 			}
-			typename std::map<K, V> m;
+			std::map<K, V> m;
 			idx = lua_absindex(L, idx);
 
 			lua_pushnil(L);
@@ -1181,7 +1187,46 @@ end
 			{
 				K key = LuaStack<const K>::get(L, -2);
 				V val = LuaStack<const V>::get(L, -1);
-				m.insert(std::map<K, V>::value_type(key, val));
+				m.insert(typename std::map<K, V>::value_type(key, val));
+				lua_pop(L, 1);
+			}
+			LogTraceReturn(m);
+		}
+	};
+
+	//const std::map &
+	template <typename K, typename V>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::map<K, V> & >
+	{
+		static inline void push(lua_State * L, const std::map<K, V> & m)
+		{
+			LogTrace("void LuaStack<const std::map<K, V> &>::push(lua_State * L, const std::map<K, V> & m)");
+			lua_createtable(L, 0, m.size());
+			for (typename std::map<K, V>::const_iterator iter = m.begin(); iter != m.end(); ++iter)
+			{
+				LuaStack<const K>::push(L, iter->first);
+				LuaStack<const V>::push(L, iter->second);
+				lua_rawset(L, -3);
+			}
+			LogTraceReturnVoid;
+		}
+
+		static inline std::map<K, V> get(lua_State * L, int idx)
+		{
+			LogTrace("std::map<K, V> LuaStack<const std::map<K, V> &>::get(lua_State * L, int idx)");
+			if (!lua_istable(L, idx))
+			{
+				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert map failed!!!", idx);
+			}
+			std::map<K, V> m;
+			idx = lua_absindex(L, idx);
+
+			lua_pushnil(L);
+			while (lua_next(L, idx))
+			{
+				K key = LuaStack<const K>::get(L, -2);
+				V val = LuaStack<const V>::get(L, -1);
+				m.insert(typename std::map<K, V>::value_type(key, val));
 				lua_pop(L, 1);
 			}
 			LogTraceReturn(m);
@@ -1189,11 +1234,11 @@ end
 	};
 
 
-	//set
+	//std::set
 	template <typename T>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <std::set<T> >
 	{
-		static inline void push(lua_State * L, typename std::set<T> & s)
+		static inline void push(lua_State * L, std::set<T> & s)
 		{
 			LogTrace("void LuaStack<std::set<T>>::push(lua_State * L, const std::set<T> & s)");
 			lua_createtable(L, 0, s.size());
@@ -1206,14 +1251,14 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename std::set<T> get(lua_State * L, int idx)
+		static inline std::set<T> get(lua_State * L, int idx)
 		{
-			LogTrace("std::set<T> LuaStack<std::set<T> >::get(lua_State * L, int idx)");
+			LogTrace("std::set<T> LuaStack<std::set<T>>::get(lua_State * L, int idx)");
 			if (!lua_istable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert set failed!!!", idx);
 			}
-			typename std::set<T> s;
+			std::set<T> s;
 			idx = lua_absindex(L, idx);
 
 			lua_pushnil(L);
@@ -1227,15 +1272,15 @@ end
 		}
 	};
 
-	//const set &
+	//const std::set
 	template <typename T>
 	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::set<T> >
 	{
-		static inline void push(lua_State * L, const typename std::set<T> & s)
+		static inline void push(lua_State * L, const std::set<T> & s)
 		{
 			LogTrace("void LuaStack<const std::set<T> &>::push(lua_State * L, const std::set<T> & s)");
 			lua_createtable(L, 0, s.size());
-			for (typename std::set<T>::iterator iter = s.begin(); iter != s.end(); ++iter)
+			for (typename std::set<T>::const_iterator iter = s.begin(); iter != s.end(); ++iter)
 			{
 				LuaStack<const T>::push(L, *iter);
 				LuaStack<bool>::push(L, true);
@@ -1244,14 +1289,52 @@ end
 			LogTraceReturnVoid;
 		}
 
-		static inline typename std::set<T> get(lua_State * L, int idx)
+		static inline std::set<T> get(lua_State * L, int idx)
 		{
 			LogTrace("std::set<T> LuaStack<const std::set<T> &>::get(lua_State * L, int idx)");
 			if (!lua_istable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert set failed!!!", idx);
 			}
-			typename std::set<T> s;
+			std::set<T> s;
+			idx = lua_absindex(L, idx);
+
+			lua_pushnil(L);
+			while (lua_next(L, idx))
+			{
+				T key = LuaStack<const T>::get(L, -2);
+				s.insert(key);
+				lua_pop(L, 1);
+			}
+			LogTraceReturn(s);
+		}
+	};
+
+	//const std::set &
+	template <typename T>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <const std::set<T> & >
+	{
+		static inline void push(lua_State * L, const std::set<T> & s)
+		{
+			LogTrace("void LuaStack<const std::set<T> &>::push(lua_State * L, const std::set<T> & s)");
+			lua_createtable(L, 0, s.size());
+			for (typename std::set<T>::const_iterator iter = s.begin(); iter != s.end(); ++iter)
+			{
+				LuaStack<const T>::push(L, *iter);
+				LuaStack<bool>::push(L, true);
+				lua_rawset(L, -3);
+			}
+			LogTraceReturnVoid;
+		}
+
+		static inline std::set<T> get(lua_State * L, int idx)
+		{
+			LogTrace("std::set<T> LuaStack<const std::set<T> &>::get(lua_State * L, int idx)");
+			if (!lua_istable(L, idx))
+			{
+				LogScriptErrorJump(L, "Error!!!The %d data is not a table, convert set failed!!!", idx);
+			}
+			std::set<T> s;
 			idx = lua_absindex(L, idx);
 
 			lua_pushnil(L);
@@ -1266,46 +1349,59 @@ end
 	};
 
 
-	//SharedPtr template<T> can use this type!!!!
-	/*
+	// pointer move
 	template <typename T>
-	struct LIGHTINK_TEMPLATE_DECL LuaStack <SharedPtr<T> >
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <LuaStackPtrMove<T> >
 	{
-		static inline void push(lua_State* L, typename SharedPtr<T>::type & sp)
+		static inline void push(lua_State* L, LuaStackPtrMove<T> & pm)
 		{
-			LogTrace("void LuaStack<SharedPtr<T>>::push(lua_State* L, const typename SharedPtr<T>::type & sp)");
-			LuaUserdata::push<const SharedPtr<T>::type>(L, sp);
+			LogTrace("void LuaStack<LuaStackPtrMove<T> &>::push(lua_State * L, LuaStackPtrMove<T> & pm)");
+			LuaUserdataPtrMove::push<T>(L, pm);
 			LogTraceReturnVoid;
 		}
 
-		static inline typename SharedPtr<T>::type get (lua_State * L, int idx)
+		static inline LuaStackPtrMove<T> get (lua_State * L, int idx)
 		{
-			LogTrace("SharedPtr<T>::type LuaStack<SharedPtr<T>>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaUserdata::get<const SharedPtr<T>::type>(L, idx));
+			LogTrace("LuaStackPtrMove<T> LuaStack<LuaStackPtrMove<T> &>::get(lua_State * L, int idx)");
+			LogTraceReturn(LuaUserdataPtrMove::get<T> (L, idx));
 		}
 	};
-	*/
 
-	//SharedPtrTS template<T> can use this type!!!!
-	/*
+	//const pointer move
 	template <typename T>
-	struct LIGHTINK_TEMPLATE_DECL LuaStack <SharedPtrTS<T> >
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <const LuaStackPtrMove<T> >
 	{
-		static inline void push(lua_State* L, typename SharedPtrTS<T>::type & sp)
+		static inline void push(lua_State* L, const LuaStackPtrMove<T> & pm)
 		{
-			LogTrace("void LuaStack<SharedPtrTS<T>>::push(lua_State* L, const typename SharedPtrTS<T>::type & sp)");
-			LuaUserdata::push<const SharedPtrTS<T>::type>(L, sp);
+			LogTrace("void LuaStack<const LuaStackPtrMove<T> &>::push(lua_State * L, const LuaStackPtrMove<T> & pm)");
+			LuaUserdataPtrMove::push<T>(L, pm);
 			LogTraceReturnVoid;
 		}
 
-		static inline typename SharedPtrTS<T>::type get (lua_State * L, int idx)
+		static inline LuaStackPtrMove<T> get (lua_State * L, int idx)
 		{
-			LogTrace("SharedPtrTS<T>::type LuaStack<SharedPtrTS<T>>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaUserdata::get<const SharedPtrTS<T>::type>(L, idx));
+			LogTrace("LuaStackPtrMove<T> LuaStack<const LuaStackPtrMove<T> &>::get(lua_State * L, int idx)");
+			LogTraceReturn(LuaUserdataPtrMove::get<T> (L, idx));
 		}
 	};
-	*/
 
+	//const pointer move &
+	template <typename T>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <const LuaStackPtrMove<T> &>
+	{
+		static inline void push(lua_State* L, const LuaStackPtrMove<T> & pm)
+		{
+			LogTrace("void LuaStack<const LuaStackPtrMove<T> &>::push(lua_State * L, const LuaStackPtrMove<T> & pm)");
+			LuaUserdataPtrMove::push<T>(L, pm);
+			LogTraceReturnVoid;
+		}
+
+		static inline LuaStackPtrMove<T> get (lua_State * L, int idx)
+		{
+			LogTrace("LuaStackPtrMove<T> LuaStack<const LuaStackPtrMove<T> &>::get(lua_State * L, int idx)");
+			LogTraceReturn(LuaUserdataPtrMove::get<T> (L, idx));
+		}
+	};
 
 	// pointer
 	template <typename T>
@@ -1338,46 +1434,44 @@ end
 
 		static inline const T * get (lua_State * L, int idx)
 		{
-			LogTrace("T * LuaStack<T *>::get(lua_State * L, int idx)");
+			LogTrace("const T * LuaStack<T *>::get(lua_State * L, int idx)");
 			LogTraceReturn(LuaUserdataPtr::get<T> (L, idx));
 		}
 	};
 
-
 	template <typename T>
-	struct LIGHTINK_TEMPLATE_DECL LuaStack <T &>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack<const T &>
 	{
-		static inline void push(lua_State* L, T & p)
+		static inline void push(lua_State * L, const T & t)
 		{
-			LogTrace("void LuaStack<T *>::push(lua_State * L, T * const p)");
-			LuaUserdataPtr::push<T>(L, p);
+			LogTrace("void LuaStack<T>::push(lua_State * L, const T & t)");
+			LuaUserdataPtr::push<T>(L, &t);
 			LogTraceReturnVoid;
 		}
 
-		static inline T & get (lua_State * L, int idx)
+		static inline const T & get(lua_State * L, int idx)
 		{
-			LogTrace("T * LuaStack<T *>::get(lua_State * L, int idx)");
-			LogTraceReturn(*LuaUserdataPtr::get<T> (L, idx));
+			LogTrace("const T & LuaStack<T>::get(lua_State * L, int idx)");
+			LogTraceReturn(*LuaUserdataPtr::get <T> (L, idx));
 		}
 	};
 
 	template <typename T>
-	struct LIGHTINK_TEMPLATE_DECL LuaStack <const T &>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack<T &>
 	{
-		static inline void push(lua_State* L, const T & p)
+		static inline void push(lua_State * L, T & t)
 		{
-			LogTrace("void LuaStack<T *>::push(lua_State * L, T * const p)");
-			LuaUserdataPtr::push<T>(L, &p);
+			LogTrace("void LuaStack<T>::push(lua_State * L, T & t)");
+			LuaUserdataPtr::push<T>(L, &t);
 			LogTraceReturnVoid;
 		}
 
-		static inline const T & get (lua_State * L, int idx)
+		static inline T & get(lua_State * L, int idx)
 		{
-			LogTrace("T * LuaStack<T *>::get(lua_State * L, int idx)");
-			LogTraceReturn(*LuaUserdataPtr::get<T> (L, idx));
+			LogTrace("T & LuaStack<T>::get(lua_State * L, int idx)");
+			LogTraceReturn(*LuaUserdataPtr::get <T> (L, idx));
 		}
 	};
-
 
 	// Lua stack conversions for const class objects passed by value.
 	template <typename T>
@@ -1393,7 +1487,7 @@ end
 		static inline const T get(lua_State * L, int idx)
 		{
 			LogTrace("T LuaStack<T>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaUserdata::get<T> (L, idx));
+			LogTraceReturn(LuaUserdata::get <T> (L, idx));
 		}
 	};
 
@@ -1403,7 +1497,7 @@ end
 	{
 		static inline void push(lua_State * L, T & t)
 		{
-			LogTrace("void LuaStack<T>::push(lua_State * L, const T & t)");
+			LogTrace("void LuaStack<T>::push(lua_State * L, T & t)");
 			LuaUserdata::push<T>(L, t);
 			LogTraceReturnVoid;
 		}

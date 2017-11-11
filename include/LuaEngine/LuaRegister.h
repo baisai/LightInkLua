@@ -71,16 +71,16 @@ namespace LightInk
 		LuaRegister & def_class_func(T obj, const std::string & name);
 
 		template <typename T>
-		LuaRegister & def_class_property(T ClassType::* obj, const std::string & name);
+		LuaRegister & def_class_property(T ClassType::* obj, const std::string  & name);
 
 		template <typename T>
-		LuaRegister & def_func(T obj, const std::string & name);
+		LuaRegister & def_func(T obj, const std::string  & name);
 
 		RuntimeError get_class_table();
 
 		RuntimeError get_class_metatable();
 
-		void init_class(const std::string & name);
+		void init_class(const std::string  & name);
 
 
 	private:
@@ -92,14 +92,14 @@ namespace LightInk
 	class LIGHTINK_TEMPLATE_DECL LuaModuleByClass : public LuaModule
 	{
 	public:
-		LuaModuleByClass(lua_State * L, const std::string & moduleName, const LuaRef & table, LuaRegister<ClassType, CtorType> & c);
+		LuaModuleByClass(lua_State * L, const std::string  & moduleName, const LuaRef & table, LuaRegister<ClassType, CtorType> & c);
 
 		virtual ~LuaModuleByClass();
 
 		LuaRegister<ClassType, CtorType> & module_end();
 
 		template <typename T>
-		LuaModuleByClass & def(T obj, const std::string & name);
+		LuaModuleByClass & def(T obj, const std::string  & name);
 
 		template <typename T>
 		LuaRegister<ClassType, CtorType> & operator[](const T & idx);

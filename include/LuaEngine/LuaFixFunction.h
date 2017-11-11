@@ -25,7 +25,7 @@
 #define LIGHTINK_LUAENGINE_LUAFIXFUNCTION_H_
 
 #include "Common/Type.h"
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 
 
 #if LUA_VERSION_NUM < 502

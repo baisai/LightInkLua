@@ -26,7 +26,7 @@
 #define LIGHTINK_LUAENGINE_LUAITERATOR_H_
 
 #include "Common/Type.h"
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "LuaEngine/LuaRef.h"
 
 namespace LightInk

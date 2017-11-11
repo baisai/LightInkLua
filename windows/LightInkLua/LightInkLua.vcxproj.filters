@@ -25,15 +25,6 @@
     <Filter Include="LuaEngine\source\lua">
       <UniqueIdentifier>{86cb3f33-1559-48b9-9772-e6028c3c9a55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Atomic">
-      <UniqueIdentifier>{08e19b69-d8f1-4164-8947-2194f2cf12c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Atomic\include">
-      <UniqueIdentifier>{c2f2d323-d220-4a6f-a488-ce9c7550daac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Atomic\source">
-      <UniqueIdentifier>{2ec8b868-8828-4c21-aa77-8de077143de8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\Common\Log.h">
@@ -46,15 +37,6 @@
       <Filter>Common\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\Common\RuntimeError.h">
-      <Filter>Common\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\Common\SharedPtr.h">
-      <Filter>Common\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\Common\AutoPtr.h">
-      <Filter>Common\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\Common\RefCounter.h">
       <Filter>Common\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\LuaEngine\lua\lapi.h">
@@ -201,9 +183,6 @@
     <ClInclude Include="..\..\include\Common\UserMemory.h">
       <Filter>Common\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Atomic\mintomic.h">
-      <Filter>Atomic\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\Common\TypeTool.h">
       <Filter>Common\include</Filter>
     </ClInclude>
@@ -213,15 +192,18 @@
     <ClInclude Include="..\..\include\LuaEngine\LuaInt64.h">
       <Filter>LuaEngine\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\LuaEngine\LuaLib.h">
+      <Filter>LuaEngine\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LuaEngine\LuaOptionTool.h">
+      <Filter>LuaEngine\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LuaEngine\LuaTableRef.h">
+      <Filter>LuaEngine\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Common\RuntimeError.cpp">
-      <Filter>Common\source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\include\Common\SharedPtr.cpp">
-      <Filter>Common\source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\include\Common\AutoPtr.cpp">
       <Filter>Common\source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\LuaEngine\lua\lapi.c">
@@ -339,6 +321,12 @@
       <Filter>Common\source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\LuaEngine\LuaInt64.cpp">
+      <Filter>LuaEngine\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\LuaEngine\LuaRef.cpp">
+      <Filter>LuaEngine\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\LuaEngine\LuaTableRef.cpp">
       <Filter>LuaEngine\source</Filter>
     </ClCompile>
   </ItemGroup>

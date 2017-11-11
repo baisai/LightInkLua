@@ -3,7 +3,7 @@
 #define LIGHTINK_LUAENGINE_LUAOPTIONTOOL_H_
 
 #include "Common/Type.h"
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "Common/StlType.h"
 #include "Common/Log.h"
 

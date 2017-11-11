@@ -24,7 +24,7 @@
 #ifndef LIGHTINK_LUAENGINE_LUACLASSPROPERTYTRAITS_H_
 #define LIGHTINK_LUAENGINE_LUACLASSPROPERTYTRAITS_H_
 
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "LuaEngine/LuaMetatableTraits.h"
 #include "LuaEngine/LuaStack.h"
 

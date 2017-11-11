@@ -21,26 +21,13 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-#ifndef LIGHTINK_LUAENGINE_LUASTATEPROTECT_H_
-#define LIGHTINK_LUAENGINE_LUASTATEPROTECT_H_
+#ifndef LIGHTINK_LUAENGINE_LUALIB_H_
+#define LIGHTINK_LUAENGINE_LUALIB_H_
 
-#include "Common/Type.h"
-#include "LuaEngine/LuaLib.h"
-
-namespace LightInk
-{
-	class LIGHTINK_DECL LuaStateProtect
-	{
-	public:
-		LuaStateProtect(lua_State * L, bool autoPop = false) : m_lua(L), m_top(lua_gettop(L)), m_autoPop(autoPop) { ; }
-		~LuaStateProtect() {if (m_autoPop) lua_settop(m_lua, m_top);}
-		void reset() { lua_settop(m_lua, m_top); }
-	private:
-		lua_State * m_lua;
-		int m_top;
-		bool m_autoPop;
-	LIGHTINK_DISABLE_COPY(LuaStateProtect)
-	};
-}
+#ifdef LIGHTINK_LUAJIT
+#include "LuaEngine/luajit/lua.hpp"
+#else
+#include "LuaEngine/lua/lua.hpp"
+#endif
 
 #endif

@@ -39,9 +39,9 @@ namespace LightInk
 {
 
 	template <typename ClassType, typename CtorType>
-	LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const std::string & name) : m_lua(L), LuaRegisterNode(L)
+	LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const string & name) : m_lua(L), LuaRegisterNode(L)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const std::string & name)");
+		LogTrace("LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const string & name)");
 		LuaStateProtect lsp(L, true);
 		init_class(name);
 		//pop metatable, class table, parent class table
@@ -50,9 +50,9 @@ namespace LightInk
 
 	template <typename ClassType, typename CtorType>
 	template <typename BaseType>
-	LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const std::string & name, BaseClassStrategy<BaseType>) : m_lua(L), LuaRegisterNode(L)
+	LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const string & name, BaseClassStrategy<BaseType>) : m_lua(L), LuaRegisterNode(L)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const std::string & name, BaseClassStrategy<BaseType>)");
+		LogTrace("LuaRegister<ClassType, CtorType>::LuaRegister(lua_State * L, const string & name, BaseClassStrategy<BaseType>)");
 		LuaStateProtect lsp(L, true);
 		init_class(name);
 		int top = lua_gettop(L);
@@ -89,7 +89,7 @@ namespace LightInk
 			}
 			lua_pop(L, 2);
 		}
-		
+
 		if (get_class_metatable() != RE_Success)
 		{
 			LogError("Error!!!Get Class Metatable Failed!!!");
@@ -100,6 +100,7 @@ namespace LightInk
 		lua_pushboolean(L, 1);
 		lua_rawset(L, -3);
 
+		
 		//pop metatable, class table, parent class table
 		LogTraceReturnVoid;
 	}
@@ -122,17 +123,17 @@ namespace LightInk
 
 	template <typename ClassType, typename CtorType>
 	template <typename T>
-	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def(T obj, const std::string & name)
+	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def(T obj, const string & name)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def(T obj, const std::string & name)");
+		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def(T obj, const string & name)");
 		LuaDefTraits<T>::call(this, m_lua, obj, name);
 		LogTraceReturn(*this);
 	}
 
 	template <typename ClassType, typename CtorType>
-	LuaModuleByClass<ClassType, CtorType> LuaRegister<ClassType, CtorType>::def_module(const std::string & name)
+	LuaModuleByClass<ClassType, CtorType> LuaRegister<ClassType, CtorType>::def_module(const string & name)
 	{
-		LogTrace("LuaModuleByClass<ClassType, CtorType> LuaRegister<ClassType, CtorType>::def_module(const std::string & name)");
+		LogTrace("LuaModuleByClass<ClassType, CtorType> LuaRegister<ClassType, CtorType>::def_module(const string & name)");
 		if (get_class_table() != RE_Success)
 		{
 			LogError("Error!!!Get Class Table Failed!!!");
@@ -161,23 +162,25 @@ namespace LightInk
 	}
 
 	template <typename ClassType, typename CtorType>
-	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_cclosure(lua_CFunction obj, const std::string & name)
+	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_cclosure(lua_CFunction obj, const string & name)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_cclosure(lua_CFunction obj, const std::string & name)");
+		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_cclosure(lua_CFunction obj, const string & name)");
 		LuaStateProtect lsp(m_lua, true);
-		if (get_class_table() != RE_Success)
+		if (get_class_metatable() != RE_Success)
 		{
-			LogError("Error!!!Get Class Table Failed!!!");
+			LogError("Error!!!Get Class Metatable Failed!!!");
 		}
+		LuaDefAutoTool::def(m_lua, obj, name);
+		lua_pop(m_lua, 1);
 		LuaDefAutoTool::def(m_lua, obj, name);
 		LogTraceReturn(*this);
 	}
 
 	template <typename ClassType, typename CtorType>
 	template <typename T>
-	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_func(T obj, const std::string & name)
+	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_func(T obj, const string & name)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_func(T obj, const std::string & name)");
+		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_func(T obj, const string & name)");
 		LuaStateProtect lsp(m_lua, true);
 		if (get_class_metatable() != RE_Success)
 		{
@@ -191,9 +194,9 @@ namespace LightInk
 
 	template <typename ClassType, typename CtorType>
 	template <typename T>
-	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_property(T ClassType::* obj, const std::string & name)
+	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_property(T ClassType::* obj, const string & name)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_property(T ClassType::* obj, const std::string & name)");
+		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_class_property(T ClassType::* obj, const string & name)");
 		typedef LuaClassPropertyInfoImp<T ClassType::*> LCPI;
 		LuaStateProtect lsp(m_lua, true);
 		if (get_class_metatable() != RE_Success)
@@ -210,9 +213,9 @@ namespace LightInk
 
 	template <typename ClassType, typename CtorType>
 	template <typename T>
-	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_func(T obj, const std::string & name)
+	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_func(T obj, const string & name)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_func(T obj, const std::string & name)");
+		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_func(T obj, const string & name)");
 		LuaStateProtect lsp(m_lua, true);
 		if (get_class_metatable() != RE_Success)
 		{
@@ -230,9 +233,9 @@ namespace LightInk
 
 	template <typename ClassType, typename CtorType>
 	template <typename T>
-	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_property(T * obj, const std::string & name)
+	LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_property(T * obj, const string & name)
 	{
-		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_property(T ClassType::* obj, const std::string & name)");
+		LogTrace("LuaRegister<ClassType, CtorType> & LuaRegister<ClassType, CtorType>::def_property(T ClassType::* obj, const string & name)");
 		LuaStateProtect lsp(m_lua, true);
 		if (get_class_table() != RE_Success)
 		{
@@ -278,9 +281,9 @@ namespace LightInk
 
 
 	template <typename ClassType, typename CtorType>
-	void LuaRegister<ClassType, CtorType>::init_class(const std::string & name)
+	void LuaRegister<ClassType, CtorType>::init_class(const string & name)
 	{
-		LogTrace("void LuaRegister<ClassType, CtorType>::init_class(const std::string & name)");
+		LogTrace("void LuaRegister<ClassType, CtorType>::init_class(const string & name)");
 		set_key(name);
 		LuaClassInfo<ClassType>::set_class_name(name.c_str());
 		if(LuaClassInfo<ClassType>::is_registered(m_lua)) //have this name
@@ -319,7 +322,7 @@ namespace LightInk
 
 			lua_pushlightuserdata(m_lua, LuaClassInfo<ClassType>::get_class_key());
 			rawsetfield(m_lua, -2, "key__");
-			
+
 			lua_pushboolean(m_lua, 1);
 			lua_rawsetp(m_lua, -2, LuaClassInfo<ClassType>::get_class_key());
 
@@ -351,9 +354,9 @@ namespace LightInk
 	//LuaModuleByClass
 	//////////////////////////////////////////////////////////////////////////////////////
 	template <typename ClassType, typename CtorType>
-	LuaModuleByClass<ClassType, CtorType>::LuaModuleByClass(lua_State * L, const std::string & moduleName, const LuaRef & table, LuaRegister<ClassType, CtorType> & c) : LuaModule(L, moduleName, table), m_class(c)
+	LuaModuleByClass<ClassType, CtorType>::LuaModuleByClass(lua_State * L, const string & moduleName, const LuaRef & table, LuaRegister<ClassType, CtorType> & c) : LuaModule(L, moduleName, table), m_class(c)
 	{
-		LogTrace("LuaModuleByClass<ClassType, CtorType>::LuaModuleByClass(lua_State * L, const std::string & moduleName, const LuaRef & table, LuaRegister<ClassType, CtorType> & c)");
+		LogTrace("LuaModuleByClass<ClassType, CtorType>::LuaModuleByClass(lua_State * L, const string & moduleName, const LuaRef & table, LuaRegister<ClassType, CtorType> & c)");
 		LogTraceReturnVoid;
 	}
 
@@ -373,9 +376,9 @@ namespace LightInk
 
 	template <typename ClassType, typename CtorType>
 	template <typename T>
-	LuaModuleByClass<ClassType, CtorType> & LuaModuleByClass<ClassType, CtorType>::def(T obj, const std::string & name)
+	LuaModuleByClass<ClassType, CtorType> & LuaModuleByClass<ClassType, CtorType>::def(T obj, const string & name)
 	{
-		LogTrace("LuaModuleByClass<ClassType, CtorType> & LuaModuleByClass<ClassType, CtorType>::def(T obj, const std::string & name)");
+		LogTrace("LuaModuleByClass<ClassType, CtorType> & LuaModuleByClass<ClassType, CtorType>::def(T obj, const string & name)");
 		push_value();
 		LuaDefAutoTool::def(state(), obj, name);
 		lua_pop(state(), 1);

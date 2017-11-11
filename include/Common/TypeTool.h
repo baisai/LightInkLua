@@ -21,8 +21,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-#ifndef LIGHTINK_COMMON_ISPOINTER_H_
-#define LIGHTINK_COMMON_ISPOINTER_H_
+#ifndef LIGHTINK_COMMON_TYPETOOL_H_
+#define LIGHTINK_COMMON_TYPETOOL_H_
 
 namespace LightInk
 {
@@ -39,17 +39,34 @@ namespace LightInk
 	struct IsPointer
 	{
 		enum { Result = false };
-		static inline T & get_ref(T & data) {return data; };
-		static inline const T & get_ref(const T & data) {return data; };
+		typedef T type;
+		static T & get_ref(T & data);
+		static const T & get_ref(const T & data);
 	};
+	///////////////////////////////////////////////////////////////////////
+	//inline method
+	//////////////////////////////////////////////////////////////////////
+	template <typename T>
+	inline T & IsPointer<T>::get_ref(T & data) { return data; }
+	template <typename T>
+	inline const T & IsPointer<T>::get_ref(const T & data) { return data; }
 
 	template <typename T>
 	struct IsPointer <T *>
 	{
 		enum { Result = true };
-		static inline T & get_ref(T * data) {return *data; };
-		static inline const T & get_ref(const T * data) {return *data; };
+		typedef T type;
+		static T & get_ref(T * data);
+		static const T & get_ref(const T * data);
 	};
+	///////////////////////////////////////////////////////////////////////
+	//inline method
+	//////////////////////////////////////////////////////////////////////
+	template <typename T>
+	inline T & IsPointer<T *>::get_ref(T * data) { return *data; }
+	template <typename T>
+	inline const T & IsPointer<T *>::get_ref(const T * data) { return *data; }
+
 
 	template <typename T>
 	struct GetType

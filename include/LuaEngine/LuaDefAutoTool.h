@@ -25,7 +25,7 @@
 #define LIGHTINK_LUAENGINE_LUAOPTIONAUTOTOOL_H_
 
 #include "Common/Type.h"
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "Common/Log.h"
 #include "LuaEngine/LuaStateProtect.h"
 #include "LuaEngine/LuaDefTraits.h"
@@ -35,16 +35,16 @@ namespace LightInk
 	struct LIGHTINK_DECL LuaDefAutoTool
 	{
 		template <typename T>
-		inline static void def(lua_State * L, T obj, const std::string & name)
+		inline static void def(lua_State * L, T obj, const string & name)
 		{
-			LogTrace("void LuaDefAutoTool::def(lua_State * L, T obj, const std::string & name)");
+			LogTrace("void LuaDefAutoTool::def(lua_State * L, T obj, const string & name)");
 			LuaDefTraits<T>::call(L, obj, name);
 			LogTraceReturnVoid;
 		}
 
-		static void def(lua_State * L, lua_CFunction obj, const std::string & name)
+		static void def(lua_State * L, lua_CFunction obj, const string & name)
 		{
-			LogTrace("void LuaDefAutoTool::def(lua_State * L, lua_CFunction ObjectCloseAuditAlarm, const std::string & name)");
+			LogTrace("void LuaDefAutoTool::def(lua_State * L, lua_CFunction ObjectCloseAuditAlarm, const string & name)");
 			LuaStateProtect lsp(L, true);
 			if (!lua_istable(L, -1))
 			{

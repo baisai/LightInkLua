@@ -25,10 +25,10 @@
 #ifndef LIGHTINK_LUAENGINE_LUAINT64_H_
 #define LIGHTINK_LUAENGINE_LUAINT64_H_
 
-#include "Common/Type.h"
-#include "LuaEngine/lua/lua.hpp"
-#include "Common/CharPtrBridge.h"
 #include <string>
+#include "Common/Type.h"
+#include "LuaEngine/LuaLib.h"
+#include "Common/CharPtrBridge.h"
 
 namespace LightInk
 {
@@ -39,15 +39,15 @@ namespace LightInk
 		LuaInt64(lua_Number number);
 		LuaInt64(int64 number);
 
-		static LuaInt64 new_from_string(const CharPtrBridge number);
+		static LuaInt64 new_from_string(const CharPtrBridge & number);
 		static LuaInt64 new_from_st(const LuaInt64 & number);
 
-		const  std::string to_string();
+		const std::string to_string();
 		lua_Number to_number();
 		LuaUint64 to_uint64();
 
 		void set_number(lua_Number number);
-		void set_string(const CharPtrBridge number);
+		void set_string(const CharPtrBridge & number);
 		void set_st(const LuaInt64 & number);
 
 		LuaInt64 add_number(lua_Number number);
@@ -95,7 +95,7 @@ namespace LightInk
 		LuaUint64(lua_Number number);
 		LuaUint64(uint64 number);
 
-		static LuaUint64 new_from_string(CharPtrBridge number);
+		static LuaUint64 new_from_string(const CharPtrBridge & number);
 		static LuaUint64 new_from_st(const LuaUint64 & number);
 
 		const std::string to_string();
@@ -103,7 +103,7 @@ namespace LightInk
 		LuaInt64 to_int64();
 
 		void set_number(lua_Number number);
-		void set_string(const CharPtrBridge number);
+		void set_string(const CharPtrBridge & number);
 		void set_st(const LuaUint64 & number);
 
 		LuaUint64 add_number(lua_Number number);

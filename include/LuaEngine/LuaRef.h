@@ -26,109 +26,20 @@
 #define LIGHTINK_LUAENGINE_LUAREF_H_
 
 #include "Common/Type.h"
+#include "Common/Log.h"
 #include "LuaEngine/LuaStateProtect.h"
 #include "LuaEngine/LuaStack.h"
+#include "LuaEngine/LuaTableRef.h"
 
 
 namespace LightInk
 {
 	class LIGHTINK_DECL LuaRef : public SmallObject
 	{
-	private:
-		class LuaTableRef : public SmallObject
-		{
-		public:
-			LuaTableRef(lua_State * L, int tableRef) : m_L(L), m_tableRef(tableRef), m_keyRef(luaL_ref(L, LUA_REGISTRYINDEX))
-			{ LogTrace("LuaRef::LuaTableRef::LuaTableRef(lua_State * L, int tableRef)"); LogTraceReturnVoid; }
-			LuaTableRef(const LuaTableRef & cp) : m_L(cp.m_L), m_tableRef(cp.m_tableRef)
-			{
-				LogTrace("LuaRef::LuaTableRef::LuaTableRef(const LuaTableRef & cp)");
-				lua_rawgeti(m_L, LUA_REGISTRYINDEX, cp.m_keyRef);
-				m_keyRef = luaL_ref(m_L, LUA_REGISTRYINDEX);
-				LogTraceReturnVoid;
-			}
-			~LuaTableRef()
-			{
-				LogTrace("LuaRef::LuaTableRef::~LuaTableRef()");
-				luaL_unref(m_L, LUA_REGISTRYINDEX, m_keyRef);
-				LogTraceReturnVoid;
-			}
-
-			inline int create_ref() const
-			{
-				LogTrace("int LuaRef::LuaTableRef::create_ref() const");
-				if (m_tableRef == LUA_REFNIL || m_keyRef == LUA_REFNIL)
-				{
-					LogTraceReturn(LUA_REFNIL);
-				}
-				push();
-				LogTraceReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
-			}
-
-			template <typename T>
-			LuaTableRef & operator = (const T & v)
-			{
-				LogTrace("LuaTableRef & LuaRef::LuaTableRef::operator =<T> (const T & v)");
-				LuaStateProtect lsp(m_L);
-				lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
-				lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
-				LuaStack<const T>::push(m_L, v);
-				lua_settable(m_L, -3);
-				lsp.reset();
-				LogTraceReturn(*this);
-			}
-
-			template <typename T>
-			LuaTableRef & rawset (const T & v)
-			{
-				LogTrace("LuaTableRef & LuaRef::LuaTableRef::rawset<T> (const T & v)");
-				LuaStateProtect lsp(m_L);
-				lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
-				lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
-				LuaStack<const T>::push(m_L, v);
-				lua_rawset(m_L, -3);
-				lsp.reset();
-				LogTraceReturn(*this);
-			}
-
-			inline lua_State * state() const
-			{ LogTrace("lua_State * LuaRef::LuaTableRef::state()"); LogTraceReturn(m_L); }
-
-			void push() const
-			{
-				LogTrace("LuaRef::LuaTableRef::push() const");
-				lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
-				lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
-				lua_gettable(m_L, -2);
-				lua_remove(m_L, -2); // remove the table
-				LogTraceReturnVoid;
-			}
-
-			LuaRef get_ref() const
-			{
-				LogTrace("LuaRef LuaRef:;LuaTableRef::get_ref()");
-				LogTraceReturn(LuaRef(*this));
-			}
-
-		private:
-			lua_State * m_L;
-			int m_tableRef;
-			int m_keyRef;
-		};
-
-		friend struct LuaStack<const LuaTableRef>;
 	public:
-		LuaRef(lua_State * L) : m_L(L), m_ref(LUA_REFNIL)
-		{ LogTrace("LuaRef::LuaRef(lua_State * L)"); LogTraceReturnVoid; }
-		LuaRef(lua_State * L, bool fromStack) : m_L(L), m_ref(luaL_ref(L, LUA_REGISTRYINDEX))
-		{ LogTrace("LuaRef::LuaRef(lua_State * L, bool fromStack)"); LogTraceReturnVoid; }
-		LuaRef(lua_State * L, int idx) : m_L(L), m_ref(LUA_REFNIL)
-		{
-			LogTrace("LuaRef::LuaRef(lua_State * L, int idx)");
-			lua_pushvalue(L, idx);
-			m_ref = luaL_ref(L, LUA_REGISTRYINDEX);
-			LogTraceReturnVoid;
-		}
+		LuaRef(lua_State * L);
+		LuaRef(lua_State * L, bool fromStack);
+		LuaRef(lua_State * L, int idx);
 		template <typename T>
 		LuaRef(lua_State * L, const T & v) : m_L(L)
 		{
@@ -137,48 +48,18 @@ namespace LightInk
 			m_ref = luaL_ref(L, LUA_REGISTRYINDEX);
 			LogTraceReturnVoid;
 		}
-		LuaRef(const LuaTableRef & v) : m_L(v.state()), m_ref(v.create_ref())
-		{ LogTrace("LuaRef::LuaRef(const LuaTableRef & v)"); LogTraceReturnVoid; }
-		LuaRef(const LuaRef & cp) : m_L(cp.m_L), m_ref(cp.create_ref())
-		{ LogTrace("LuaRef::LuaRef(const LuaRef & cp)"); LogTraceReturnVoid; }
-		~LuaRef()
-		{
-			LogTrace("LuaRef::~LuaRef()");
-			luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
-			LogTraceReturnVoid;
-		}
+		LuaRef(const LuaTableRef & v);
+		LuaRef(const LuaRef & cp);
+		virtual ~LuaRef();
 
-		inline int create_ref() const
-		{
-			LogTrace("int LuaRef::create_ref() const");
-			if (m_ref == LUA_REFNIL)
-			{
-				LogTraceReturn(m_ref);
-			}
-			push();
-			LogTraceReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
-		}
+		void clear_lua();
 
-		inline void set_nil()
-		{
-			LogTrace("LuaRef::set_nil()");
-			if (m_ref != LUA_REFNIL)
-			{
-				luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
-				m_ref = LUA_REFNIL;
-			}
-			LogTraceReturnVoid;
-		}
+		int create_ref() const;
 
-		LuaRef & operator = (const LuaRef & right)
-		{
-			LogTrace("LuaRef & LuaRef::operator = (const LuaRef & right)");
-			luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
-			right.push();
-			m_L = right.state();
-			m_ref = luaL_ref(m_L, LUA_REGISTRYINDEX);
-			LogTraceReturn(*this);
-		}
+		void set_nil();
+
+		LuaRef & operator = (const LuaRef & right);
+		LuaRef & operator = (const LuaTableRef & right);
 
 		template <typename T>
 		LuaRef & operator = (const T & right)
@@ -191,119 +72,28 @@ namespace LightInk
 		}
 
 
-		static inline LuaRef new_table(lua_State * L, int narr = 0, int nrec = 0)
-		{
-			LogTrace("LuaRef LuaRef::new_table(lua_State * L, int narr, int nrec)");
-			lua_createtable(L, narr, nrec);
-			LogTraceReturn(LuaRef(L, true));
-		}
-		static inline LuaRef get_global_var(lua_State * L, const char * name)
-		{
-			LogTrace("LuaRef LuaRef::get_global_var(lua_State * L, const char * name)");
-			lua_getglobal(L, name);
-			LogTraceReturn(LuaRef(L, true));
-		}
+		static LuaRef new_table(lua_State * L, int narr = 0, int nrec = 0);
+		static LuaRef get_global_var(lua_State * L, const char * name);
 
 
-		std::string to_string() const
-		{
-			LogTrace("string LuaRef::to_string() const");
-			LuaStateProtect lsp(m_L);
-			lua_getglobal(m_L, "tostring");
-			push();
-			if (lua_pcall(m_L, 1, 1, 0))
-			{
-				const char * errStr = lua_tostring(m_L, -1);
-				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(std::string());
-			}
-			const char * str = lua_tostring(m_L, -1);
-			lsp.reset();
-			LogTraceReturn(std::string(str));
-		}
-		void print() const
-		{
-			LogTrace("LuaRef::print(std::ostream & os) const");
-			switch (type())
-			{
-			case LUA_TNIL:
-				LogScriptMessage("nil");break;
-			case LUA_TNUMBER:
-				LogScriptMessage(to_string().c_str());break;
-			case LUA_TBOOLEAN:
-				LogScriptMessage(cast<bool>() ? "true" : "false");break;
-			case LUA_TSTRING:
-				LogScriptMessage("\"%s\"", cast<std::string>().c_str());break;
-			case LUA_TTABLE:
-				LogScriptMessage("table : %s", to_string().c_str());break;
-			case LUA_TFUNCTION:
-				LogScriptMessage("function : %s", to_string().c_str());break;
-			case LUA_TUSERDATA:
-				LogScriptMessage("userdata : %s", to_string().c_str());break;
-			case LUA_TTHREAD:
-				LogScriptMessage("thread : %s", to_string().c_str());break;
-			case LUA_TLIGHTUSERDATA:
-				LogScriptMessage("lightuserdata : %s", to_string().c_str());break;
-			default:
-				LogScriptMessage("unknown");break;
-			}
-			LogTraceReturnVoid;
-		}
-		inline lua_State * state() const
-		{ LogTrace("lua_State * LuaRef::state()"); LogTraceReturn(m_L); }
-		inline void push() const
-		{
-			LogTrace("LuaRef::push() const");
-			lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_ref);
-			LogTraceReturnVoid;
-		}
-		inline void pop()
-		{
-			LogTrace("LuaRef::pop() const");
-			luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
-			m_ref = luaL_ref(m_L, LUA_REGISTRYINDEX);
-			LogTraceReturnVoid;
-		}
-		inline int type() const
-		{
-			LogTrace("int LuaRef::type() const");
-			if (m_ref == LUA_REFNIL)
-			{
-				LogTraceReturn(LUA_TNIL);
-			}
-			LuaStateProtect lsp(m_L, true);
-			push();
-			LogTraceReturn(lua_type(m_L, -1));
-		}
-		inline bool is_nil() const
-		{LogTrace("bool LuaRef::is_nil() const"); LogTraceReturn((type() == LUA_TNIL));}
-		inline bool is_number() const
-		{LogTrace("bool LuaRef::is_number() const"); LogTraceReturn((type() == LUA_TNUMBER));}
-		inline bool is_string() const
-		{LogTrace("bool LuaRef::is_string() const"); LogTraceReturn((type() == LUA_TSTRING));}
-		inline bool is_table() const
-		{LogTrace("bool LuaRef::is_table() const"); LogTraceReturn((type() == LUA_TTABLE));}
-		inline bool is_function() const
-		{LogTrace("bool LuaRef::is_function() const"); LogTraceReturn((type() == LUA_TFUNCTION));}
-		inline bool is_userdata() const
-		{LogTrace("bool LuaRef::is_userdata() const"); LogTraceReturn((type() == LUA_TUSERDATA));}
-		inline bool is_thread() const
-		{LogTrace("bool LuaRef::is_thread() const"); LogTraceReturn((type() == LUA_TTHREAD));}
-		inline bool is_lightuserdata() const
-		{LogTrace("bool LuaRef::is_lightuserdata() const"); LogTraceReturn((type() == LUA_TLIGHTUSERDATA));}
-		inline bool is_bool() const
-		{LogTrace("bool LuaRef::is_bool() const"); LogTraceReturn((type() == LUA_TBOOLEAN));}
-		inline bool is_cfunction() const
-		{
-			LogTrace("bool LuaRef::is_cfunction() const");
-			if (m_ref == LUA_REFNIL)
-			{
-				LogTraceReturn(false);
-			}
-			LuaStateProtect lsp(m_L, true);
-			push();
-			LogTraceReturn(lua_iscfunction(m_L, -1) == 1);
-		}
+		std::string to_string() const;
+		void print() const;
+		
+		lua_State * state() const;
+		void push() const;
+		void pop();
+		int type() const;
+
+		bool is_nil() const;
+		bool is_number() const;
+		bool is_string() const;
+		bool is_table() const;
+		bool is_function() const;
+		bool is_userdata() const;
+		bool is_thread() const;
+		bool is_lightuserdata() const;
+		bool is_bool() const;
+		bool is_cfunction() const;
 
 		template <typename T>
 		T cast() const
@@ -405,15 +195,8 @@ namespace LightInk
 			lsp.reset();
 			LogTraceReturnVoid;
 		}
-		size_t length() const
-		{
-			LogTrace("LuaRef::length() const");
-			LuaStateProtect lsp(m_L, true);
-			push();
-			size_t len = lua_objlen(m_L, -1);
-			lsp.reset();
-			LogTraceReturn(len);
-		}
+
+		size_t length() const;
 
 		template <typename T>
 		LuaRef rawget(const T & key) const
@@ -433,20 +216,9 @@ namespace LightInk
 		{
 			LogTrace("LuaTableRef LuaRef::operator [] (const T & key) const");
 			LuaStack<const T>::push(m_L, key);
-			LogTraceReturn(LuaTableRef(m_L, m_ref));
+			LogTraceReturn(LuaTableRef(*this));
 		}
-		const LuaRef operator () () const
-		{
-			LogTrace("const LuaRef LuaRef::operator () () const");
-			push();
-			if (lua_pcall(m_L, 0, 1, 0))
-			{
-				const char * errStr = lua_tostring(m_L, -1);
-				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
-			}
-			LogTraceReturn(LuaRef(m_L, true));
-		}
+		const LuaRef operator () () const;
 /*
 --lua生成
 function create_traits(count)
@@ -989,7 +761,7 @@ create_traits(20)
 	{
 		static inline void push(lua_State * L, const LuaRef & v)
 		{
-			LogTrace("LuaStack<LuaRef>::push(lua_State * L, LuaRef & v)");
+			LogTrace("LuaStack<const LuaRef>::push(lua_State * L, LuaRef & v)");
 			if (L != v.state())
 			{
 				LogScriptErrorJump(L, "Error!!!The LuaStack<LuaRef>::push vm is not LuaRef vm!!!");
@@ -1000,26 +772,31 @@ create_traits(20)
 		
 		static inline LuaRef get(lua_State * L, int idx)
 		{
-			LogTrace("LuaRef LuaStack<LuaRef>::get(lua_State * L, int idx)");
+			LogTrace("LuaRef LuaStack<const LuaRef>::get(lua_State * L, int idx)");
 			LogTraceReturn(LuaRef(L, idx));
 		}
 	};
+
 	template <>
-	struct LIGHTINK_TEMPLATE_DECL LuaStack <const LuaRef::LuaTableRef>
+	struct LIGHTINK_TEMPLATE_DECL LuaStack <const LuaRef &>
 	{
-		static inline void push(lua_State * L, const LuaRef::LuaTableRef & v)
+		static inline void push(lua_State * L, const LuaRef & v)
 		{
-			LogTrace("LuaStack<LuaRef::LuaTableRef>::push(lua_State * L, const LuaRef::LuaTableRef & v)");
+			LogTrace("LuaStack<const LuaRef &>::push(lua_State * L, LuaRef & v)");
 			if (L != v.state())
 			{
-				LogScriptErrorJump(L, "Error!!!The LuaStack<LuaRef::LuaTableRef>::push vm is not LuaRef vm!!!");
+				LogScriptErrorJump(L, "Error!!!The LuaStack<LuaRef>::push vm is not LuaRef vm!!!");
 			}
 			v.push();
 			LogTraceReturnVoid;
 		}
-		
-	};
 
+		static inline LuaRef get(lua_State * L, int idx)
+		{
+			LogTrace("LuaRef LuaStack<const LuaRef&>::get(lua_State * L, int idx)");
+			LogTraceReturn(LuaRef(L, idx));
+		}
+	};
 
 }
 

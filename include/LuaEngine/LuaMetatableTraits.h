@@ -43,11 +43,7 @@ namespace LightInk
 		{
 			LogTrace("LuaUserdataForClass<ClassType> * LuaMetatableTraits<ClassType>::userdata_to_imp(lua_State * L, int idx)");
 			LuaStateProtect lsp(L);
-			if (lua_isnothing(L, idx))
-			{
-				LogTraceReturn(NULL);
-			}
-			else if (!lua_isuserdata(L, idx))
+			if (lua_isnothing(L, idx) || !lua_isuserdata(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The arg %d is not userdata!!!", idx);
 				LogTraceReturn(NULL);
@@ -86,6 +82,20 @@ namespace LightInk
 			}
 			LogTraceReturn(NULL);
 		}
+
+		static ClassType * userdata_to_object_move(lua_State* L, int idx)
+		{
+			LogTrace("ClassType * LuaMetatableTraits<ClassType>::userdata_to_object_move(lua_State* L, int idx)");
+			LuaUserdataForClass<ClassType> * p = userdata_to_imp(L, idx);
+			if (p)
+			{
+				ClassType * t = p->m_obj;
+				p->m_obj = NULL;
+				LogTraceReturn(t);
+			}
+			LogTraceReturn(NULL);
+		}
+
 		static int mt_isdelete_function(lua_State * L)
 		{
 			LogTrace("int LuaMetatableTraits<ClassType>::mt_isdelete_function(lua_State * L)");

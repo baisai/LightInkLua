@@ -48,7 +48,7 @@ namespace LightInk
 
 		if (lua_isnil(L, -1))
 		{
-			LogScriptErrorJump(L, "Error!!!Not this field!!!%s", key);
+			LogScriptErrorJump(L, "Error!!!Not this field!!!\"%s\"", key);
 			LogTraceReturn(0);
 		}
 		else if (lua_isuserdata(L, -1))
@@ -79,7 +79,7 @@ namespace LightInk
 
 		if (lua_isnil(L, -1))
 		{
-			LogScriptErrorJump(L, "Error!!!Not this field!!!%s", key);
+			LogScriptErrorJump(L, "Error!!!Not this field!!!\"%s\"", key);
 				
 		}
 		else if (lua_isuserdata(L, -1))
@@ -90,7 +90,7 @@ namespace LightInk
 		}
 		else
 		{
-			LogScriptErrorJump(L, "Error!!!This field is not a property!!!%s", key);
+			LogScriptErrorJump(L, "Error!!!This field is not a property!!!\"%s\"", key);
 		}
 		LogTraceReturn(0);
 	}
@@ -145,7 +145,7 @@ namespace LightInk
 
 		if (lua_isnil(L, -1))
 		{
-			LogScriptErrorJump(L, "Error!!!Not this field!!!%s", key);
+			LogScriptErrorJump(L, "Error!!!Not this field!!!\"%s\"", key);
 			LogTraceReturn(0);
 		}
 		else if (lua_isuserdata(L, -1))
@@ -175,7 +175,7 @@ namespace LightInk
 		lua_rawget(L, -2);
 		if (lua_isnil(L, -1))
 		{
-			LogScriptErrorJump(L, "Error!!!Not this field!!!%s", key);
+			LogScriptErrorJump(L, "Error!!!Not this field!!!\"%s\"", key);
 				
 		}
 		else if (lua_isuserdata(L, -1))
@@ -186,7 +186,7 @@ namespace LightInk
 		}
 		else
 		{
-			LogScriptErrorJump(L, "Error!!!This field is not a property!!!%s", key);
+			LogScriptErrorJump(L, "Error!!!This field is not a property!!!\"%s\"", key);
 		}
 		LogTraceReturn(0);
 	}

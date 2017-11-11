@@ -55,6 +55,15 @@
 #endif
 
 
+#if defined(__x86_64__) || defined(__x86_64) || defined(_M_X64) || defined(_M_AMD64) || defined(__aarch64__) || defined(__ppc64__)
+#define LIGHTINK_X64
+#endif
+
+//#ifndef LIGHTINK_LUAJIT
+//#define LIGHTINK_LUAJIT
+//#endif
+
+
 /////////////////////////////////////////////////////////
 //导出,导入变量
 ////////////////////////////////////////////////////////

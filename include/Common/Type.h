@@ -24,8 +24,10 @@
 #ifndef LIGHTINK_COMMON_TYPE_H_
 #define LIGHTINK_COMMON_TYPE_H_
 
+#include <limits.h>
 #include "Common/Config.h"
 #include "Common/WinSnprintf.h"
+
 
 #define LIGHTINK_DISABLE_COPY(name) \
 	private: \
@@ -43,9 +45,64 @@
 # include <stdint.h>
 #endif
 
+#ifndef INT8_MIN
+#define INT8_MIN SCHAR_MIN
+#endif
+#ifndef INT8_MAX
+#define INT8_MAX SCHAR_MAX
+#endif
+#ifndef UINT8_MAX
+#define UINT8_MAX UCHAR_MAX
+#endif
+
+#ifndef INT16_MIN
+#define INT16_MIN SHRT_MIN
+#endif
+#ifndef INT16_MAX
+#define INT16_MAX SHRT_MAX
+#endif
+#ifndef UINT16_MAX
+#define UINT16_MAX USHRT_MAX
+#endif
+
+#ifndef INT32_MIN
+#define INT32_MIN INT_MIN
+#endif
+#ifndef INT32_MAX
+#define INT32_MAX INT_MAX
+#endif
+#ifndef UINT32_MAX
+#define UINT32_MAX UINT_MAX
+#endif
+
+#ifndef INT64_MIN
+#define INT64_MIN LLONG_MIN
+#endif
+#ifndef INT64_MAX
+#define INT64_MAX LLONG_MAX
+#endif
+#ifndef UINT64_MAX
+#define UINT64_MAX ULLONG_MAX
+#endif
+
+
 #ifdef WIN32
 #define strtoll _strtoi64
 #define strtoull _strtoui64
+#endif
+
+#if COMPILER == COMPILER_MICROSOFT
+
+#define I64FMT "%016I64X"
+#define I64FMTD "%I64u"
+#define SI64FMTD "%I64d"
+
+#else
+
+#define I64FMT "%016llX"
+#define I64FMTD "%llu"
+#define SI64FMTD "%lld"
+
 #endif
 
 
@@ -82,8 +139,38 @@ typedef int PID_TYPE;
 /////////////////////////////////////////////////////////
 namespace LightInk
 {
-	const int32 maxInt = 0x7FFF;
-	const uint32 maxUint32 = (uint32)-1;
+	const int32 LIGHTINK_MP_BUFFBIG = 20;	//大块内存界限
+	const int32 LIGHTINK_MP_BIGOFFSETBIT = 10; //大块内存对齐
+	const int32 LIGHTINK_MP_OFFSETBIT = 3;	//小块内存对齐
+
+
+	extern uint32 LIGHTINK_RM_READERBUFFER; //读缓冲区大小
+	extern uint32 LIGHTINK_RM_WRITERBUFFER; //写缓冲区大小
+	extern uint32 LIGHTINK_UDP_MTU; //mtu值
+
+	extern uint32 LIGHTINK_RELIUDP_CACHEFRAMEMAX; //udp cache frame max
+	extern uint32 LIGHTINK_RELIUDP_RESENDTIMEOUT; //udp resend timeout
+
+	extern uint32 LIGHTINK_KCP_UPDATETICK; //kcp 内部的tick间隔
+	extern uint32 LIGHTINK_KCP_FASTRESEND; //kcp ack跨越次数马上重传,0为不重传
+	extern uint32 LIGHTINK_KCP_NOCONTROL; //kcp 是否关闭流控
+	extern uint32 LIGHTINK_KCP_SENDWND; //kcp 发送窗口
+	extern uint32 LIGHTINK_KCP_RECVWND; //kcp接收窗口
+	extern uint32 LIGHTINK_KCP_RTO; //延时重传
+
+	extern uint32 LIGHTINK_MP_BUFFGCSTEP; //内存回收一步扫描多少格
+
+	extern uint32 LIGHTINK_TM_THREADSTEP;	//线程池一次增加的线程数
+
+	extern uint32 LIGHTINK_LP_LOOPCOREMAX; //单线程初始最大连接数
+
+	extern uint32 LIGHTINK_MSGP_ONEMAXMEMORY; //单消息最大长度
+
+	extern uint32 LIGHTINK_LP_PINGINTERVAL; //ping interval
+
+	extern uint8 LIGHTINK_LP_PINGOUT; //ping out times
+
+	extern uint8 LIGHTINK_LP_LOGINOUT; //login out times
 
 }
 

@@ -26,8 +26,9 @@
 #define LIGHTINK_LUAENGINE_LUACLASSINFO_H_
 
 #include <string.h>
-#include "LuaEngine/lua/lua.hpp"
+#include "LuaEngine/LuaLib.h"
 #include "LuaEngine/LuaStateProtect.h"
+#include "Common/Log.h"
 #include "LuaEngine/LuaFixFunction.h"
 
 namespace LightInk
@@ -84,7 +85,7 @@ namespace LightInk
 			idx = lua_absindex(L, idx);
 			lua_pushlightuserdata(L, &m_key);
 			lua_rawget(L, idx);
-			LogTraceReturn(static_cast<bool>(lua_toboolean(L, -1)));
+			LogTraceReturn((lua_toboolean(L, -1) != 0));
 		}
 
 		static bool get_class_table(lua_State * L)
