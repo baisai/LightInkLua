@@ -134,46 +134,4 @@ typedef int PID_TYPE;
 
 
 
-//////////////////////////////////////////////////////////
-//常数
-/////////////////////////////////////////////////////////
-namespace LightInk
-{
-	const int32 LIGHTINK_MP_BUFFBIG = 20;	//大块内存界限
-	const int32 LIGHTINK_MP_BIGOFFSETBIT = 10; //大块内存对齐
-	const int32 LIGHTINK_MP_OFFSETBIT = 3;	//小块内存对齐
-
-
-	extern uint32 LIGHTINK_RM_READERBUFFER; //读缓冲区大小
-	extern uint32 LIGHTINK_RM_WRITERBUFFER; //写缓冲区大小
-	extern uint32 LIGHTINK_UDP_MTU; //mtu值
-
-	extern uint32 LIGHTINK_RELIUDP_CACHEFRAMEMAX; //udp cache frame max
-	extern uint32 LIGHTINK_RELIUDP_RESENDTIMEOUT; //udp resend timeout
-
-	extern uint32 LIGHTINK_KCP_UPDATETICK; //kcp 内部的tick间隔
-	extern uint32 LIGHTINK_KCP_FASTRESEND; //kcp ack跨越次数马上重传,0为不重传
-	extern uint32 LIGHTINK_KCP_NOCONTROL; //kcp 是否关闭流控
-	extern uint32 LIGHTINK_KCP_SENDWND; //kcp 发送窗口
-	extern uint32 LIGHTINK_KCP_RECVWND; //kcp接收窗口
-	extern uint32 LIGHTINK_KCP_RTO; //延时重传
-
-	extern uint32 LIGHTINK_MP_BUFFGCSTEP; //内存回收一步扫描多少格
-
-	extern uint32 LIGHTINK_TM_THREADSTEP;	//线程池一次增加的线程数
-
-	extern uint32 LIGHTINK_LP_LOOPCOREMAX; //单线程初始最大连接数
-
-	extern uint32 LIGHTINK_MSGP_ONEMAXMEMORY; //单消息最大长度
-
-	extern uint32 LIGHTINK_LP_PINGINTERVAL; //ping interval
-
-	extern uint8 LIGHTINK_LP_PINGOUT; //ping out times
-
-	extern uint8 LIGHTINK_LP_LOGINOUT; //login out times
-
-}
-
-
-
 #endif
