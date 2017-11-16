@@ -73,9 +73,9 @@ namespace LightInk
 		template <typename T>
 		inline void set_key(const T & t)
 		{
-			LogTrace("LuaRegisterNode::set_key<T>(const T & t)");
+			LogTraceStepCall("LuaRegisterNode::set_key<T>(const T & t)");
 			m_key = t;
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		void set_key(int idx);
@@ -83,9 +83,9 @@ namespace LightInk
 		template <typename T>
 		inline void set_value(const T & t)
 		{
-			LogTrace("LuaRegisterNode::set_value<T>(const T & t)");
+			LogTraceStepCall("LuaRegisterNode::set_value<T>(const T & t)");
 			m_value = t;
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		void set_value(int idx);
@@ -93,9 +93,9 @@ namespace LightInk
 		template <typename T>
 		inline void set_parent(const T & t)
 		{
-			LogTrace("LuaRegisterNode::set_parent<T>(const T & t)");
+			LogTraceStepCall("LuaRegisterNode::set_parent<T>(const T & t)");
 			m_parent = t;
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		void set_parent(int idx);

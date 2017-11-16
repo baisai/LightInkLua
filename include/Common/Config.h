@@ -30,7 +30,9 @@
 #endif // DEBUG
 
 
-#define LightInkNoTrace //关闭trace日志
+#define LightInkNoTraceStepCall //关闭每次Call的trace日志
+
+//#define LightInkNoTrace //关闭trace日志
 
 #ifndef LIGHTINK_DEBUG
 #define LightInkNoDebug //关闭debug日志

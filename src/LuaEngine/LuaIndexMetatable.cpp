@@ -31,16 +31,16 @@ namespace LightInk
 {
 	int LuaIndexMetatable::ct_index_function(lua_State * L)
 	{
-		LogTrace("int LuaIndexMetatable::ct_index_function(lua_State * L)");
+		LogTraceStepCall("int LuaIndexMetatable::ct_index_function(lua_State * L)");
 		if (!lua_istable(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The First arg is not class table!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		if (!lua_getmetatable(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The class table have not metatable!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		const char * key = luaL_checkstring(L, 2);
 		lua_pushvalue(L, 2);
@@ -49,28 +49,28 @@ namespace LightInk
 		if (lua_isnil(L, -1))
 		{
 			LogScriptErrorJump(L, "Error!!!Not this field!!!\"%s\"", key);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		else if (lua_isuserdata(L, -1))
 		{
 			LuaClassPropertyInfo * p = (LuaClassPropertyInfo *) lua_touserdata(L, -1);
-			LogTraceReturn((p->m_indexFunction)(L, p->m_property, key));
+			LogTraceStepReturn((p->m_indexFunction)(L, p->m_property, key));
 		}
-		LogTraceReturn(1);
+		LogTraceStepReturn(1);
 	}
 
 	int LuaIndexMetatable::ct_newindex_function(lua_State * L)
 	{
-		LogTrace("int LuaIndexMetatable::ct_newindex_function(lua_State * L)");
+		LogTraceStepCall("int LuaIndexMetatable::ct_newindex_function(lua_State * L)");
 		if (!lua_istable(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The First arg is not class table!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		if (!lua_getmetatable(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The class table have not metatable!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 
 		const char * key = luaL_checkstring(L, 2);
@@ -86,58 +86,58 @@ namespace LightInk
 		{
 			LuaClassPropertyInfo * p = (LuaClassPropertyInfo *) lua_touserdata(L, -1);
 			lua_pop(L, 1); //pop userdata
-			LogTraceReturn((p->m_newindexFunction)(L, p->m_property, key, 3));
+			LogTraceStepReturn((p->m_newindexFunction)(L, p->m_property, key, 3));
 		}
 		else
 		{
 			LogScriptErrorJump(L, "Error!!!This field is not a property!!!\"%s\"", key);
 		}
-		LogTraceReturn(0);
+		LogTraceStepReturn(0);
 	}
 
 	int LuaIndexMetatable::gt_index_function(lua_State * L)
 	{
-		LogTrace("int LuaIndexMetatable::gt_index_function(lua_State * L)");
+		LogTraceStepCall("int LuaIndexMetatable::gt_index_function(lua_State * L)");
 		if (lua_isuserdata(L, 1))
 		{
 			LuaClassPropertyInfo * p = (LuaClassPropertyInfo *) lua_touserdata(L, 1);
-			LogTraceReturn((p->m_indexFunction)(L, p->m_property, "gt_index_function"));
+			LogTraceStepReturn((p->m_indexFunction)(L, p->m_property, "gt_index_function"));
 		}
 		else
 		{
 			LogScriptErrorJump(L, "Error!!!This field is not a property userdata!!!");
 		}
-		LogTraceReturn(0);
+		LogTraceStepReturn(0);
 	}
 
 	int LuaIndexMetatable::gt_newindex_function(lua_State * L)
 	{
-		LogTrace("int LuaIndexMetatable::gt_newindex_function(lua_State * L)");
+		LogTraceStepCall("int LuaIndexMetatable::gt_newindex_function(lua_State * L)");
 		if (lua_isuserdata(L, 1))
 		{
 			LuaClassPropertyInfo * p = (LuaClassPropertyInfo *) lua_touserdata(L, 1);
-			LogTraceReturn((p->m_newindexFunction)(L, p->m_property, "gt_index_function", 2));
+			LogTraceStepReturn((p->m_newindexFunction)(L, p->m_property, "gt_index_function", 2));
 		}
 		else
 		{
 			LogScriptErrorJump(L, "Error!!!This field is not a property userdata!!!");
 		}
-		LogTraceReturn(0);
+		LogTraceStepReturn(0);
 	}
 
 
 	int LuaIndexMetatable::mt_index_function(lua_State * L)
 	{
-		LogTrace("int LuaIndexMetatable::mt_index_function(lua_State * L)");
+		LogTraceStepCall("int LuaIndexMetatable::mt_index_function(lua_State * L)");
 		if (!lua_isuserdata(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The First arg is not userdata!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		if (!lua_getmetatable(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The userdata have not metatable!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		const char * key = luaL_checkstring(L, 2);
 		lua_pushvalue(L, 2);
@@ -146,28 +146,28 @@ namespace LightInk
 		if (lua_isnil(L, -1))
 		{
 			LogScriptErrorJump(L, "Error!!!Not this field!!!\"%s\"", key);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		else if (lua_isuserdata(L, -1))
 		{
 			LuaClassPropertyInfo * p = (LuaClassPropertyInfo *) lua_touserdata(L, -1);
-			LogTraceReturn((p->m_indexFunction)(L, p->m_property, key));
+			LogTraceStepReturn((p->m_indexFunction)(L, p->m_property, key));
 		}
-		LogTraceReturn(1);
+		LogTraceStepReturn(1);
 	}
 
 	int LuaIndexMetatable::mt_newindex_function(lua_State * L)
 	{
-		LogTrace("int LuaIndexMetatable::mt_newindex_function(lua_State * L)");
+		LogTraceStepCall("int LuaIndexMetatable::mt_newindex_function(lua_State * L)");
 		if (!lua_isuserdata(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The First arg is not userdata!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 		if (!lua_getmetatable(L, 1))
 		{
 			LogScriptErrorJump(L, "Error!!!The userdata have not metatable!!!!");
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 
 		const char * key = luaL_checkstring(L, 2);
@@ -182,13 +182,13 @@ namespace LightInk
 		{
 			LuaClassPropertyInfo * p = (LuaClassPropertyInfo *) lua_touserdata(L, -1);
 			lua_pop(L, 1); //pop userdata
-			LogTraceReturn((p->m_newindexFunction)(L, p->m_property, key, 3));
+			LogTraceStepReturn((p->m_newindexFunction)(L, p->m_property, key, 3));
 		}
 		else
 		{
 			LogScriptErrorJump(L, "Error!!!This field is not a property!!!\"%s\"", key);
 		}
-		LogTraceReturn(0);
+		LogTraceStepReturn(0);
 	}
 
 }

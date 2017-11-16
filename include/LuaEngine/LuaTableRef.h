@@ -48,27 +48,27 @@ namespace LightInk
 		template <typename T>
 		LuaTableRef & operator = (const T & v)
 		{
-			LogTrace("LuaTableRef & LuaRef::LuaTableRef::operator =<T> (const T & v)");
+			LogTraceStepCall("LuaTableRef & LuaRef::LuaTableRef::operator =<T> (const T & v)");
 			LuaStateProtect lsp(m_L);
 			lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
 			lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
 			LuaStack<const T>::push(m_L, v);
 			lua_settable(m_L, -3);
 			lsp.reset();
-			LogTraceReturn(*this);
+			LogTraceStepReturn(*this);
 		}
 
 		template <typename T>
 		LuaTableRef & rawset (const T & v)
 		{
-			LogTrace("LuaTableRef & LuaRef::LuaTableRef::rawset<T> (const T & v)");
+			LogTraceStepCall("LuaTableRef & LuaRef::LuaTableRef::rawset<T> (const T & v)");
 			LuaStateProtect lsp(m_L);
 			lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
 			lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
 			LuaStack<const T>::push(m_L, v);
 			lua_rawset(m_L, -3);
 			lsp.reset();
-			LogTraceReturn(*this);
+			LogTraceStepReturn(*this);
 		}
 
 		lua_State * state() const;

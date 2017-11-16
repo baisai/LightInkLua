@@ -29,102 +29,102 @@ namespace LightInk
 {
 	LuaTableRef::LuaTableRef(const LuaRef & tab, const LuaRef & key) : m_L(tab.state()), m_tableRef(tab.create_ref()), m_keyRef(key.create_ref())
 	{
-		LogTrace("LuaTableRef::LuaTableRef(const LuaRef & tab, const LuaRef & key)");
-		LogTraceReturnVoid;
+		LogTraceStepCall("LuaTableRef::LuaTableRef(const LuaRef & tab, const LuaRef & key)");
+		LogTraceStepReturnVoid;
 	}
 	LuaTableRef::LuaTableRef(const LuaRef & tab) : m_L(tab.state()), m_tableRef(tab.create_ref()), m_keyRef(luaL_ref(tab.state(), LUA_REGISTRYINDEX))
 	{ 
-		LogTrace("LuaRef::LuaTableRef::LuaTableRef(const LuaRef & tab)");
-		LogTraceReturnVoid; 
+		LogTraceStepCall("LuaRef::LuaTableRef::LuaTableRef(const LuaRef & tab)");
+		LogTraceStepReturnVoid; 
 	}
 	LuaTableRef::LuaTableRef(const LuaTableRef & cp) : m_L(cp.m_L), m_tableRef(cp.create_tab_ref()), m_keyRef(cp.create_key_ref())
 	{
-		LogTrace("LuaRef::LuaTableRef::LuaTableRef(const LuaTableRef & cp)");
-		LogTraceReturnVoid;
+		LogTraceStepCall("LuaRef::LuaTableRef::LuaTableRef(const LuaTableRef & cp)");
+		LogTraceStepReturnVoid;
 	}
 	LuaTableRef::~LuaTableRef()
 	{
-		LogTrace("LuaRef::LuaTableRef::~LuaTableRef()");
+		LogTraceStepCall("LuaRef::LuaTableRef::~LuaTableRef()");
 		if (m_L) { luaL_unref(m_L, LUA_REGISTRYINDEX, m_keyRef); }
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	void LuaTableRef::clear_lua()
 	{
-		LogTrace("void LuaRef::LuaTableRef::clear_lua()");
+		LogTraceStepCall("void LuaRef::LuaTableRef::clear_lua()");
 		m_L = NULL;
 		m_tableRef = LUA_REFNIL;
 		m_keyRef = LUA_REFNIL;
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	int LuaTableRef::create_ref() const
 	{
-		LogTrace("int LuaRef::LuaTableRef::create_ref() const");
+		LogTraceStepCall("int LuaRef::LuaTableRef::create_ref() const");
 		if (m_tableRef == LUA_REFNIL || m_keyRef == LUA_REFNIL)
 		{
-			LogTraceReturn(LUA_REFNIL);
+			LogTraceStepReturn(LUA_REFNIL);
 		}
 		push();
-		LogTraceReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
+		LogTraceStepReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
 	}
 
 
 
 	lua_State * LuaTableRef::state() const
 	{ 
-		LogTrace("lua_State * LuaRef::LuaTableRef::state()"); 
-		LogTraceReturn(m_L); 
+		LogTraceStepCall("lua_State * LuaRef::LuaTableRef::state()"); 
+		LogTraceStepReturn(m_L); 
 	}
 
 	void LuaTableRef::push() const
 	{
-		LogTrace("LuaRef::LuaTableRef::push() const");
+		LogTraceStepCall("LuaRef::LuaTableRef::push() const");
 		lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
 		lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
 		lua_gettable(m_L, -2);
 		lua_remove(m_L, -2); // remove the table
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	int LuaTableRef::create_tab_ref() const
 	{
-		LogTrace("int LuaTableRef::create_tab_ref() const");
+		LogTraceStepCall("int LuaTableRef::create_tab_ref() const");
 		if (m_tableRef == LUA_REFNIL)
 		{
-			LogTraceReturn(m_tableRef);
+			LogTraceStepReturn(m_tableRef);
 		}
 		lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
-		LogTraceReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
+		LogTraceStepReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
 	}
 
 	int LuaTableRef::create_key_ref() const
 	{
-		LogTrace("int LuaTableRef::create_key_ref() const");
+		LogTraceStepCall("int LuaTableRef::create_key_ref() const");
 		if (m_keyRef == LUA_REFNIL)
 		{
-			LogTraceReturn(m_keyRef);
+			LogTraceStepReturn(m_keyRef);
 		}
 		lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
-		LogTraceReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
+		LogTraceStepReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
 	}
 
 	LuaRef LuaTableRef::get_ref() const
 	{
-		LogTrace("LuaRef LuaRef:;LuaTableRef::get_ref()");
-		LogTraceReturn(LuaRef(*this));
+		LogTraceStepCall("LuaRef LuaRef:;LuaTableRef::get_ref()");
+		LogTraceStepReturn(LuaRef(*this));
 	}
 	LuaRef LuaTableRef::get_tab_ref() const
 	{
-		LogTrace("LuaRef LuaTableRef::get_tab_ref() const");
+		LogTraceStepCall("LuaRef LuaTableRef::get_tab_ref() const");
 		lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_tableRef);
-		LogTraceReturn(LuaRef(m_L, true));
+		LogTraceStepReturn(LuaRef(m_L, true));
 	}
 	LuaRef LuaTableRef::get_key_ref() const
 	{
-		LogTrace("LuaRef LuaTableRef::get_key_ref() const");
+		LogTraceStepCall("LuaRef LuaTableRef::get_key_ref() const");
 		lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_keyRef);
-		LogTraceReturn(LuaRef(m_L, true));
+		LogTraceStepReturn(LuaRef(m_L, true));
 	}
 
 }

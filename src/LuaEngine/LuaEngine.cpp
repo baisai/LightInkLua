@@ -31,35 +31,35 @@ namespace LightInk
 {
 	LuaEngine::LuaEngine() : m_lua(NULL)
 	{
-		LogTrace("LuaEngine::LuaEngine()");
-		LogTraceReturnVoid;
+		LogTraceStepCall("LuaEngine::LuaEngine()");
+		LogTraceStepReturnVoid;
 	}
 
 	LuaEngine::~LuaEngine()
 	{
-		LogTrace("LuaEngine::~LuaEngine()");
+		LogTraceStepCall("LuaEngine::~LuaEngine()");
 		close();
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	lua_State * LuaEngine::get_lua_state()
 	{
-		LogTrace("lua_State * LuaEngine::get_lua_state()");
-		LogTraceReturn(m_lua);
+		LogTraceStepCall("lua_State * LuaEngine::get_lua_state()");
+		LogTraceStepReturn(m_lua);
 	}
 
 	bool LuaEngine::is_inited()
 	{
-		LogTrace("bool LuaEngine::is_inited()");
-		LogTraceReturn(m_lua != NULL);
+		LogTraceStepCall("bool LuaEngine::is_inited()");
+		LogTraceStepReturn(m_lua != NULL);
 	}
 
 	RuntimeError LuaEngine::init()
 	{
-		LogTrace("RuntimeError LuaEngine::init()");
+		LogTraceStepCall("RuntimeError LuaEngine::init()");
 		if (m_lua)
 		{
-			LogTraceReturn(RE_Lua_ThisStateInited);
+			LogTraceStepReturn(RE_Lua_ThisStateInited);
 		}
 #if defined(LIGHTINK_LUAJIT) && defined(LIGHTINK_X64)
 		m_lua = luaL_newstate();
@@ -68,7 +68,7 @@ namespace LightInk
 #endif
 		if (!m_lua)
 		{
-			LogTraceReturn(RE_Lua_NewStateFailed);
+			LogTraceStepReturn(RE_Lua_NewStateFailed);
 		}
 		lua_atpanic(m_lua, LuaEngine::lua_error_catch);
 		luaL_openlibs(m_lua);
@@ -174,40 +174,40 @@ namespace LightInk
 				.def(&LuaInt64::pow_set_st, "pow_set_st")
 
 		];
-		LogTraceReturn(do_init());
+		LogTraceStepReturn(do_init());
 	}
 
 	void LuaEngine::close()
 	{
-		LogTrace("void LuaEngine::close()");
+		LogTraceStepCall("void LuaEngine::close()");
 		if (m_lua)
 		{
 			do_close();
 			lua_close(m_lua);
 			m_lua = NULL;
 		}
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	void * LuaEngine::lua_allocator(void * ud, void * ptr, size_t osize, size_t nsize)
 	{
-		LogTrace("void * LuaEngine::lua_allocator(void * ud, void * ptr, size_t osize, size_t nsize)");
+		LogTraceStepCall("void * LuaEngine::lua_allocator(void * ud, void * ptr, size_t osize, size_t nsize)");
 		LuaEngine * p = (LuaEngine *)ud;
-		LogTraceReturn(p->do_lua_allocator(ptr, osize, nsize));
+		LogTraceStepReturn(p->do_lua_allocator(ptr, osize, nsize));
 	}
 
 	int LuaEngine::lua_error_catch(lua_State * L)
 	{
-		LogTrace("int LuaEngine::lua_error_catch(lua_State * L)");
+		LogTraceStepCall("int LuaEngine::lua_error_catch(lua_State * L)");
 		const char * errStr = lua_tostring(L, -1);
 		LogError("Error!!!Lua Error Catch \"%s\"", errStr);
 		throw RE_Lua_RuntimeError;
-		LogTraceReturn(0);
+		LogTraceStepReturn(0);
 	}
 
 	int LuaEngine::log_string(lua_State * L, LogLevel::LEVEL level)
 	{
-		LogTrace("int LuaEngine::log_string(lua_State * L, LogMsg::LEVEL level)");
+		LogTraceStepCall("int LuaEngine::log_string(lua_State * L, LogMsg::LEVEL level)");
 		int n = lua_gettop(L) + 1;  /* number of arguments */
 		lua_getglobal(L, "tostring");
 	
@@ -225,7 +225,7 @@ namespace LightInk
 			s = lua_tostring(L, -1);  /* get result */
 			if (s == NULL)
 			{
-				LogTraceReturn(luaL_error(L, "\'tostring\' must return a string to \'print\'"));
+				LogTraceStepReturn(luaL_error(L, "\'tostring\' must return a string to \'print\'"));
 			}
 
 			str.append(s);
@@ -254,54 +254,54 @@ namespace LightInk
 		default:
 			break;
 		}
-		LogTraceReturn(0);
+		LogTraceStepReturn(0);
 	}
 
 	int LuaEngine::lua_print_debug(lua_State * L)
 	{
-		LogTrace("int LuaEngine::lua_print_debug(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Debug));
+		LogTraceStepCall("int LuaEngine::lua_print_debug(lua_State * L)");
+		LogTraceStepReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Debug));
 	}
 	int LuaEngine::lua_replace_print(lua_State * L)
 	{
-		LogTrace("int LuaEngine::lua_replace_print(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Message));
+		LogTraceStepCall("int LuaEngine::lua_replace_print(lua_State * L)");
+		LogTraceStepReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Message));
 	}
 	int LuaEngine::lua_print_warning(lua_State * L)
 	{
-		LogTrace("int LuaEngine::lua_print_warning(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Warning));
+		LogTraceStepCall("int LuaEngine::lua_print_warning(lua_State * L)");
+		LogTraceStepReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Warning));
 	}
 	int LuaEngine::lua_print_error(lua_State * L)
 	{
-		LogTrace("int LuaEngine::lua_print_error(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Error));
+		LogTraceStepCall("int LuaEngine::lua_print_error(lua_State * L)");
+		LogTraceStepReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Error));
 	}
 	int LuaEngine::lua_print_fatal(lua_State * L)
 	{
-		LogTrace("int LuaEngine::lua_print_fatal(lua_State * L)");
-		LogTraceReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Fatal));
+		LogTraceStepCall("int LuaEngine::lua_print_fatal(lua_State * L)");
+		LogTraceStepReturn(LuaEngine::log_string(L, LogLevel::LogMsg_Fatal));
 	}
 
 	void * LuaEngine::do_lua_allocator(void * ptr, size_t osize, size_t nsize)
 	{
-		LogTrace("void * LuaEngine::do_lua_allocator(void * ptr, size_t osize, size_t nsize)");
-		LogTraceReturn(SmallObject::realloc_user(ptr, osize, nsize));
+		LogTraceStepCall("void * LuaEngine::do_lua_allocator(void * ptr, size_t osize, size_t nsize)");
+		LogTraceStepReturn(SmallObject::realloc_user(ptr, osize, nsize));
 	}
 
 	RuntimeError LuaEngine::do_init()
-	{ LogTrace("RuntimeError LuaEngine::do_init()"); LogTraceReturn(RE_Success); }
+	{ LogTraceStepCall("RuntimeError LuaEngine::do_init()"); LogTraceStepReturn(RE_Success); }
 	void LuaEngine::do_close()
-	{ LogTrace("void LuaEngine::do_close()"); LogTraceReturnVoid; }
+	{ LogTraceStepCall("void LuaEngine::do_close()"); LogTraceStepReturnVoid; }
 
 	
 	RuntimeError LuaEngine::add_package_path(const string & path)
 	{
-		LogTrace("RuntimeError LuaEngine::add_package_path(const string & path)");
+		LogTraceStepCall("RuntimeError LuaEngine::add_package_path(const string & path)");
 		string new_path = "package.path = package.path .. \"";
         if (path.empty())
         {
-            LogTraceReturn(RE_Lua_StringEmpty);
+            LogTraceStepReturn(RE_Lua_StringEmpty);
         }
 
         if (path[0] != ';')
@@ -318,19 +318,19 @@ namespace LightInk
 
 
 		run_string(new_path.c_str());
-		LogTraceReturn(RE_Success);
+		LogTraceStepReturn(RE_Success);
 	}
 
 	void LuaEngine::clear_package_path()
 	{
-		LogTrace("void LuaEngine::clear_package_path()");
+		LogTraceStepCall("void LuaEngine::clear_package_path()");
 		run_string("package.path = \";./?.lua\"");
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	void LuaEngine::dump_stack(lua_State * L)
 	{
-		LogTrace("void LuaEngine::dump_stack(lua_State * L)");
+		LogTraceStepCall("void LuaEngine::dump_stack(lua_State * L)");
 		 int top = lua_gettop(L);
         for (int i = 1; i <= top; i++)
         {
@@ -386,38 +386,38 @@ namespace LightInk
             LogMessage(" ");
         }
         LogMessage("\n");
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	RuntimeError LuaEngine::run_string(const char * chunk)
 	{
-		LogTrace("RuntimeError LuaEngine::run_string(const char * chunk)");
+		LogTraceStepCall("RuntimeError LuaEngine::run_string(const char * chunk)");
 		if (luaL_dostring(m_lua, chunk))
 		{
 			const char * err = lua_tostring(m_lua, -1);
 			LogScriptError("Call LuaEngine::run_string Error!!! error is \"%s\"", err);
 			lua_pop(m_lua, 1); //pop error
-			LogTraceReturn(RE_Lua_RuntimeError);
+			LogTraceStepReturn(RE_Lua_RuntimeError);
 		}
-		LogTraceReturn(RE_Success);
+		LogTraceStepReturn(RE_Success);
 	}
 
 	RuntimeError LuaEngine::run_file(const char * fileName)
 	{
-		LogTrace("RuntimeError LuaEngine::run_file(const char * fileName)");
+		LogTraceStepCall("RuntimeError LuaEngine::run_file(const char * fileName)");
 		if (luaL_dofile(m_lua, fileName))
 		{
 			const char * err = lua_tostring(m_lua, -1);
 			LogScriptError("Call LuaEngine::run_file Error!!! error is \"%s\" \n chunk is \"%s\"\n", err, fileName);
 			lua_pop(m_lua, 1); //pop error
-			LogTraceReturn(RE_Lua_RuntimeError);
+			LogTraceStepReturn(RE_Lua_RuntimeError);
 		}
-		LogTraceReturn(RE_Success);
+		LogTraceStepReturn(RE_Success);
 	}
 
 	RuntimeError LuaEngine::require_file(const char * fileName)
 	{
-		LogTrace("RuntimeError LuaEngine::require_file(const char * fileName)");
+		LogTraceStepCall("RuntimeError LuaEngine::require_file(const char * fileName)");
 		LuaStateProtect lsp(m_lua, true);
 		lua_getglobal(m_lua, "require");
 		lua_pushstring(m_lua, fileName);
@@ -425,29 +425,29 @@ namespace LightInk
 		{
 			const char * errStr = lua_tostring(m_lua, -1);
 			if (errStr) LogScriptError(errStr);
-			LogTraceReturn(RE_Lua_RuntimeError);
+			LogTraceStepReturn(RE_Lua_RuntimeError);
 		}
-		LogTraceReturn(RE_Success);
+		LogTraceStepReturn(RE_Success);
 	}
 
 	RuntimeError LuaEngine::register_global_func(const char * func, lua_CFunction f)
 	{
-		LogTrace("RuntimeError LuaEngine::register_global_func(const char * func, lua_CFunction f)");
+		LogTraceStepCall("RuntimeError LuaEngine::register_global_func(const char * func, lua_CFunction f)");
 		LuaDefAutoTool::def(m_lua, f, func);
-		LogTraceReturn(RE_Success);
+		LogTraceStepReturn(RE_Success);
 	}
 
 	LuaRef LuaEngine::get_global_ref(const char * name)
 	{
-		LogTrace("LuaRef LuaEngine::get_global_ref(const char * name)");
+		LogTraceStepCall("LuaRef LuaEngine::get_global_ref(const char * name)");
 		lua_getglobal(m_lua, name);
-		LogTraceReturn(LuaRef(m_lua, true));
+		LogTraceStepReturn(LuaRef(m_lua, true));
 	}
 
 	void LuaEngine::register_module(void(*func)(lua_State * lua))
 	{
-		LogTrace("void LuaEngine::register_module(void(*func)(lua_State * lua))");
+		LogTraceStepCall("void LuaEngine::register_module(void(*func)(lua_State * lua))");
 		func(m_lua);
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 }

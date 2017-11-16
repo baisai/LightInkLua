@@ -39,84 +39,84 @@ namespace LightInk
 	public:
 		inline static const char * get_class_name()
 		{
-			LogTrace("const char * LuaClassInfo<T>::get_class_name()");
-			LogTraceReturn(m_className);
+			LogTraceStepCall("const char * LuaClassInfo<T>::get_class_name()");
+			LogTraceStepReturn(m_className);
 		}
 		static void set_class_name(const char * name)
 		{
-			LogTrace("void LuaClassInfo<T>::set_class_name(const char * name)");
+			LogTraceStepCall("void LuaClassInfo<T>::set_class_name(const char * name)");
 			if (have_name())
 			{
-				LogTraceReturnVoid;
+				LogTraceStepReturnVoid;
 			}
 			strncpy(m_className, name, 128);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		inline static void * get_class_key()
 		{
-			LogTrace("void * LuaClassInfo<T>::get_class_key()");
-			LogTraceReturn(&m_key);
+			LogTraceStepCall("void * LuaClassInfo<T>::get_class_key()");
+			LogTraceStepReturn(&m_key);
 		}
 
 		inline static bool have_name()
 		{
-			LogTrace("bool LuaClassInfo<T>::have_name()");
-			LogTraceReturn((m_className[0] != '\0'));
+			LogTraceStepCall("bool LuaClassInfo<T>::have_name()");
+			LogTraceStepReturn((m_className[0] != '\0'));
 		}
 
 		inline static bool is_registered(lua_State * L)
 		{
-			LogTrace("bool is_registered(lua_State * L)");
+			LogTraceStepCall("bool is_registered(lua_State * L)");
 			LuaStateProtect lsp(L, true);
 			lua_pushlightuserdata(L, &m_key);
 			lua_rawget(L, LUA_REGISTRYINDEX);
 			
 			if (lua_istable(L, -1))
 			{
-				LogTraceReturn(true);
+				LogTraceStepReturn(true);
 			}
-			LogTraceReturn(false);
+			LogTraceStepReturn(false);
 		}
 
 		inline static bool check_registered(lua_State * L, int idx)
 		{
-			LogTrace("bool check_registered(lua_State * L, int idx)");
+			LogTraceStepCall("bool check_registered(lua_State * L, int idx)");
 			LuaStateProtect lsp(L, true);
 			idx = lua_absindex(L, idx);
 			lua_pushlightuserdata(L, &m_key);
 			lua_rawget(L, idx);
-			LogTraceReturn((lua_toboolean(L, -1) != 0));
+			LogTraceStepReturn((lua_toboolean(L, -1) != 0));
 		}
 
 		static bool get_class_table(lua_State * L)
 		{
-			LogTrace("bool LuaClassInfo<T>::get_class_table(lua_State * L)");
+			LogTraceStepCall("bool LuaClassInfo<T>::get_class_table(lua_State * L)");
 			lua_pushlightuserdata(L, &m_key);
 			lua_rawget(L, LUA_REGISTRYINDEX);
 			if (lua_istable(L, -1))
 			{
-				LogTraceReturn(true);
+				LogTraceStepReturn(true);
 			}
 			LogScriptError("Error!!!This  class %s is not register!!!", m_className);
-			LogTraceReturn(false);
+			LogTraceStepReturn(false);
 		}
 
 		static bool get_class_metatable(lua_State * L)
 		{
-			LogTrace("bool LuaClassInfo<T>::get_class_metatable(lua_State * L)");
+			LogTraceStepCall("bool LuaClassInfo<T>::get_class_metatable(lua_State * L)");
 			if (!get_class_table(L))
 			{
-				LogTraceReturn(false);
+				LogTraceStepReturn(false);
 			}
 			lua_pushstring(L, "metatable__");
 			lua_rawget(L, -2);
 			lua_remove(L, -2);
-			LogTraceReturn(true);
+			LogTraceStepReturn(true);
 		}
 
 		static bool set_class_table(lua_State * L, int idx)
 		{
-			LogTrace("LuaClassInfo<T>::set_class_table(lua_State * L, int idx)");
+			LogTraceStepCall("LuaClassInfo<T>::set_class_table(lua_State * L, int idx)");
 			{
 				LuaStateProtect lsp(L, true);
 				lua_pushvalue(L, idx);
@@ -125,7 +125,7 @@ namespace LightInk
 				if (!lua_istable(L, -1))
 				{
 					LogScriptError("Error!!!This  class %s do not have metatable__!!!", m_className);
-					LogTraceReturn(false);
+					LogTraceStepReturn(false);
 				}
 				lua_pushstring(L, "key__");
 				lua_rawget(L, -2);
@@ -133,12 +133,12 @@ namespace LightInk
 				if (!lua_rawequal(L, -1, -2))
 				{
 					LogScriptError("Error!!!This  class %s do not have metatable__!!!", m_className);
-					LogTraceReturn(false);
+					LogTraceStepReturn(false);
 				}
 			}
 			lua_pushvalue(L, idx);
 			lua_rawsetp(L, LUA_REGISTRYINDEX, &m_key);
-			LogTraceReturn(true);
+			LogTraceStepReturn(true);
 		}
 	private:
 		static char m_key;

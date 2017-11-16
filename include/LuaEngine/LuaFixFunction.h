@@ -120,7 +120,7 @@
 	/*
 	inline LIGHTINK_DECL int pcall_callback(lua_State * L)
 	{
-		LogTrace("int pcall_callback(lua_State * L)");
+		LogTraceStepCall("int pcall_callback(lua_State * L)");
 		lua_Debug debug= {};  
 		int ret = lua_getstack(L, 2, &debug); // 0是pcall_callback_err_fun自己, 1是error函数, 2是真正出错的函数  
 		lua_getinfo(L, "Sln", &debug);  
@@ -135,7 +135,7 @@
   
 		msg << " [" << err << "]";  
 		lua_pushstring(L, msg.str().c_str());  
-		LogTraceReturn(1);
+		LogTraceStepReturn(1);
 	}*/
 	
 

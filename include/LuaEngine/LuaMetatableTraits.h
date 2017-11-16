@@ -41,64 +41,64 @@ namespace LightInk
 	{
 		static LuaUserdataForClass<ClassType> * userdata_to_imp(lua_State * L, int idx)
 		{
-			LogTrace("LuaUserdataForClass<ClassType> * LuaMetatableTraits<ClassType>::userdata_to_imp(lua_State * L, int idx)");
+			LogTraceStepCall("LuaUserdataForClass<ClassType> * LuaMetatableTraits<ClassType>::userdata_to_imp(lua_State * L, int idx)");
 			LuaStateProtect lsp(L);
 			if (lua_isnothing(L, idx) || !lua_isuserdata(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The arg %d is not userdata!!!", idx);
-				LogTraceReturn(NULL);
+				LogTraceStepReturn(NULL);
 			}
 			void * userdata = lua_touserdata(L, idx);
 
 			if (userdata == NULL)
 			{
 				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but pointer is null!!!", idx);
-				LogTraceReturn(NULL);
+				LogTraceStepReturn(NULL);
 			}
 			if (!lua_getmetatable(L, idx))
 			{
 				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but not metatable!!!", idx);
-				LogTraceReturn(NULL);
+				LogTraceStepReturn(NULL);
 			}
 			
 			//因为可能是继承关系
 			if (!LuaClassInfo<ClassType>::check_registered(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The arg %d is userdata, but class type is error!!!", idx);
-				LogTraceReturn(NULL);
+				LogTraceStepReturn(NULL);
 			}
 			LuaUserdataForClass<ClassType> * p = (LuaUserdataForClass<ClassType>*) userdata;
 			lsp.reset();
-			LogTraceReturn(p);
+			LogTraceStepReturn(p);
 		}
 
 		static ClassType * userdata_to_object(lua_State* L, int idx)
 		{
-			LogTrace("ClassType * LuaMetatableTraits<ClassType>::userdata_to_object(lua_State * L, int idx)");
+			LogTraceStepCall("ClassType * LuaMetatableTraits<ClassType>::userdata_to_object(lua_State * L, int idx)");
 			LuaUserdataForClass<ClassType> * p = userdata_to_imp(L, idx);
 			if (p)
 			{
-				LogTraceReturn(p->m_obj);
+				LogTraceStepReturn(p->m_obj);
 			}
-			LogTraceReturn(NULL);
+			LogTraceStepReturn(NULL);
 		}
 
 		static ClassType * userdata_to_object_move(lua_State* L, int idx)
 		{
-			LogTrace("ClassType * LuaMetatableTraits<ClassType>::userdata_to_object_move(lua_State* L, int idx)");
+			LogTraceStepCall("ClassType * LuaMetatableTraits<ClassType>::userdata_to_object_move(lua_State* L, int idx)");
 			LuaUserdataForClass<ClassType> * p = userdata_to_imp(L, idx);
 			if (p)
 			{
 				ClassType * t = p->m_obj;
 				p->m_obj = NULL;
-				LogTraceReturn(t);
+				LogTraceStepReturn(t);
 			}
-			LogTraceReturn(NULL);
+			LogTraceStepReturn(NULL);
 		}
 
 		static int mt_isdelete_function(lua_State * L)
 		{
-			LogTrace("int LuaMetatableTraits<ClassType>::mt_isdelete_function(lua_State * L)");
+			LogTraceStepCall("int LuaMetatableTraits<ClassType>::mt_isdelete_function(lua_State * L)");
 			LuaUserdataForClass<ClassType> * p = userdata_to_imp(L, 1);
 			if (p && p->m_obj)
 			{
@@ -108,42 +108,42 @@ namespace LightInk
 			{
 				lua_pushboolean(L, 1);
 			}
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 
 		static int mt_delete_function(lua_State * L)
 		{
-			LogTrace("int LuaMetatableTraits<ClassType>::mt_delete_function(lua_State * L)");
+			LogTraceStepCall("int LuaMetatableTraits<ClassType>::mt_delete_function(lua_State * L)");
 			LuaUserdataForClass<ClassType> * p = userdata_to_imp(L, 1);
 			if (p && p->m_obj && !p->m_luaGC)
 			{
 				delete p->m_obj;
 				p->m_obj = NULL;
 			}
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 
 		static int mt_force_delete_function(lua_State * L)
 		{
-			LogTrace("int LuaMetatableTraits<ClassType>::mt_force_delete_function(lua_State * L)");
+			LogTraceStepCall("int LuaMetatableTraits<ClassType>::mt_force_delete_function(lua_State * L)");
 			LuaUserdataForClass<ClassType> * p = userdata_to_imp(L, 1);
 			if (p && p->m_obj)
 			{
 				delete p->m_obj;
 				p->m_obj = NULL;
 			}
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 
 		static int mt_gc_function(lua_State * L)
 		{
-			LogTrace("int LuaMetatableTraits<ClassType>::mt_gc_function(lua_State * L)");
+			LogTraceStepCall("int LuaMetatableTraits<ClassType>::mt_gc_function(lua_State * L)");
 			LuaUserdataForClass<ClassType> * p = userdata_to_imp(L, 1);
 			if (p)
 			{
 				p->~LuaUserdataForClass();
 			}
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 }

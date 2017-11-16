@@ -37,7 +37,7 @@ namespace LightInk
 		template <typename T>
 		static void push(lua_State * L, const T & t)
 		{
-			LogTrace("void LuaUserdata<T>::push(lua_State * L, const T & t)");
+			LogTraceStepCall("void LuaUserdata<T>::push(lua_State * L, const T & t)");
 			if (!LuaClassInfo<T>::get_class_metatable(L))
 			{
 				LogScriptErrorJump(L, "Error!!!LuaUserdata<T>::push Can not get class metatable!!!!");
@@ -46,19 +46,19 @@ namespace LightInk
 			lua_insert(L, -2);
 			lua_setmetatable(L, -2);
 			new(userdataPtr) LuaUserdataForClass<T>(new T(t), true);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		
 		template <typename T>
 		static T get(lua_State * L, int idx)
 		{
-			LogTrace("T LuaUserdata<T>::get(lua_State * L, int idx)");
+			LogTraceStepCall("T LuaUserdata<T>::get(lua_State * L, int idx)");
 			T * p = LuaMetatableTraits<T>::userdata_to_object(L, idx);
 			if (!p)
 			{
 				LogScriptErrorJump(L, "Error!!!LuaUserdata<T>::get get pointer is null!!!!");
 			}
-			LogTraceReturn(*p);
+			LogTraceStepReturn(*p);
 		}
 	};
 
@@ -76,7 +76,7 @@ namespace LightInk
 		template <typename T>
 		static void push(lua_State * L, const LuaStackPtrMove<T> & pm)
 		{
-			LogTrace("void LuaUserdataPtrMove<T>::push(lua_State * L, const T & t)");
+			LogTraceStepCall("void LuaUserdataPtrMove<T>::push(lua_State * L, const T & t)");
 			if (!LuaClassInfo<T>::get_class_metatable(L))
 			{
 				LogScriptErrorJump(L, "Error!!!LuaUserdataPtrMove<T>::push Can not get class metatable!!!!");
@@ -93,14 +93,14 @@ namespace LightInk
 				lua_pop(L, 1);
 				lua_pushnil(L);
 			}
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		
 		template <typename T>
 		static LuaStackPtrMove<T> get(lua_State * L, int idx)
 		{
-			LogTrace("T LuaUserdataPtrMove<T>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaStackPtrMove<T>(LuaMetatableTraits<T>::userdata_to_object_move(L, idx)));
+			LogTraceStepCall("T LuaUserdataPtrMove<T>::get(lua_State * L, int idx)");
+			LogTraceStepReturn(LuaStackPtrMove<T>(LuaMetatableTraits<T>::userdata_to_object_move(L, idx)));
 		}
 	};
 
@@ -109,7 +109,7 @@ namespace LightInk
 		template <typename T>
 		static void push(lua_State * L, const T * t)
 		{
-			LogTrace("void LuaUserdataPtr<T>::push(lua_State * L, const T & t)");
+			LogTraceStepCall("void LuaUserdataPtr<T>::push(lua_State * L, const T & t)");
 			if (!LuaClassInfo<T>::get_class_metatable(L))
 			{
 				LogScriptErrorJump(L, "Error!!!LuaUserdataPtr<T>::push Can not get class metatable!!!!");
@@ -126,14 +126,14 @@ namespace LightInk
 				lua_pop(L, 1);
 				lua_pushnil(L);
 			}
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		
 		template <typename T>
 		static T * get(lua_State * L, int idx)
 		{
-			LogTrace("T LuaUserdataPtr<T>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaMetatableTraits<T>::userdata_to_object(L, idx));
+			LogTraceStepCall("T LuaUserdataPtr<T>::get(lua_State * L, int idx)");
+			LogTraceStepReturn(LuaMetatableTraits<T>::userdata_to_object(L, idx));
 		}
 	};
 

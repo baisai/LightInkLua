@@ -92,48 +92,48 @@ namespace LightInk
 		template <typename T>
 		RuntimeError open_module(T m)
 		{
-			LogTrace("LuaEngine::open_module<T>(T m)");
+			LogTraceStepCall("LuaEngine::open_module<T>(T m)");
 			m(m_lua);
-			LogTraceReturn(RE_Success);
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename T>
 		RuntimeError get_global_var(const char * name, T & var)
 		{
-			LogTrace("RuntimeError LuaEngine::get_global_var<T>(const char * name, T & var)");
+			LogTraceStepCall("RuntimeError LuaEngine::get_global_var<T>(const char * name, T & var)");
 			LuaStateProtect lsp(m_lua);
 			lua_getglobal(m_lua, name);
 			var = LuaStack<const T>::get(m_lua, -1);
 			lsp.reset();
-			LogTraceReturn(RE_Success);
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename T>
 		RuntimeError set_global_var(const char * name, const T & var)
 		{
-			LogTrace("RuntimeError LuaEngine::set_global_var<T>(const char * name, T & var)");
+			LogTraceStepCall("RuntimeError LuaEngine::set_global_var<T>(const char * name, T & var)");
 			LuaStack<const T>::push(m_lua, var);
 			lua_setglobal(m_lua, name);
-			LogTraceReturn(RE_Success);
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template<typename R>
 		RuntimeError call(const char * name, R & result)
 		{
-			LogTrace("RuntimeError LuaEngine::call(R & result)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(R & result)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			if (lua_pcall(m_lua, 0, 1, 0))
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{ LogTraceReturn(e); }
+			{ LogTraceStepReturn(e); }
 			
-			LogTraceReturn(RE_Success);
+			LogTraceStepReturn(RE_Success);
 		}
 /*
 --lua生成
@@ -157,15 +157,15 @@ function create_traits(count)
 		table.insert(temp, arg1)
 		table.insert(temp, ">\n\t\tRuntimeError call(const char * name, R & result, ")
 		table.insert(temp, arg2)
-		table.insert(temp, ")\n\t\t{\n\t\t\tLogTrace(\"RuntimeError LuaEngine::call(const char * name, R & result, ")
+		table.insert(temp, ")\n\t\t{\n\t\t\tLogTraceStepCall(\"RuntimeError LuaEngine::call(const char * name, R & result, ")
 		table.insert(temp, arg2)
 		table.insert(temp, ")\");\n")
 		table.insert(temp, "\t\t\tLuaStateProtect lsp(m_lua, true);\n\t\t\tlua_getglobal(m_lua, name);\n")
 		table.insert(temp, arg3)
 		table.insert(temp, string.format("\t\t\tif (lua_pcall(m_lua, %d, 1, 0))\n\t\t\t{\n", k))
 		table.insert(temp, "\t\t\t\tconst char * errStr = lua_tostring(m_lua, -1);\n\t\t\t\tif (errStr) LogScriptError(errStr);\n")
-		table.insert(temp, "\t\t\t\tLogTraceReturn(RE_Lua_RuntimeError);\n\t\t\t}\n")
-		table.insert(temp, "\t\t\ttry { result = LuaStack<const R>::get(m_lua, -1); }\n\t\t\tcatch (RuntimeError e)\n\t\t\t{  LogTraceReturn(e); }\n\t\t\tLogTraceReturn(RE_Success);\n\t\t}\n\n")
+		table.insert(temp, "\t\t\t\tLogTraceStepReturn(RE_Lua_RuntimeError);\n\t\t\t}\n")
+		table.insert(temp, "\t\t\ttry { result = LuaStack<const R>::get(m_lua, -1); }\n\t\t\tcatch (RuntimeError e)\n\t\t\t{  LogTraceStepReturn(e); }\n\t\t\tLogTraceStepReturn(RE_Success);\n\t\t}\n\n")
 
 		str = str .. table.concat(temp)
 	end
@@ -179,7 +179,7 @@ create_traits(20)
 		template <typename R, typename Arg1>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -187,18 +187,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -207,18 +207,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -228,18 +228,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -250,18 +250,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -273,18 +273,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -297,18 +297,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -322,18 +322,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -348,18 +348,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -375,18 +375,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -403,18 +403,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -432,18 +432,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -462,18 +462,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -493,18 +493,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -525,18 +525,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -558,18 +558,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -592,18 +592,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -627,18 +627,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17, typename Arg18>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -663,18 +663,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17, typename Arg18, typename Arg19>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -700,18 +700,18 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 
 		template <typename R, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17, typename Arg18, typename Arg19, typename Arg20>
 		RuntimeError call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19, const Arg20 & arg20)
 		{
-			LogTrace("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19, const Arg20 & arg20)");
+			LogTraceStepCall("RuntimeError LuaEngine::call(const char * name, R & result, const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19, const Arg20 & arg20)");
 			LuaStateProtect lsp(m_lua, true);
 			lua_getglobal(m_lua, name);
 			LuaStack<const Arg1>::push(m_lua, arg1);
@@ -738,12 +738,12 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_lua, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(RE_Lua_RuntimeError);
+				LogTraceStepReturn(RE_Lua_RuntimeError);
 			}
 			try { result = LuaStack<const R>::get(m_lua, -1); }
 			catch (RuntimeError e)
-			{  LogTraceReturn(e); }
-			LogTraceReturn(RE_Success);
+			{  LogTraceStepReturn(e); }
+			LogTraceStepReturn(RE_Success);
 		}
 	};
 }

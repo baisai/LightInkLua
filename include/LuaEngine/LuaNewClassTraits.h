@@ -42,8 +42,8 @@ namespace LightInk
 	{
 		static  int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, int()>::call(lua_State * L)");
-			LogTraceReturn(0);
+			LogTraceStepCall("LuaNewClassTraits<ClassType, int()>::call(lua_State * L)");
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -52,9 +52,9 @@ namespace LightInk
 	{
 		static  int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void()>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void()>::call(lua_State * L)");
 			lua_pushnil(L);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -63,18 +63,18 @@ namespace LightInk
 	{
 		static  int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void()>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void()>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			rawgetfield(L, 1, "metatable__");
 			//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
@@ -82,7 +82,7 @@ namespace LightInk
 			
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -108,18 +108,18 @@ function create_traits(count)
 		table.insert(temp, arg1)
 		table.insert(temp, ">\n\tstruct LIGHTINK_TEMPLATE_DECL LuaNewClassTraits<ClassType, luaGC, void(")
 		table.insert(temp, arg2)
-		table.insert(temp, ")>\n\t{\n\t\tstatic int call(lua_State * L)\n\t\t{\n\t\t\tLogTrace(\"LuaNewClassTraits<ClassType, void(")
+		table.insert(temp, ")>\n\t{\n\t\tstatic int call(lua_State * L)\n\t\t{\n\t\t\tLogTraceStepCall(\"LuaNewClassTraits<ClassType, void(")
 		table.insert(temp, arg2)
 		table.insert(temp, ")>::call(lua_State * L)\");\n")
-		table.insert(temp, "\t\t\tif (!lua_istable(L, 1))\n\t\t\t{\n\t\t\t\tLogScriptErrorJump(L, \"Error!!!The NewClass Traits First arg is not table!!!\");\n\t\t\t\tLogTraceReturn(0);\n\t\t\t}\n")
+		table.insert(temp, "\t\t\tif (!lua_istable(L, 1))\n\t\t\t{\n\t\t\t\tLogScriptErrorJump(L, \"Error!!!The NewClass Traits First arg is not table!!!\");\n\t\t\t\tLogTraceStepReturn(0);\n\t\t\t}\n")
 		table.insert(temp, arg3)
 		table.insert(temp, "\t\t\trawgetfield(L, 1, \"metatable__\");\n\t\t\t//lua_rawgetp(L, 1, LuaClassInfo<ClassType>::get_class_key());\n")
-		table.insert(temp, "\t\t\tif (!lua_istable(L, -1))\n\t\t\t{\n\t\t\t\tLogScriptErrorJump(L, \"Error!!!The NewClass Traits First arg have not userdata metatable!!!\");\n\t\t\t\tLogTraceReturn(0);\n\t\t\t}\n")
+		table.insert(temp, "\t\t\tif (!lua_istable(L, -1))\n\t\t\t{\n\t\t\t\tLogScriptErrorJump(L, \"Error!!!The NewClass Traits First arg have not userdata metatable!!!\");\n\t\t\t\tLogTraceStepReturn(0);\n\t\t\t}\n")
 		table.insert(temp, "\t\t\tvoid * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));\n\t\t\t")
 		table.insert(temp, "lua_pushvalue(L, -2);\n\t\t\tlua_setmetatable(L, -2);\n\n\t\t\t")
 		table.insert(temp, "new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(")
 		table.insert(temp, arg4)
-		table.insert(temp, "), luaGC);\n\t\t\tLogTraceReturn(1);\n\t\t}\n\t};\n\n")
+		table.insert(temp, "), luaGC);\n\t\t\tLogTraceStepReturn(1);\n\t\t}\n\t};\n\n")
 
 		str = str .. table.concat(temp)
 	end
@@ -136,11 +136,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			rawgetfield(L, 1, "metatable__");
@@ -148,14 +148,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -164,11 +164,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -177,14 +177,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -193,11 +193,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -207,14 +207,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -223,11 +223,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -238,14 +238,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -254,11 +254,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -270,14 +270,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -286,11 +286,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -303,14 +303,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -319,11 +319,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -337,14 +337,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -353,11 +353,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -372,14 +372,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -388,11 +388,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -408,14 +408,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -424,11 +424,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -445,14 +445,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -461,11 +461,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -483,14 +483,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -499,11 +499,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -522,14 +522,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -538,11 +538,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -562,14 +562,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -578,11 +578,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -603,14 +603,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -619,11 +619,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -645,14 +645,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -661,11 +661,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -688,14 +688,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -704,11 +704,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -732,14 +732,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -748,11 +748,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -777,14 +777,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -793,11 +793,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -823,14 +823,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -839,11 +839,11 @@ create_traits(20)
 	{
 		static int call(lua_State * L)
 		{
-			LogTrace("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(lua_State * L)");
+			LogTraceStepCall("LuaNewClassTraits<ClassType, void(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(lua_State * L)");
 			if (!lua_istable(L, 1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg is not table!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
@@ -870,14 +870,14 @@ create_traits(20)
 			if (!lua_istable(L, -1))
 			{
 				LogScriptErrorJump(L, "Error!!!The NewClass Traits First arg have not userdata metatable!!!");
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
 			void * userdataPtr = lua_newuserdata(L, sizeof(LuaUserdataForClass<ClassType>));
 			lua_pushvalue(L, -2);
 			lua_setmetatable(L, -2);
 
 			new(userdataPtr) LuaUserdataForClass<ClassType>(new ClassType(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20), luaGC);
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 

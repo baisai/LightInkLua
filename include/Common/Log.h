@@ -37,15 +37,23 @@
 ///////////////////////////
 #ifdef LightInkNoTrace
 #define LogTrace(ft, ...)
-#define LogTraceReturn(v) return v
-#define LogTraceReturnVoid return
 #define LogTraceEnd
-
+#ifndef LightInkNoTraceStepCall
+#define LightInkNoTraceStepCall
+#endif
 #else
 #define LogTrace(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
-#define LogTraceReturn(v) return v
-#define LogTraceReturnVoid return
 #define LogTraceEnd
+#endif
+
+#ifdef LightInkNoTraceStepCall
+#define LogTraceStepCall(ft, ...)
+#define LogTraceStepReturn(v) return v
+#define LogTraceStepReturnVoid return
+#else
+#define LogTraceStepCall(ft, ...) printf(ft, ##__VA_ARGS__);printf("\n")
+#define LogTraceStepReturn(v) return v
+#define LogTraceStepReturnVoid return
 #endif
 
 ////////////////////////

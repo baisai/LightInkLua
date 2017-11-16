@@ -31,111 +31,111 @@ namespace LightInk
 {
 	LuaRef::LuaRef(lua_State * L) : m_L(L), m_ref(LUA_REFNIL)
 	{ 
-		LogTrace("LuaRef::LuaRef(lua_State * L)"); 
-		LogTraceReturnVoid; 
+		LogTraceStepCall("LuaRef::LuaRef(lua_State * L)"); 
+		LogTraceStepReturnVoid; 
 	}
 
 	LuaRef::LuaRef(lua_State * L, bool fromStack) : m_L(L), m_ref(luaL_ref(L, LUA_REGISTRYINDEX))
 	{ 
-		LogTrace("LuaRef::LuaRef(lua_State * L, bool fromStack)"); 
-		LogTraceReturnVoid; 
+		LogTraceStepCall("LuaRef::LuaRef(lua_State * L, bool fromStack)"); 
+		LogTraceStepReturnVoid; 
 	}
 
 	LuaRef::LuaRef(lua_State * L, int idx) : m_L(L), m_ref(LUA_REFNIL)
 	{
-		LogTrace("LuaRef::LuaRef(lua_State * L, int idx)");
+		LogTraceStepCall("LuaRef::LuaRef(lua_State * L, int idx)");
 		lua_pushvalue(L, idx);
 		m_ref = luaL_ref(L, LUA_REGISTRYINDEX);
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	LuaRef::LuaRef(const LuaTableRef & v) : m_L(v.state()), m_ref(v.create_ref())
 	{ 
-		LogTrace("LuaRef::LuaRef(const LuaTableRef & v)");
-		LogTraceReturnVoid;
+		LogTraceStepCall("LuaRef::LuaRef(const LuaTableRef & v)");
+		LogTraceStepReturnVoid;
 	}
 
 	LuaRef::LuaRef(const LuaRef & cp) : m_L(cp.m_L), m_ref(cp.create_ref())
 	{
-		LogTrace("LuaRef::LuaRef(const LuaRef & cp)"); 
-		LogTraceReturnVoid;
+		LogTraceStepCall("LuaRef::LuaRef(const LuaRef & cp)"); 
+		LogTraceStepReturnVoid;
 	}
 
 	LuaRef::~LuaRef()
 	{
-		LogTrace("LuaRef::~LuaRef()");
+		LogTraceStepCall("LuaRef::~LuaRef()");
 		if (m_L) { luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref); }
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	void LuaRef::clear_lua()
 	{
-		LogTrace("void LuaRef::LuaTableRef::clear_lua()");
+		LogTraceStepCall("void LuaRef::LuaTableRef::clear_lua()");
 		m_L = NULL;
 		m_ref = LUA_REFNIL;
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	int LuaRef::create_ref() const
 	{
-		LogTrace("int LuaRef::create_ref() const");
+		LogTraceStepCall("int LuaRef::create_ref() const");
 		if (m_ref == LUA_REFNIL)
 		{
-			LogTraceReturn(m_ref);
+			LogTraceStepReturn(m_ref);
 		}
 		push();
-		LogTraceReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
+		LogTraceStepReturn(luaL_ref(m_L, LUA_REGISTRYINDEX));
 	}
 
 	void LuaRef::set_nil()
 	{
-		LogTrace("LuaRef::set_nil()");
+		LogTraceStepCall("LuaRef::set_nil()");
 		if (m_ref != LUA_REFNIL)
 		{
 			luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
 			m_ref = LUA_REFNIL;
 		}
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	LuaRef & LuaRef::operator = (const LuaRef & right)
 	{
-		LogTrace("LuaRef & LuaRef::operator = (const LuaRef & right)");
+		LogTraceStepCall("LuaRef & LuaRef::operator = (const LuaRef & right)");
 		luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
 		right.push();
 		m_L = right.state();
 		m_ref = luaL_ref(m_L, LUA_REGISTRYINDEX);
-		LogTraceReturn(*this);
+		LogTraceStepReturn(*this);
 	}
 
 	LuaRef & LuaRef::operator = (const LuaTableRef & right)
 	{
-		LogTrace("LuaRef & LuaRef::operator = (const LuaTableRef & right)");
+		LogTraceStepCall("LuaRef & LuaRef::operator = (const LuaTableRef & right)");
 		luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
 		right.push();
 		m_L = right.state();
 		m_ref = luaL_ref(m_L, LUA_REGISTRYINDEX);
-		LogTraceReturn(*this);
+		LogTraceStepReturn(*this);
 	}
 
 
 	LuaRef LuaRef::new_table(lua_State * L, int narr, int nrec)
 	{
-		LogTrace("LuaRef LuaRef::new_table(lua_State * L, int narr, int nrec)");
+		LogTraceStepCall("LuaRef LuaRef::new_table(lua_State * L, int narr, int nrec)");
 		lua_createtable(L, narr, nrec);
-		LogTraceReturn(LuaRef(L, true));
+		LogTraceStepReturn(LuaRef(L, true));
 	}
 	LuaRef LuaRef::get_global_var(lua_State * L, const char * name)
 	{
-		LogTrace("LuaRef LuaRef::get_global_var(lua_State * L, const char * name)");
+		LogTraceStepCall("LuaRef LuaRef::get_global_var(lua_State * L, const char * name)");
 		lua_getglobal(L, name);
-		LogTraceReturn(LuaRef(L, true));
+		LogTraceStepReturn(LuaRef(L, true));
 	}
 
 
 	std::string LuaRef::to_string() const
 	{
-		LogTrace("std::string LuaRef::to_string() const");
+		LogTraceStepCall("std::string LuaRef::to_string() const");
 		LuaStateProtect lsp(m_L);
 		lua_getglobal(m_L, "tostring");
 		push();
@@ -143,15 +143,15 @@ namespace LightInk
 		{
 			const char * errStr = lua_tostring(m_L, -1);
 			if (errStr) LogScriptError(errStr);
-			LogTraceReturn(std::string());
+			LogTraceStepReturn(std::string());
 		}
 		const char * str = lua_tostring(m_L, -1);
 		lsp.reset();
-		LogTraceReturn(std::string(str));
+		LogTraceStepReturn(std::string(str));
 	}
 	void LuaRef::print() const
 	{
-		LogTrace("LuaRef::print(std::ostream & os) const");
+		LogTraceStepCall("LuaRef::print(std::ostream & os) const");
 		switch (type())
 		{
 		case LUA_TNIL:
@@ -175,116 +175,116 @@ namespace LightInk
 		default:
 			LogScriptMessage("unknown");break;
 		}
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 	lua_State * LuaRef::state() const
-	{ LogTrace("lua_State * LuaRef::state()"); LogTraceReturn(m_L); }
+	{ LogTraceStepCall("lua_State * LuaRef::state()"); LogTraceStepReturn(m_L); }
 	void LuaRef::push() const
 	{
-		LogTrace("LuaRef::push() const");
+		LogTraceStepCall("LuaRef::push() const");
 		lua_rawgeti(m_L, LUA_REGISTRYINDEX, m_ref);
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 	void LuaRef::pop()
 	{
-		LogTrace("LuaRef::pop() const");
+		LogTraceStepCall("LuaRef::pop() const");
 		luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
 		m_ref = luaL_ref(m_L, LUA_REGISTRYINDEX);
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 	int LuaRef::type() const
 	{
-		LogTrace("int LuaRef::type() const");
+		LogTraceStepCall("int LuaRef::type() const");
 		if (m_ref == LUA_REFNIL)
 		{
-			LogTraceReturn(LUA_TNIL);
+			LogTraceStepReturn(LUA_TNIL);
 		}
 		LuaStateProtect lsp(m_L, true);
 		push();
-		LogTraceReturn(lua_type(m_L, -1));
+		LogTraceStepReturn(lua_type(m_L, -1));
 	}
 
 	bool LuaRef::is_nil() const
 	{
-		LogTrace("bool LuaRef::is_nil() const"); 
-		LogTraceReturn((type() == LUA_TNIL));
+		LogTraceStepCall("bool LuaRef::is_nil() const"); 
+		LogTraceStepReturn((type() == LUA_TNIL));
 	}
 	bool LuaRef::is_number() const
 	{
-		LogTrace("bool LuaRef::is_number() const");
-		LogTraceReturn((type() == LUA_TNUMBER));
+		LogTraceStepCall("bool LuaRef::is_number() const");
+		LogTraceStepReturn((type() == LUA_TNUMBER));
 	}
 	bool LuaRef::is_string() const
 	{
-		LogTrace("bool LuaRef::is_string() const"); 
-		LogTraceReturn((type() == LUA_TSTRING));
+		LogTraceStepCall("bool LuaRef::is_string() const"); 
+		LogTraceStepReturn((type() == LUA_TSTRING));
 	}
 	bool LuaRef::is_table() const
 	{
-		LogTrace("bool LuaRef::is_table() const"); 
-		LogTraceReturn((type() == LUA_TTABLE));
+		LogTraceStepCall("bool LuaRef::is_table() const"); 
+		LogTraceStepReturn((type() == LUA_TTABLE));
 	}
 	bool LuaRef::is_function() const
 	{
-		LogTrace("bool LuaRef::is_function() const"); 
-		LogTraceReturn((type() == LUA_TFUNCTION));
+		LogTraceStepCall("bool LuaRef::is_function() const"); 
+		LogTraceStepReturn((type() == LUA_TFUNCTION));
 	}
 	bool LuaRef::is_userdata() const
 	{
-		LogTrace("bool LuaRef::is_userdata() const"); 
-		LogTraceReturn((type() == LUA_TUSERDATA));
+		LogTraceStepCall("bool LuaRef::is_userdata() const"); 
+		LogTraceStepReturn((type() == LUA_TUSERDATA));
 	}
 	bool LuaRef::is_thread() const
 	{
-		LogTrace("bool LuaRef::is_thread() const"); 
-		LogTraceReturn((type() == LUA_TTHREAD));
+		LogTraceStepCall("bool LuaRef::is_thread() const"); 
+		LogTraceStepReturn((type() == LUA_TTHREAD));
 	}
 	bool LuaRef::is_lightuserdata() const
 	{
-		LogTrace("bool LuaRef::is_lightuserdata() const"); 
-		LogTraceReturn((type() == LUA_TLIGHTUSERDATA));
+		LogTraceStepCall("bool LuaRef::is_lightuserdata() const"); 
+		LogTraceStepReturn((type() == LUA_TLIGHTUSERDATA));
 	}
 	bool LuaRef::is_bool() const
 	{
-		LogTrace("bool LuaRef::is_bool() const"); 
-		LogTraceReturn((type() == LUA_TBOOLEAN));
+		LogTraceStepCall("bool LuaRef::is_bool() const"); 
+		LogTraceStepReturn((type() == LUA_TBOOLEAN));
 	}
 
 	bool LuaRef::is_cfunction() const
 	{
-		LogTrace("bool LuaRef::is_cfunction() const");
+		LogTraceStepCall("bool LuaRef::is_cfunction() const");
 		if (m_ref == LUA_REFNIL)
 		{
-			LogTraceReturn(false);
+			LogTraceStepReturn(false);
 		}
 		LuaStateProtect lsp(m_L, true);
 		push();
-		LogTraceReturn(lua_iscfunction(m_L, -1) == 1);
+		LogTraceStepReturn(lua_iscfunction(m_L, -1) == 1);
 	}
 
 
 	size_t LuaRef::length() const
 	{
-		LogTrace("LuaRef::length() const");
+		LogTraceStepCall("LuaRef::length() const");
 		LuaStateProtect lsp(m_L, true);
 		push();
 		size_t len = lua_objlen(m_L, -1);
 		lsp.reset();
-		LogTraceReturn(len);
+		LogTraceStepReturn(len);
 	}
 
 		
 	const LuaRef LuaRef::operator () () const
 	{
-		LogTrace("const LuaRef LuaRef::operator () () const");
+		LogTraceStepCall("const LuaRef LuaRef::operator () () const");
 		push();
 		if (lua_pcall(m_L, 0, 1, 0))
 		{
 			const char * errStr = lua_tostring(m_L, -1);
 			if (errStr) LogScriptError(errStr);
-			LogTraceReturn(LuaRef(m_L));
+			LogTraceStepReturn(LuaRef(m_L));
 		}
-		LogTraceReturn(LuaRef(m_L, true));
+		LogTraceStepReturn(LuaRef(m_L, true));
 	}
 
 }

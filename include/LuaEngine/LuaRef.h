@@ -43,10 +43,10 @@ namespace LightInk
 		template <typename T>
 		LuaRef(lua_State * L, const T & v) : m_L(L)
 		{
-			LogTrace("LuaRef::LuaRef<T>(lua_State * L, const T v)");
+			LogTraceStepCall("LuaRef::LuaRef<T>(lua_State * L, const T v)");
 			LuaStack<const T>::push(m_L, v);
 			m_ref = luaL_ref(L, LUA_REGISTRYINDEX);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		LuaRef(const LuaTableRef & v);
 		LuaRef(const LuaRef & cp);
@@ -64,11 +64,11 @@ namespace LightInk
 		template <typename T>
 		LuaRef & operator = (const T & right)
 		{
-			LogTrace("LuaRef & LuaRef::operator = <T>(const T & right)");
+			LogTraceStepCall("LuaRef & LuaRef::operator = <T>(const T & right)");
 			luaL_unref(m_L, LUA_REGISTRYINDEX, m_ref);
 			LuaStack<const T>::push(m_L, right);
 			m_ref = luaL_ref(m_L, LUA_REGISTRYINDEX);
-			LogTraceReturn(*this);
+			LogTraceStepReturn(*this);
 		}
 
 
@@ -98,102 +98,102 @@ namespace LightInk
 		template <typename T>
 		T cast() const
 		{
-			LogTrace("T LuaRef::cast<T>() const");
+			LogTraceStepCall("T LuaRef::cast<T>() const");
 			LuaStateProtect lsp(m_L);
 			push();
 			T t(LuaStack<const T>::get(m_L, -1));
 			lsp.reset();
-			LogTraceReturn(t);
+			LogTraceStepReturn(t);
 		}
 		template <typename T>
 		inline operator T () const
-		{ LogTrace("LuaRef::operator T<T> () const"); LogTraceReturn(cast<T>()); }
+		{ LogTraceStepCall("LuaRef::operator T<T> () const"); LogTraceStepReturn(cast<T>()); }
 
 
 		template <typename T>
 		bool operator == (const T & right) const
 		{
-			LogTrace("bool LuaRef::operator ==<T> (const T & right) const");
+			LogTraceStepCall("bool LuaRef::operator ==<T> (const T & right) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, right);
 			bool eq = lua_equal(m_L, -1, -2) == 1;
 			lsp.reset();
-			LogTraceReturn(eq);
+			LogTraceStepReturn(eq);
 		}
 		template <typename T>
 		inline bool operator != (const T & right) const
 		{
-			LogTrace("bool LuaRef::operator !=<T> (const T & right) const");
-			LogTraceReturn(!((*this) == right));
+			LogTraceStepCall("bool LuaRef::operator !=<T> (const T & right) const");
+			LogTraceStepReturn(!((*this) == right));
 		}
 		template <typename T>
 		bool operator < (const T & right) const
 		{
-			LogTrace("bool LuaRef::operator <<T> (const T & right) const");
+			LogTraceStepCall("bool LuaRef::operator <<T> (const T & right) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, right);
 			bool lt = lua_lessthan(m_L, -2, -1) == 1;
 			lsp.reset();
-			LogTraceReturn(lt);
+			LogTraceStepReturn(lt);
 		}
 		template <typename T>
 		bool operator <= (const T & right) const
 		{
-			LogTrace("bool LuaRef::operator <=<T> (const T & right) const");
+			LogTraceStepCall("bool LuaRef::operator <=<T> (const T & right) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, right);
 			bool elt = lua_equal(m_L, -2, -1) == 1 || lua_lessthan(m_L, -2, -1) == 1;
 			lsp.reset();
-			LogTraceReturn(elt);
+			LogTraceStepReturn(elt);
 		}
 		template <typename T>
 		bool operator > (const T & right) const
 		{
-			LogTrace("bool LuaRef::operator ><T> (const T & right) const");
+			LogTraceStepCall("bool LuaRef::operator ><T> (const T & right) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, right);
 			bool mt = lua_lessthan(m_L, -1, -2) == 1;
 			lsp.reset();
-			LogTraceReturn(mt);
+			LogTraceStepReturn(mt);
 		}
 		template <typename T>
 		bool operator >= (const T & right) const
 		{
-			LogTrace("bool LuaRef::operator >=<T> (const T & right) const");
+			LogTraceStepCall("bool LuaRef::operator >=<T> (const T & right) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, right);
 			bool emt = lua_equal(m_L, -1, -2) == 1 || lua_lessthan(m_L, -1, -2) == 1;
 			lsp.reset();
-			LogTraceReturn(emt);
+			LogTraceStepReturn(emt);
 		}
 		template <typename T>
 		bool rawequal(const T & right) const
 		{
-			LogTrace("bool LuaRef::rawequal<T>(const T & right) const");
+			LogTraceStepCall("bool LuaRef::rawequal<T>(const T & right) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, right);
 			bool req = lua_rawequal(m_L, -1, -2) == 1;
 			lsp.reset();
-			LogTraceReturn(req);
+			LogTraceStepReturn(req);
 		}
 
 
 		template <typename T>
 		void append(const T & v) const
 		{
-			LogTrace("LuaRef::append<T>(const T & v) const");
+			LogTraceStepCall("LuaRef::append<T>(const T & v) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, v);
 			luaL_ref(m_L, -2);
 			lsp.reset();
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		size_t length() const;
@@ -201,22 +201,22 @@ namespace LightInk
 		template <typename T>
 		LuaRef rawget(const T & key) const
 		{
-			LogTrace("LuaRef LuaRef::rawget<T>(const T & key) const");
+			LogTraceStepCall("LuaRef LuaRef::rawget<T>(const T & key) const");
 			LuaStateProtect lsp(m_L);
 			push();
 			LuaStack<const T>::push(m_L, key);
 			lua_rawget(m_L, -2);
 			LuaRef t(m_L, true);
 			lsp.reset();
-			LogTraceReturn(t);
+			LogTraceStepReturn(t);
 		}
 
 		template <typename T>
 		LuaTableRef operator[] (const T & key) const
 		{
-			LogTrace("LuaTableRef LuaRef::operator [] (const T & key) const");
+			LogTraceStepCall("LuaTableRef LuaRef::operator [] (const T & key) const");
 			LuaStack<const T>::push(m_L, key);
-			LogTraceReturn(LuaTableRef(*this));
+			LogTraceStepReturn(LuaTableRef(*this));
 		}
 		const LuaRef operator () () const;
 /*
@@ -241,14 +241,14 @@ function create_traits(count)
 		table.insert(temp, arg1)
 		table.insert(temp, ">\n\t\tconst LuaRef operator()(")
 		table.insert(temp, arg2)
-		table.insert(temp, ") const\n\t\t{\n\t\t\tLogTrace(\"const LuaRef ")
+		table.insert(temp, ") const\n\t\t{\n\t\t\tLogTraceStepCall(\"const LuaRef ")
 		table.insert(temp, "LuaRef::operator()(")
 		table.insert(temp, arg2)
 		table.insert(temp, ") const\");\n\t\t\tpush();\n")
 		table.insert(temp, arg3)
 		table.insert(temp, string.format("\t\t\tif (lua_pcall(m_L, %d, 1, 0))\n\t\t\t{\n", k))
 		table.insert(temp, "\t\t\t\tconst char * errStr = lua_tostring(m_L, -1);\n\t\t\t\tif (errStr) LogScriptError(errStr);\n")
-		table.insert(temp, "\t\t\t\tLogTraceReturn(LuaRef(m_L));\n\t\t\t}\n\t\t\tLogTraceReturn(LuaRef(m_L, true));\n\t\t}\n\n")
+		table.insert(temp, "\t\t\t\tLogTraceStepReturn(LuaRef(m_L));\n\t\t\t}\n\t\t\tLogTraceStepReturn(LuaRef(m_L, true));\n\t\t}\n\n")
 
 		str = str .. table.concat(temp)
 	end
@@ -262,22 +262,22 @@ create_traits(20)
 		template <typename Arg1>
 		const LuaRef operator()(const Arg1 & arg1) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			if (lua_pcall(m_L, 1, 1, 0))
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -285,15 +285,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -302,15 +302,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -320,15 +320,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -339,15 +339,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -359,15 +359,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -380,15 +380,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -402,15 +402,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -425,15 +425,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -449,15 +449,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -474,15 +474,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -500,15 +500,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -527,15 +527,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -555,15 +555,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -584,15 +584,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -614,15 +614,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -645,15 +645,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17, typename Arg18>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -677,15 +677,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17, typename Arg18, typename Arg19>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -710,15 +710,15 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 		template <typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5, typename Arg6, typename Arg7, typename Arg8, typename Arg9, typename Arg10, typename Arg11, typename Arg12, typename Arg13, typename Arg14, typename Arg15, typename Arg16, typename Arg17, typename Arg18, typename Arg19, typename Arg20>
 		const LuaRef operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19, const Arg20 & arg20) const
 		{
-			LogTrace("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19, const Arg20 & arg20) const");
+			LogTraceStepCall("const LuaRef LuaRef::operator()(const Arg1 & arg1, const Arg2 & arg2, const Arg3 & arg3, const Arg4 & arg4, const Arg5 & arg5, const Arg6 & arg6, const Arg7 & arg7, const Arg8 & arg8, const Arg9 & arg9, const Arg10 & arg10, const Arg11 & arg11, const Arg12 & arg12, const Arg13 & arg13, const Arg14 & arg14, const Arg15 & arg15, const Arg16 & arg16, const Arg17 & arg17, const Arg18 & arg18, const Arg19 & arg19, const Arg20 & arg20) const");
 			push();
 			LuaStack<const Arg1>::push(m_L, arg1);
 			LuaStack<const Arg2>::push(m_L, arg2);
@@ -744,9 +744,9 @@ create_traits(20)
 			{
 				const char * errStr = lua_tostring(m_L, -1);
 				if (errStr) LogScriptError(errStr);
-				LogTraceReturn(LuaRef(m_L));
+				LogTraceStepReturn(LuaRef(m_L));
 			}
-			LogTraceReturn(LuaRef(m_L, true));
+			LogTraceStepReturn(LuaRef(m_L, true));
 		}
 
 	private:
@@ -761,19 +761,19 @@ create_traits(20)
 	{
 		static inline void push(lua_State * L, const LuaRef & v)
 		{
-			LogTrace("LuaStack<const LuaRef>::push(lua_State * L, LuaRef & v)");
+			LogTraceStepCall("LuaStack<const LuaRef>::push(lua_State * L, LuaRef & v)");
 			if (L != v.state())
 			{
 				LogScriptErrorJump(L, "Error!!!The LuaStack<LuaRef>::push vm is not LuaRef vm!!!");
 			}
 			v.push();
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		
 		static inline LuaRef get(lua_State * L, int idx)
 		{
-			LogTrace("LuaRef LuaStack<const LuaRef>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaRef(L, idx));
+			LogTraceStepCall("LuaRef LuaStack<const LuaRef>::get(lua_State * L, int idx)");
+			LogTraceStepReturn(LuaRef(L, idx));
 		}
 	};
 
@@ -782,19 +782,19 @@ create_traits(20)
 	{
 		static inline void push(lua_State * L, const LuaRef & v)
 		{
-			LogTrace("LuaStack<const LuaRef &>::push(lua_State * L, LuaRef & v)");
+			LogTraceStepCall("LuaStack<const LuaRef &>::push(lua_State * L, LuaRef & v)");
 			if (L != v.state())
 			{
 				LogScriptErrorJump(L, "Error!!!The LuaStack<LuaRef>::push vm is not LuaRef vm!!!");
 			}
 			v.push();
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		static inline LuaRef get(lua_State * L, int idx)
 		{
-			LogTrace("LuaRef LuaStack<const LuaRef&>::get(lua_State * L, int idx)");
-			LogTraceReturn(LuaRef(L, idx));
+			LogTraceStepCall("LuaRef LuaStack<const LuaRef&>::get(lua_State * L, int idx)");
+			LogTraceStepReturn(LuaRef(L, idx));
 		}
 	};
 

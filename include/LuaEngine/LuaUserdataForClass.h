@@ -34,18 +34,18 @@ namespace LightInk
 	{
 		LuaUserdataForClass(const T * p, bool luaGC) : m_obj((T*)p), m_luaGC(luaGC)
 		{
-			LogTrace("LuaUserdataForClass(T * p, bool luaGC)");
-			LogTraceReturnVoid;
+			LogTraceStepCall("LuaUserdataForClass(T * p, bool luaGC)");
+			LogTraceStepReturnVoid;
 		}
 		~LuaUserdataForClass()
 		{
-			LogTrace("~LuaUserdataForClass()");
+			LogTraceStepCall("~LuaUserdataForClass()");
 			if (m_obj && m_luaGC)
 			{
 				delete m_obj;
 			}
 			m_obj = NULL;
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		T * m_obj;
 		bool m_luaGC;

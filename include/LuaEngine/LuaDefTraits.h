@@ -44,16 +44,16 @@ namespace LightInk
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T arg, const string & name)
 		{
-			LogTrace("LuaDefTraits<T>::call(RegisterType* reg, lua_State * L, T arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T>::call(RegisterType* reg, lua_State * L, T arg, const string & name)");
 			reg->def_class_property(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		static void call(lua_State * L, T arg, const string & name)
 		{
-			LogTrace("LuaDefTraits<T>::call(lua_State * L, T arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T>::call(lua_State * L, T arg, const string & name)");
 			LuaDefTool::def_property(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -63,16 +63,16 @@ namespace LightInk
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (*arg)(), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)()>::call(RegisterType* reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)()>::call(RegisterType* reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		static void call(lua_State * L, T (*arg)(), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)()>::call(lua_State * L, T (*arg)(), const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)()>::call(lua_State * L, T (*arg)(), const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -96,17 +96,17 @@ function create_traits(count)
 		table.insert(temp, arg2)
 		table.insert(temp, ")>\n\t{\n\t\ttemplate <typename RegisterType>\n\t\tstatic void call(RegisterType * reg, lua_State * L, T (*arg)(")
 		table.insert(temp, arg2)
-		table.insert(temp, "), const string & name)\n\t\t{\n\t\t\tLogTrace(\"LuaDefTraits<T (*)(")
+		table.insert(temp, "), const string & name)\n\t\t{\n\t\t\tLogTraceStepCall(\"LuaDefTraits<T (*)(")
 		table.insert(temp, arg2)
 		table.insert(temp, ")>::call(RegisterType * reg, lua_State * L, arg, const string & name)\");\n\t\t\t")
-		table.insert(temp, "reg->def_func(arg, name);\n\t\t\tLogTraceReturnVoid;\n\t\t}\n")
+		table.insert(temp, "reg->def_func(arg, name);\n\t\t\tLogTraceStepReturnVoid;\n\t\t}\n")
 
 		table.insert(temp, "\t\tstatic void call(lua_State * L, T (*arg)(")
 		table.insert(temp, arg2)
-		table.insert(temp, "), const string & name)\n\t\t{\n\t\t\tLogTrace(\"LuaDefTraits<T (*)(")
+		table.insert(temp, "), const string & name)\n\t\t{\n\t\t\tLogTraceStepCall(\"LuaDefTraits<T (*)(")
 		table.insert(temp, arg2)
 		table.insert(temp, ")>::call(lua_State * L, arg, const string & name)\");\n\t\t\t")
-		table.insert(temp, "LuaDefTool::def_func(L, arg, name);\n\t\t\tLogTraceReturnVoid;\n\t\t}\n\t};\n\n")
+		table.insert(temp, "LuaDefTool::def_func(L, arg, name);\n\t\t\tLogTraceStepReturnVoid;\n\t\t}\n\t};\n\n")
 
 	end
 
@@ -122,15 +122,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -140,15 +140,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -158,15 +158,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -176,15 +176,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -194,15 +194,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -212,15 +212,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -230,15 +230,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -248,15 +248,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -266,15 +266,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -284,15 +284,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -302,15 +302,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -320,15 +320,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -338,15 +338,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -356,15 +356,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -374,15 +374,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -392,15 +392,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -410,15 +410,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -428,15 +428,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -446,15 +446,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -464,15 +464,15 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType * reg, lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		static void call(lua_State * L, T (*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(lua_State * L, arg, const string & name)");
 			LuaDefTool::def_func(L, arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -486,9 +486,9 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)()>::call(RegisterType* reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)()>::call(RegisterType* reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 	template <typename T, typename ClassType>
@@ -497,9 +497,9 @@ create_traits(20)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)() const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)() const>::call(RegisterType* reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)() const>::call(RegisterType* reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 /*
@@ -534,7 +534,7 @@ function create_traits(count, isConst)
 		else
 			table.insert(temp, "), ")
 		end
-		table.insert(temp, "const string & name)\n\t\t{\n\t\t\tLogTrace(\"LuaDefTraits<T (ClassType::*)(")
+		table.insert(temp, "const string & name)\n\t\t{\n\t\t\tLogTraceStepCall(\"LuaDefTraits<T (ClassType::*)(")
 		table.insert(temp, arg2)
 		if isConst then
 			table.insert(temp, ") const>")
@@ -542,7 +542,7 @@ function create_traits(count, isConst)
 			table.insert(temp, ")>")
 		end
 		table.insert(temp, "::call(RegisterType * reg, lua_State * L, arg, const string & name)\");\n\t\t\t")
-		table.insert(temp, "reg->def_class_func(arg, name);\n\t\t\tLogTraceReturnVoid;\n\t\t}\n\t};\n\n")
+		table.insert(temp, "reg->def_class_func(arg, name);\n\t\t\tLogTraceStepReturnVoid;\n\t\t}\n\t};\n\n")
 
 		str = str .. table.concat(temp)
 	end
@@ -562,9 +562,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -574,9 +574,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -586,9 +586,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -598,9 +598,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -610,9 +610,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -622,9 +622,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -634,9 +634,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -646,9 +646,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -658,9 +658,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -670,9 +670,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -682,9 +682,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -694,9 +694,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -706,9 +706,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -718,9 +718,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -730,9 +730,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -742,9 +742,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -754,9 +754,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -766,9 +766,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -778,9 +778,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -790,9 +790,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20), const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20)>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -803,9 +803,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -815,9 +815,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -827,9 +827,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -839,9 +839,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -851,9 +851,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -863,9 +863,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -875,9 +875,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -887,9 +887,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -899,9 +899,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -911,9 +911,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -923,9 +923,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -935,9 +935,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -947,9 +947,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -959,9 +959,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -971,9 +971,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -983,9 +983,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -995,9 +995,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -1007,9 +1007,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -1019,9 +1019,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
@@ -1031,9 +1031,9 @@ create_traits(20, true)
 		template <typename RegisterType>
 		static void call(RegisterType* reg, lua_State * L, T (ClassType::*arg)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const, const string & name)
 		{
-			LogTrace("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
+			LogTraceStepCall("LuaDefTraits<T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const>::call(RegisterType * reg, lua_State * L, arg, const string & name)");
 			reg->def_class_func(arg, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 

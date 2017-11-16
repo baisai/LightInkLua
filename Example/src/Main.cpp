@@ -31,7 +31,7 @@ void test_bind_static();
 
 int main(int argc, char ** argv)
 {
-	LogTrace("int main(int argc, char ** argv)");
+	LogTraceStepCall("int main(int argc, char ** argv)");
 	
 	test_bind_class();
 
@@ -40,5 +40,5 @@ int main(int argc, char ** argv)
 	test_bind_static();
 
 	getchar();
-	LogTraceReturn(0);
+	LogTraceStepReturn(0);
 }

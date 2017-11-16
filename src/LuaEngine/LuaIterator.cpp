@@ -31,18 +31,18 @@ namespace LightInk
 	/////////////////////////////////////////////////////////
 	LuaIterator::LuaIterator(lua_State * L, int idx) : m_L(L), m_top(lua_gettop(L)), m_over(false), m_keyIdx(0), m_copyCount(0)
 	{
-		LogTrace("LuaIterator::LuaIterator(lua_State * L, int idx)");
+		LogTraceStepCall("LuaIterator::LuaIterator(lua_State * L, int idx)");
 		lua_pushvalue(L, idx);
 		lua_pushnil(L);
 		lua_pushnil(L);
 		next();
 		m_keyIdx = lua_absindex(m_L, -2);
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 	void LuaIterator::set_over()
 	{
-		LogTrace("LuaIterator::set_over()");
+		LogTraceStepCall("LuaIterator::set_over()");
 		if (!m_over)
 		{
 			m_over = true;
@@ -50,49 +50,49 @@ namespace LightInk
 			m_copyCount = 0;
 			lua_settop(m_L, m_top);
 		}
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 	lua_State * LuaIterator::state()
 	{
-		LogTrace("lua_State * LuaIterator::state()");
-		LogTraceReturn(m_L);
+		LogTraceStepCall("lua_State * LuaIterator::state()");
+		LogTraceStepReturn(m_L);
 	}
 	bool LuaIterator::is_over()
 	{
-		LogTrace("bool LuaIterator::is_over()");
-		LogTraceReturn(m_over);
+		LogTraceStepCall("bool LuaIterator::is_over()");
+		LogTraceStepReturn(m_over);
 	}
 		
 
 	LuaIterator & LuaIterator::operator ++ ()
 	{
-		LogTrace("LuaIterator & LuaIterator::operator ++ ()");
+		LogTraceStepCall("LuaIterator & LuaIterator::operator ++ ()");
 		if (!m_over)
 		{
 			next();
 		}
-		LogTraceReturn(*this);
+		LogTraceStepReturn(*this);
 	}
 
 	LuaIterator & LuaIterator::operator ++ (int)
 	{
-		LogTrace("LuaIterator & LuaIterator::operator ++ (int)");
+		LogTraceStepCall("LuaIterator & LuaIterator::operator ++ (int)");
 		if (!m_over)
 		{
 			next();
 		}
-		LogTraceReturn(*this);
+		LogTraceStepReturn(*this);
 	}
 
 	void LuaIterator::next()
 	{
-		LogTrace("void LuaIterator::next()");
+		LogTraceStepCall("void LuaIterator::next()");
 		lua_pop(m_L, 1);
 		if (!lua_next(m_L, -2))
 		{
 			set_over();
 		}
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 
@@ -101,69 +101,69 @@ namespace LightInk
 	/////////////////////////////////////////////////////////
 	LuaRefIterator::LuaRefIterator(const LuaRef & table) : m_L(table.state()), m_table(table), m_key(table.state()), m_value(table.state())
 	{
-		LogTrace("LuaRefIterator::LuaRefIterator(const LuaRef & table)");
-		LogTraceReturnVoid;
+		LogTraceStepCall("LuaRefIterator::LuaRefIterator(const LuaRef & table)");
+		LogTraceStepReturnVoid;
 	}
 
 	lua_State * LuaRefIterator::state()
 	{
-		LogTrace("lua_State * LuaRefIterator::state()");
-		LogTraceReturn(m_L);
+		LogTraceStepCall("lua_State * LuaRefIterator::state()");
+		LogTraceStepReturn(m_L);
 	}
 
 	bool LuaRefIterator::is_over()
 	{
-		LogTrace("bool LuaRefIterator::is_over()");
-		LogTraceReturn(m_key.is_nil());
+		LogTraceStepCall("bool LuaRefIterator::is_over()");
+		LogTraceStepReturn(m_key.is_nil());
 	}
 
 	LuaRef & LuaRefIterator::get_key()
 	{
-		LogTrace("LuaRef & LuaRefIterator::get_key()");
-		LogTraceReturn(m_key);
+		LogTraceStepCall("LuaRef & LuaRefIterator::get_key()");
+		LogTraceStepReturn(m_key);
 	}
 
 	LuaRef & LuaRefIterator::get_value()
 	{
-		LogTrace("LuaRef & LuaRefIterator::get_value()");
-		LogTraceReturn(m_value);
+		LogTraceStepCall("LuaRef & LuaRefIterator::get_value()");
+		LogTraceStepReturn(m_value);
 	}
 
 	LuaRef & LuaRefIterator::operator * ()
 	{
-		LogTrace("LuaRef & LuaRefIterator::operator * ()");
-		LogTraceReturn(m_value);
+		LogTraceStepCall("LuaRef & LuaRefIterator::operator * ()");
+		LogTraceStepReturn(m_value);
 	}
 
 	LuaRef & LuaRefIterator::operator -> ()
 	{
-		LogTrace("LuaRef & LuaRefIterator::operator -> ()");
-		LogTraceReturn(m_value);
+		LogTraceStepCall("LuaRef & LuaRefIterator::operator -> ()");
+		LogTraceStepReturn(m_value);
 	}
 
 	LuaRefIterator & LuaRefIterator::operator ++ ()
 	{
-		LogTrace("LuaRefIterator & LuaRefIterator::operator ++ ()");
+		LogTraceStepCall("LuaRefIterator & LuaRefIterator::operator ++ ()");
 		if (!m_key.is_nil())
 		{
 			next();
 		}
-		LogTraceReturn(*this);
+		LogTraceStepReturn(*this);
 	}
 
 	LuaRefIterator & LuaRefIterator::operator ++ (int)
 	{
-		LogTrace("LuaRefIterator & LuaRefIterator::operator ++ (int)");
+		LogTraceStepCall("LuaRefIterator & LuaRefIterator::operator ++ (int)");
 		if (!m_key.is_nil())
 		{
 			next();
 		}
-		LogTraceReturn(*this);
+		LogTraceStepReturn(*this);
 	}
 
 	void LuaRefIterator::next()
 	{
-		LogTrace("void LuaRefIterator::next()");
+		LogTraceStepCall("void LuaRefIterator::next()");
 		m_table.push();
 		m_key.push ();
 		if (lua_next (m_L, -2))
@@ -177,7 +177,7 @@ namespace LightInk
 			m_value.set_nil();
 		}
 		lua_pop(m_L, 1);
-		LogTraceReturnVoid;
+		LogTraceStepReturnVoid;
 	}
 
 }

@@ -61,26 +61,26 @@ namespace LightInk
 		typedef T ClassType::* PropertyTypePtr;
 		static int pt_index_function(lua_State * L, void * field, const char * key)
 		{
-			LogTrace("int LuaClassPropertyTraits<ClassType, T>::pt_index_function(lua_State * L, void * field, const char * key)");
+			LogTraceStepCall("int LuaClassPropertyTraits<ClassType, T>::pt_index_function(lua_State * L, void * field, const char * key)");
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			LuaClassPropertyInfoImp<PropertyTypePtr> * lcpii = (LuaClassPropertyInfoImp<PropertyTypePtr> * )field;
 			PropertyTypePtr ptr = lcpii->m_imp;
 			if (ptr)
 			{
 				LuaStack<const PropertyType>::push(L, (objPtr->*ptr));
-				LogTraceReturn(1);
+				LogTraceStepReturn(1);
 			}
 			else
 			{
 				LogScriptErrorJump(L, "none this field<%s>\n", key);
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 
 		static int pt_newindex_function(lua_State * L, void * field, const char * key, int idx)
 		{
-			LogTrace("int LuaClassPropertyTraits<ClassType, T>::pt_newindex_function(lua_State * L, void * field, const char * key, int idx)");
+			LogTraceStepCall("int LuaClassPropertyTraits<ClassType, T>::pt_newindex_function(lua_State * L, void * field, const char * key, int idx)");
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			LuaClassPropertyInfoImp<PropertyTypePtr> * lcpii = (LuaClassPropertyInfoImp<PropertyTypePtr> * )field;
 			PropertyTypePtr ptr = lcpii->m_imp;
@@ -92,7 +92,7 @@ namespace LightInk
 			{
 				LogError("none this field<%s>\n", key);
 			}
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -104,24 +104,24 @@ namespace LightInk
 		typedef T PropertyType;
 		static int pt_index_function(lua_State * L, void * field, const char * key)
 		{
-			LogTrace("int LuaClassPropertyTraits<T>::pt_index_function(lua_State * L, void * field, const char * key)");
+			LogTraceStepCall("int LuaClassPropertyTraits<T>::pt_index_function(lua_State * L, void * field, const char * key)");
 			PropertyType * ptr = (PropertyType *)field;
 			if (ptr)
 			{
 				LuaStack<const PropertyType>::push(L, *ptr);
-				LogTraceReturn(1);
+				LogTraceStepReturn(1);
 			}
 			else
 			{
 				LogScriptErrorJump(L, "none this field<%s>\n", key);
-				LogTraceReturn(0);
+				LogTraceStepReturn(0);
 			}
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 
 		static int pt_newindex_function(lua_State * L, void * field, const char * key, int idx)
 		{
-			LogTrace("int LuaClassPropertyTraits<T>::pt_newindex_function(lua_State * L, void * field, const char * key, int idx)");
+			LogTraceStepCall("int LuaClassPropertyTraits<T>::pt_newindex_function(lua_State * L, void * field, const char * key, int idx)");
 			PropertyType * ptr = (PropertyType *)field;
 			if (ptr)
 			{
@@ -131,7 +131,7 @@ namespace LightInk
 			{
 				LogScriptErrorJump(L, "none this field<%s>\n", key);
 			}
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 

@@ -37,14 +37,14 @@ namespace LightInk
 		template <typename T>
 		inline static void def(lua_State * L, T obj, const string & name)
 		{
-			LogTrace("void LuaDefAutoTool::def(lua_State * L, T obj, const string & name)");
+			LogTraceStepCall("void LuaDefAutoTool::def(lua_State * L, T obj, const string & name)");
 			LuaDefTraits<T>::call(L, obj, name);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		static void def(lua_State * L, lua_CFunction obj, const string & name)
 		{
-			LogTrace("void LuaDefAutoTool::def(lua_State * L, lua_CFunction ObjectCloseAuditAlarm, const string & name)");
+			LogTraceStepCall("void LuaDefAutoTool::def(lua_State * L, lua_CFunction ObjectCloseAuditAlarm, const string & name)");
 			LuaStateProtect lsp(L, true);
 			if (!lua_istable(L, -1))
 			{
@@ -58,7 +58,7 @@ namespace LightInk
 			lua_pushlstring(L, name.c_str(), name.size());
 			lua_pushcclosure(L, obj, 0);
 			lua_rawset(L, -3);
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 		
 	};

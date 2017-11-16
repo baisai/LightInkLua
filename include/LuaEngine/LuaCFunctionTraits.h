@@ -52,12 +52,12 @@ namespace LightInk
 		typedef T (ClassType::*FunctionType)();
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)() >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)() >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			LuaStack<const T>::push(L, (objPtr->*func)());
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -68,12 +68,12 @@ namespace LightInk
 		typedef T (ClassType::*FunctionType)() const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)() const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)() const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			LuaStack<const T>::push(L, (objPtr->*func)());
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -84,12 +84,12 @@ namespace LightInk
 		typedef void (ClassType::*FunctionType)();
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)() >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)() >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			(objPtr->*func)();
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -100,12 +100,12 @@ namespace LightInk
 		typedef void (ClassType::*FunctionType)() const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)() const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)() const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			(objPtr->*func)();
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -157,7 +157,7 @@ function create_traits(count, isReturn, isConst)
 		else
 			table.insert(temp, ");\n")
 		end
-		table.insert(temp, "\t\tstatic int call(lua_State * L)\n\t\t{\n\t\t\tLogTrace(\"int LuaCFunctionTraits<")
+		table.insert(temp, "\t\tstatic int call(lua_State * L)\n\t\t{\n\t\t\tLogTraceStepCall(\"int LuaCFunctionTraits<")
 		if isReturn then
 			table.insert(temp, " T (ClassType::*)(")
 		else
@@ -181,9 +181,9 @@ function create_traits(count, isReturn, isConst)
 		end
 		table.insert(temp, arg4)
 		if isReturn then
-			table.insert(temp, "));\n\t\t\tLogTraceReturn(1);\n\t\t}\n\t};\n\n")
+			table.insert(temp, "));\n\t\t\tLogTraceStepReturn(1);\n\t\t}\n\t};\n\n")
 		else
-			table.insert(temp, ");\n\t\t\tLogTraceReturn(0);\n\t\t}\n\t};\n\n")
+			table.insert(temp, ");\n\t\t\tLogTraceStepReturn(0);\n\t\t}\n\t};\n\n")
 		end
 
 		str = str .. table.concat(temp)
@@ -208,13 +208,13 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -224,14 +224,14 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -241,7 +241,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -249,7 +249,7 @@ print("\n\n\n")
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -259,7 +259,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -268,7 +268,7 @@ print("\n\n\n")
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -278,7 +278,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -288,7 +288,7 @@ print("\n\n\n")
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -298,7 +298,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -309,7 +309,7 @@ print("\n\n\n")
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -319,7 +319,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -331,7 +331,7 @@ print("\n\n\n")
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -341,7 +341,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -354,7 +354,7 @@ print("\n\n\n")
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -364,7 +364,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -378,7 +378,7 @@ print("\n\n\n")
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -388,7 +388,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -403,7 +403,7 @@ print("\n\n\n")
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -413,7 +413,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -429,7 +429,7 @@ print("\n\n\n")
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -439,7 +439,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -456,7 +456,7 @@ print("\n\n\n")
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -466,7 +466,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -484,7 +484,7 @@ print("\n\n\n")
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -494,7 +494,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -513,7 +513,7 @@ print("\n\n\n")
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -523,7 +523,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -543,7 +543,7 @@ print("\n\n\n")
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -553,7 +553,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -574,7 +574,7 @@ print("\n\n\n")
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -584,7 +584,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -606,7 +606,7 @@ print("\n\n\n")
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -616,7 +616,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -639,7 +639,7 @@ print("\n\n\n")
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -649,7 +649,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -673,7 +673,7 @@ print("\n\n\n")
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -683,7 +683,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -708,7 +708,7 @@ print("\n\n\n")
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			Arg20 arg20 = LuaStack<const Arg20>::get(L, 21);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -723,13 +723,13 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -739,14 +739,14 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -756,7 +756,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -764,7 +764,7 @@ print("\n\n\n")
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -774,7 +774,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -783,7 +783,7 @@ print("\n\n\n")
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -793,7 +793,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -803,7 +803,7 @@ print("\n\n\n")
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -813,7 +813,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -824,7 +824,7 @@ print("\n\n\n")
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -834,7 +834,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -846,7 +846,7 @@ print("\n\n\n")
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -856,7 +856,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -869,7 +869,7 @@ print("\n\n\n")
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -879,7 +879,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -893,7 +893,7 @@ print("\n\n\n")
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -903,7 +903,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -918,7 +918,7 @@ print("\n\n\n")
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -928,7 +928,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -944,7 +944,7 @@ print("\n\n\n")
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -954,7 +954,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -971,7 +971,7 @@ print("\n\n\n")
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -981,7 +981,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -999,7 +999,7 @@ print("\n\n\n")
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1009,7 +1009,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1028,7 +1028,7 @@ print("\n\n\n")
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1038,7 +1038,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1058,7 +1058,7 @@ print("\n\n\n")
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1068,7 +1068,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1089,7 +1089,7 @@ print("\n\n\n")
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1099,7 +1099,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1121,7 +1121,7 @@ print("\n\n\n")
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1131,7 +1131,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1154,7 +1154,7 @@ print("\n\n\n")
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1164,7 +1164,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1188,7 +1188,7 @@ print("\n\n\n")
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1198,7 +1198,7 @@ print("\n\n\n")
 		typedef T (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1223,7 +1223,7 @@ print("\n\n\n")
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			Arg20 arg20 = LuaStack<const Arg20>::get(L, 21);
 			LuaStack<const T>::push(L, (objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -1238,13 +1238,13 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			(objPtr->*func)(arg1);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1254,14 +1254,14 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			(objPtr->*func)(arg1, arg2);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1271,7 +1271,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1279,7 +1279,7 @@ print("\n\n\n")
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			(objPtr->*func)(arg1, arg2, arg3);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1289,7 +1289,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1298,7 +1298,7 @@ print("\n\n\n")
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			(objPtr->*func)(arg1, arg2, arg3, arg4);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1308,7 +1308,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1318,7 +1318,7 @@ print("\n\n\n")
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1328,7 +1328,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1339,7 +1339,7 @@ print("\n\n\n")
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1349,7 +1349,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1361,7 +1361,7 @@ print("\n\n\n")
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1371,7 +1371,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1384,7 +1384,7 @@ print("\n\n\n")
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1394,7 +1394,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1408,7 +1408,7 @@ print("\n\n\n")
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1418,7 +1418,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1433,7 +1433,7 @@ print("\n\n\n")
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1443,7 +1443,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1459,7 +1459,7 @@ print("\n\n\n")
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1469,7 +1469,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1486,7 +1486,7 @@ print("\n\n\n")
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1496,7 +1496,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1514,7 +1514,7 @@ print("\n\n\n")
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1524,7 +1524,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1543,7 +1543,7 @@ print("\n\n\n")
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1553,7 +1553,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1573,7 +1573,7 @@ print("\n\n\n")
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1583,7 +1583,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1604,7 +1604,7 @@ print("\n\n\n")
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1614,7 +1614,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1636,7 +1636,7 @@ print("\n\n\n")
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1646,7 +1646,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1669,7 +1669,7 @@ print("\n\n\n")
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1679,7 +1679,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1703,7 +1703,7 @@ print("\n\n\n")
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1713,7 +1713,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1738,7 +1738,7 @@ print("\n\n\n")
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			Arg20 arg20 = LuaStack<const Arg20>::get(L, 21);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1753,13 +1753,13 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			(objPtr->*func)(arg1);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1769,14 +1769,14 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 2);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			(objPtr->*func)(arg1, arg2);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1786,7 +1786,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1794,7 +1794,7 @@ print("\n\n\n")
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 3);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			(objPtr->*func)(arg1, arg2, arg3);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1804,7 +1804,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1813,7 +1813,7 @@ print("\n\n\n")
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 4);
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			(objPtr->*func)(arg1, arg2, arg3, arg4);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1823,7 +1823,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1833,7 +1833,7 @@ print("\n\n\n")
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 5);
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1843,7 +1843,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1854,7 +1854,7 @@ print("\n\n\n")
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 6);
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1864,7 +1864,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1876,7 +1876,7 @@ print("\n\n\n")
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 7);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1886,7 +1886,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1899,7 +1899,7 @@ print("\n\n\n")
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 8);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1909,7 +1909,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1923,7 +1923,7 @@ print("\n\n\n")
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 9);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1933,7 +1933,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1948,7 +1948,7 @@ print("\n\n\n")
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 10);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1958,7 +1958,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -1974,7 +1974,7 @@ print("\n\n\n")
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 11);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -1984,7 +1984,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2001,7 +2001,7 @@ print("\n\n\n")
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 12);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2011,7 +2011,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2029,7 +2029,7 @@ print("\n\n\n")
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 13);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2039,7 +2039,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2058,7 +2058,7 @@ print("\n\n\n")
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 14);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2068,7 +2068,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2088,7 +2088,7 @@ print("\n\n\n")
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 15);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2098,7 +2098,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2119,7 +2119,7 @@ print("\n\n\n")
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 16);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2129,7 +2129,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2151,7 +2151,7 @@ print("\n\n\n")
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 17);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2161,7 +2161,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2184,7 +2184,7 @@ print("\n\n\n")
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 18);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2194,7 +2194,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2218,7 +2218,7 @@ print("\n\n\n")
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 19);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2228,7 +2228,7 @@ print("\n\n\n")
 		typedef void (ClassType::*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const;
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (ClassType::*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) const >::call(lua_State * L)");
 			LuaClassFunctionInfo<FunctionType> * funcInfo = (LuaClassFunctionInfo<FunctionType> *)lua_touserdata (L, lua_upvalueindex(1));
 			FunctionType func = funcInfo->m_func;
 			ClassType * objPtr = LuaMetatableTraits<ClassType>::userdata_to_object(L, 1);
@@ -2253,7 +2253,7 @@ print("\n\n\n")
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 20);
 			Arg20 arg20 = LuaStack<const Arg20>::get(L, 21);
 			(objPtr->*func)(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2267,10 +2267,10 @@ print("\n\n\n")
 		typedef T (*FunctionType)();
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)() >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)() >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			LuaStack<const T>::push(L, func());
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2281,10 +2281,10 @@ print("\n\n\n")
 		typedef void (*FunctionType)();
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)() >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)() >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			func();
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2331,7 +2331,7 @@ function create_traits(count, isReturn)
 		end
 		table.insert(temp, arg2)
 
-		table.insert(temp, ");\n\t\tstatic int call(lua_State * L)\n\t\t{\n\t\t\tLogTrace(\"int LuaCFunctionTraits<")
+		table.insert(temp, ");\n\t\tstatic int call(lua_State * L)\n\t\t{\n\t\t\tLogTraceStepCall(\"int LuaCFunctionTraits<")
 		if isReturn then
 			table.insert(temp, " T (*)(")
 		else
@@ -2348,9 +2348,9 @@ function create_traits(count, isReturn)
 		end
 		table.insert(temp, arg4)
 		if isReturn then
-			table.insert(temp, "));\n\t\t\tLogTraceReturn(1);\n\t\t}\n\t};\n\n")
+			table.insert(temp, "));\n\t\t\tLogTraceStepReturn(1);\n\t\t}\n\t};\n\n")
 		else
-			table.insert(temp, ");\n\t\t\tLogTraceReturn(0);\n\t\t}\n\t};\n\n")
+			table.insert(temp, ");\n\t\t\tLogTraceStepReturn(0);\n\t\t}\n\t};\n\n")
 		end
 
 		str = str .. table.concat(temp)
@@ -2371,11 +2371,11 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			LuaStack<const T>::push(L, func(arg1));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2385,12 +2385,12 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
 			LuaStack<const T>::push(L, func(arg1, arg2));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2400,13 +2400,13 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 3);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2416,14 +2416,14 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 3);
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 4);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2433,7 +2433,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2441,7 +2441,7 @@ create_traits(20, false)
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 4);
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 5);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2451,7 +2451,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2460,7 +2460,7 @@ create_traits(20, false)
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 5);
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 6);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2470,7 +2470,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2480,7 +2480,7 @@ create_traits(20, false)
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 6);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 7);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2490,7 +2490,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2501,7 +2501,7 @@ create_traits(20, false)
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 7);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 8);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2511,7 +2511,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2523,7 +2523,7 @@ create_traits(20, false)
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 8);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 9);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2533,7 +2533,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2546,7 +2546,7 @@ create_traits(20, false)
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 9);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 10);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2556,7 +2556,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2570,7 +2570,7 @@ create_traits(20, false)
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 10);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 11);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2580,7 +2580,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2595,7 +2595,7 @@ create_traits(20, false)
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 11);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 12);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2605,7 +2605,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2621,7 +2621,7 @@ create_traits(20, false)
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 12);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 13);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2631,7 +2631,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2648,7 +2648,7 @@ create_traits(20, false)
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 13);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 14);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2658,7 +2658,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2676,7 +2676,7 @@ create_traits(20, false)
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 14);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 15);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2686,7 +2686,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2705,7 +2705,7 @@ create_traits(20, false)
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 15);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 16);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2715,7 +2715,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2735,7 +2735,7 @@ create_traits(20, false)
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 16);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 17);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2745,7 +2745,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2766,7 +2766,7 @@ create_traits(20, false)
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 17);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 18);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2776,7 +2776,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2798,7 +2798,7 @@ create_traits(20, false)
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 18);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 19);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2808,7 +2808,7 @@ create_traits(20, false)
 		typedef T (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< T (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2831,7 +2831,7 @@ create_traits(20, false)
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 19);
 			Arg20 arg20 = LuaStack<const Arg20>::get(L, 20);
 			LuaStack<const T>::push(L, func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20));
-			LogTraceReturn(1);
+			LogTraceStepReturn(1);
 		}
 	};
 
@@ -2846,11 +2846,11 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			func(arg1);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2860,12 +2860,12 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
 			func(arg1, arg2);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2875,13 +2875,13 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 3);
 			func(arg1, arg2, arg3);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2891,14 +2891,14 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
 			Arg3 arg3 = LuaStack<const Arg3>::get(L, 3);
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 4);
 			func(arg1, arg2, arg3, arg4);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2908,7 +2908,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2916,7 +2916,7 @@ create_traits(20, false)
 			Arg4 arg4 = LuaStack<const Arg4>::get(L, 4);
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 5);
 			func(arg1, arg2, arg3, arg4, arg5);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2926,7 +2926,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2935,7 +2935,7 @@ create_traits(20, false)
 			Arg5 arg5 = LuaStack<const Arg5>::get(L, 5);
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 6);
 			func(arg1, arg2, arg3, arg4, arg5, arg6);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2945,7 +2945,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2955,7 +2955,7 @@ create_traits(20, false)
 			Arg6 arg6 = LuaStack<const Arg6>::get(L, 6);
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 7);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2965,7 +2965,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2976,7 +2976,7 @@ create_traits(20, false)
 			Arg7 arg7 = LuaStack<const Arg7>::get(L, 7);
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 8);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -2986,7 +2986,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -2998,7 +2998,7 @@ create_traits(20, false)
 			Arg8 arg8 = LuaStack<const Arg8>::get(L, 8);
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 9);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3008,7 +3008,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3021,7 +3021,7 @@ create_traits(20, false)
 			Arg9 arg9 = LuaStack<const Arg9>::get(L, 9);
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 10);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3031,7 +3031,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3045,7 +3045,7 @@ create_traits(20, false)
 			Arg10 arg10 = LuaStack<const Arg10>::get(L, 10);
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 11);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3055,7 +3055,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3070,7 +3070,7 @@ create_traits(20, false)
 			Arg11 arg11 = LuaStack<const Arg11>::get(L, 11);
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 12);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3080,7 +3080,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3096,7 +3096,7 @@ create_traits(20, false)
 			Arg12 arg12 = LuaStack<const Arg12>::get(L, 12);
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 13);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3106,7 +3106,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3123,7 +3123,7 @@ create_traits(20, false)
 			Arg13 arg13 = LuaStack<const Arg13>::get(L, 13);
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 14);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3133,7 +3133,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3151,7 +3151,7 @@ create_traits(20, false)
 			Arg14 arg14 = LuaStack<const Arg14>::get(L, 14);
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 15);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3161,7 +3161,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3180,7 +3180,7 @@ create_traits(20, false)
 			Arg15 arg15 = LuaStack<const Arg15>::get(L, 15);
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 16);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3190,7 +3190,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3210,7 +3210,7 @@ create_traits(20, false)
 			Arg16 arg16 = LuaStack<const Arg16>::get(L, 16);
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 17);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3220,7 +3220,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3241,7 +3241,7 @@ create_traits(20, false)
 			Arg17 arg17 = LuaStack<const Arg17>::get(L, 17);
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 18);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3251,7 +3251,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3273,7 +3273,7 @@ create_traits(20, false)
 			Arg18 arg18 = LuaStack<const Arg18>::get(L, 18);
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 19);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 
@@ -3283,7 +3283,7 @@ create_traits(20, false)
 		typedef void (*FunctionType)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20);
 		static int call(lua_State * L)
 		{
-			LogTrace("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
+			LogTraceStepCall("int LuaCFunctionTraits< void (*)(Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9, Arg10, Arg11, Arg12, Arg13, Arg14, Arg15, Arg16, Arg17, Arg18, Arg19, Arg20) >::call(lua_State * L)");
 			FunctionType func = *((FunctionType *)lua_touserdata (L, lua_upvalueindex(1)));
 			Arg1 arg1 = LuaStack<const Arg1>::get(L, 1);
 			Arg2 arg2 = LuaStack<const Arg2>::get(L, 2);
@@ -3306,7 +3306,7 @@ create_traits(20, false)
 			Arg19 arg19 = LuaStack<const Arg19>::get(L, 19);
 			Arg20 arg20 = LuaStack<const Arg20>::get(L, 20);
 			func(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20);
-			LogTraceReturn(0);
+			LogTraceStepReturn(0);
 		}
 	};
 

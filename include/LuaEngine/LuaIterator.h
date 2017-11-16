@@ -42,24 +42,24 @@ namespace LightInk
 		
 		template <typename T>
 		inline T get_key()
-		{ LogTrace("T LuaIterator::get_key<T>()"); LogTraceReturn(LuaStack<const T>::get(m_L, m_keyIdx)); }
+		{ LogTraceStepCall("T LuaIterator::get_key<T>()"); LogTraceStepReturn(LuaStack<const T>::get(m_L, m_keyIdx)); }
 		template <typename T>
 		inline T get_value()
-		{ LogTrace("T LuaIterator::get_value<T>()"); LogTraceReturn(LuaStack<const T>::get(m_L, m_keyIdx + 1)); }
+		{ LogTraceStepCall("T LuaIterator::get_value<T>()"); LogTraceStepReturn(LuaStack<const T>::get(m_L, m_keyIdx + 1)); }
 		template <typename T>
 		inline T operator * ()
-		{ LogTrace("T LuaIterator::operator *<T> ()"); LogTraceReturn(LuaStack<const T>::get(m_L, m_keyIdx + 1)); }
+		{ LogTraceStepCall("T LuaIterator::operator *<T> ()"); LogTraceStepReturn(LuaStack<const T>::get(m_L, m_keyIdx + 1)); }
 		template <typename T>
 		inline T operator -> ()
-		{ LogTrace("T LuaIterator::operator -><T> ()"); LogTraceReturn(LuaStack<const T>::get(m_L, m_keyIdx + 1)); }
+		{ LogTraceStepCall("T LuaIterator::operator -><T> ()"); LogTraceStepReturn(LuaStack<const T>::get(m_L, m_keyIdx + 1)); }
 
-		inline int key_type() { LogTrace("int LuaIterator::key_type()"); LogTraceReturn(lua_type(m_L, m_keyIdx)); }
-		inline int value_type() { LogTrace("int LuaIterator::value_type()"); LogTraceReturn(lua_type(m_L, m_keyIdx + 1)); }
+		inline int key_type() { LogTraceStepCall("int LuaIterator::key_type()"); LogTraceStepReturn(lua_type(m_L, m_keyIdx)); }
+		inline int value_type() { LogTraceStepCall("int LuaIterator::value_type()"); LogTraceStepReturn(lua_type(m_L, m_keyIdx + 1)); }
 
-		inline void copy_key() { LogTrace("void LuaIterator::copy_key()"); lua_pushvalue(m_L, m_keyIdx); ++m_copyCount; LogTraceReturnVoid; }
-		inline void copy_value() { LogTrace("void LuaIterator::copy_value()"); lua_pushvalue(m_L, m_keyIdx + 1); ++m_copyCount; LogTraceReturnVoid; }
-		inline void pop_copy() { LogTrace("void LuaIterator::pop_copy()"); lua_pop(m_L, m_copyCount); LogTraceReturnVoid; }
-		inline void clean_stack() { LogTrace("void LuaIterator::clean_stack()"); lua_settop(m_L, m_keyIdx + 1); LogTraceReturnVoid; }
+		inline void copy_key() { LogTraceStepCall("void LuaIterator::copy_key()"); lua_pushvalue(m_L, m_keyIdx); ++m_copyCount; LogTraceStepReturnVoid; }
+		inline void copy_value() { LogTraceStepCall("void LuaIterator::copy_value()"); lua_pushvalue(m_L, m_keyIdx + 1); ++m_copyCount; LogTraceStepReturnVoid; }
+		inline void pop_copy() { LogTraceStepCall("void LuaIterator::pop_copy()"); lua_pop(m_L, m_copyCount); LogTraceStepReturnVoid; }
+		inline void clean_stack() { LogTraceStepCall("void LuaIterator::clean_stack()"); lua_settop(m_L, m_keyIdx + 1); LogTraceStepReturnVoid; }
 
 		LuaIterator & operator ++ ();
 		LuaIterator & operator ++ (int);

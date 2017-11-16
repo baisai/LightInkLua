@@ -38,7 +38,7 @@ namespace LightInk
 		template <typename T>
 		static void def_func(lua_State * L, T obj, const std::string & name)
 		{
-			LogTrace("void LuaDefTool::def_func<T>(lua_State * L, T & obj, const std::string & name)");
+			LogTraceStepCall("void LuaDefTool::def_func<T>(lua_State * L, T & obj, const std::string & name)");
 			LuaStateProtect lsp(L, true);
 			if (!lua_istable(L, -1))
 			{
@@ -52,13 +52,13 @@ namespace LightInk
 			new (lua_newuserdata(L, sizeof(T))) T(obj);
 			lua_pushcclosure(L, &LuaCFunctionTraits<T>::call, 1);
 			rawsetfieldlen(L, -2, name.c_str(), name.size());
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 
 		template <typename T>
 		static void def_property(lua_State * L, T * obj, const std::string & name)
 		{
-			LogTrace("void LuaDefTool::def_property<T>(lua_State * L, T * obj, const std::string & name)");
+			LogTraceStepCall("void LuaDefTool::def_property<T>(lua_State * L, T * obj, const std::string & name)");
 			LuaStateProtect lsp(L, true);
 			if (!lua_istable(L, -1))
 			{
@@ -72,7 +72,7 @@ namespace LightInk
 			new (lua_newuserdata(L, sizeof(LuaClassPropertyInfo))) LuaClassPropertyInfo(LuaClassPropertyTraits<T, void>::pt_index_function, 
 																						LuaClassPropertyTraits<T, void>::pt_newindex_function, obj);
 			rawsetfieldlen(L, -2, name.c_str(), name.size());
-			LogTraceReturnVoid;
+			LogTraceStepReturnVoid;
 		}
 	};
 
