@@ -65,6 +65,9 @@ namespace LightInk
 
 		LuaRegister & def_cclosure(lua_CFunction obj, const std::string & name);
 
+		template <typename ET>
+		LuaRegister & def_enum(ET obj, const std::string & name);
+
 	private:
 
 		template <typename T>
